@@ -1,13 +1,38 @@
-import React, { useEffect } from 'react';
-import data from "../data"
+import React, { useEffect, useReducer } from 'react';
 import { Link } from "react-router-dom"
 import axios from "axios"
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'FETCH_REQUEST':
+            return { ...state, loading: true };
+        case "FETCH_SUCCESS":
+            return { ...state, products: action.payload, loading: false };
+        case 'FETCH_FAIL':
+            return { ...state, loading: false, error: action.payload };
+        default:
+            return state
+    }
+}
+
 const HomeScreen = () => {
-    useEffect(()=>{
-        axios.get('/api/product').then(data=>{
-            console.log(data)
-        })
-    },[])
+    const [{ loading, error, products }, dispatch] = useReducer(reducer, {
+        products: [],
+        loading: true,
+        error: ""
+    })
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatch({ type: 'FETCH_REQUEST' })
+            try {
+                const result = await axios.get('/api/product')
+                dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
+            } catch (err) {
+                dispatch({ type: 'FETCH_FAIL', payload: err.message })
+            }
+        }
+        fetchData()
+    }, [])
 
     return (
         <section>
@@ -15,7 +40,8 @@ const HomeScreen = () => {
                 <h1>Featured Products</h1>
                 <div className="products">
                     <div className="row">
-                        {data.products.map(product => {
+                        {loading && <h1>Loading.....</h1>}
+                        {products.map(product => {
                             return <div className="col-md-3" key={product.slug}>
                                 <Link to={`product/${product.slug}`}>
                                     <img src={`${product.image}`} alt={product.name} />
