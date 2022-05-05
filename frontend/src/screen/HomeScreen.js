@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import data from "../data"
 import { Link } from "react-router-dom"
-
+import axios from "axios"
 const HomeScreen = () => {
-
+    useEffect(()=>{
+        axios.get('/api/product').then(data=>{
+            console.log(data)
+        })
+    },[])
 
     return (
         <section>
