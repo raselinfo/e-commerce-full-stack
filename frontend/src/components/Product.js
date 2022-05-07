@@ -16,7 +16,7 @@ const Product = ({ product }) => {
                     <p>{product.numReviews}</p>
                     <p>${product.price}</p>
                     <Rating rating={product.rating} numReviews={product.numReviews}/>
-                    <p>{product.countInStock && <button className='btn-primary py-2 px-3'>Add To Cart</button>}</p>
+                    <p>{product.countInStock && <button className='btn-warning btn mt-2 py-2 px-3'>Add To Cart</button>}</p>
                 </Card.Body>
             </Card>
            

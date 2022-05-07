@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import axios from "axios"
 import Product from '../components/Product';
 import { Row } from "react-bootstrap"
+import Loading from '../components/Loading';
 const initialState = {
     products: [],
     loading: true,
@@ -43,7 +44,7 @@ const HomeScreen = () => {
                 <Row>
 
                     {
-                        loading ? <div>Loading........</div> :
+                        loading ? <Loading /> :
                             error ? <div>${error}</div> :
                                 products.map(product => {
                                     return <Product key={product.slug} product={product} />
