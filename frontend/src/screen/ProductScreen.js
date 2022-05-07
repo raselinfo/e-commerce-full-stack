@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from "axios"
 import { Row, Col, ListGroup, Card, Badge, Button } from "react-bootstrap"
@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async"
 import Loading from '../components/Loading';
 import MessageBox from '../components/MessageBox';
 import handleError from '../utils';
+import { Store } from "../Store"
 const initialState = {
     product: null,
     loading: true,
@@ -30,6 +31,7 @@ const reducer = (state, { type, payload }) => {
 
 const ProductScreen = () => {
     const [{ product, error, loading }, dispatch] = useReducer(reducer, initialState)
+    const { state, dispatch: ctxDispatch } = useContext(Store)
     const { slug } = useParams()
     useEffect(() => {
         dispatch({ type: "FETCH_REQUEST" })
@@ -46,7 +48,9 @@ const ProductScreen = () => {
 
     }, [slug])
 
-
+    const addToCartHandler = () => {
+        ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity: 1 } })        
+    }
     return (
         <div>
 
@@ -92,7 +96,7 @@ const ProductScreen = () => {
                                 </ListGroup.Item>
                                 <ListGroup.Item>
 
-                                    <Col md={6}>{product.countInStock > 0 && <Button variant="warning">Add to cart</Button>}</Col>
+                                    <Col md={6}>{product.countInStock > 0 && <Button variant="warning" onClick={addToCartHandler}>Add to cart</Button>}</Col>
 
                                 </ListGroup.Item>
                             </ListGroup>
