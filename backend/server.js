@@ -20,6 +20,8 @@ app.get("/api/product/slug/:slug", (req, res) => {
 })
 
 
+
+
 app.listen(4000, () => {
     console.log(`http://localhost:4000`)
 })
