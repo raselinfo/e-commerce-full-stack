@@ -19,6 +19,16 @@ app.get("/api/product/slug/:slug", (req, res) => {
 
 })
 
+app.get("/api/product/:id", (req, res) => {
+    const { id } = req.params
+    const product = data.products.find(item => item._id === Number(id))
+    if (product) {
+        res.send(product)
+    } else {
+        res.status(404).json({ message: "Data Not found!" })
+    }
+})
+
 
 
 

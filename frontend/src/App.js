@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import ProductScreen from "./screen/ProductScreen";
 import { Navbar, Container, Nav, Badge } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
+import CartScreen from "./screen/CartScreen"
 function App() {
   const { state: { cart: { cartItems
   } } } = useContext(Store)
@@ -21,11 +22,11 @@ function App() {
               </LinkContainer>
               <Nav>
                 <Link to="/cart" className="text-white">
-                  Cart {cartItems.length > 0 && <Badge bg="danger">{cartItems.length}</Badge>}
+                  Cart {cartItems.length > 0 && <Badge bg="danger">{cartItems.reduce((acc, item) => acc += item.quantity, 0)}</Badge>}
                 </Link>
               </Nav>
             </header>
-            
+
 
           </Container>
 
@@ -36,6 +37,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
             </Routes>
           </Container>
         </main>

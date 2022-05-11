@@ -1,7 +1,7 @@
 const data = {
     products: [
         {
-            _id:1,
+            _id: 1,
             name: 'Nike Slim shirt',
             slug: 'nike-slim-shirt',
             category: 'Shirts',
@@ -54,4 +54,4 @@ const data = {
         },
     ],
 };
-module.exports= data;
+module.exports = data;
