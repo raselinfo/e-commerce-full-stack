@@ -5,11 +5,13 @@ import { Row, Col, ListGroup, Button, Card } from "react-bootstrap"
 import MessageBox from "../components/MessageBox"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 const CartScreen = () => {
+    const navigate = useNavigate()
     const { state: { cart: { cartItems } }, dispatch } = useContext(Store)
     const updateCartHandler = async (item, quantity) => {
         const { data } = await axios.get(`/api/product/${item._id}`)
-
+        
         if (data.countInStock < quantity) {
             window.alert("Sorry, Product is out of stock!");
             return;
@@ -20,6 +22,11 @@ const CartScreen = () => {
     const handleDeleteItem = (item) => {
         dispatch({ type: "DELETE_PRODUCT", payload: item })
     }
+
+    const handleCheckout = () => {
+        navigate('/signin?redirect=/shipping')
+    }
+
     return (
         <>
             <Helmet>
@@ -82,7 +89,7 @@ const CartScreen = () => {
                                 <ListGroup.Item>
                                     <div className="d-grid">
                                         <Button type="button" variant="primary" disabled={cartItems.length === 0}
-
+                                            onClick={handleCheckout}
                                         >Process to Checkout </Button>
                                     </div>
                                 </ListGroup.Item>
