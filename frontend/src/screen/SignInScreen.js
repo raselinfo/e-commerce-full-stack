@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Container, Form } from "react-bootstrap"
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation } from 'react-router-dom';
+import axios from "axios"
 const SignInScreen = () => {
     const { search } = useLocation()
     const redireactURL = new URLSearchParams(search).get('redirect')
     const redirect = redireactURL ? redireactURL : '/'
-    
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const handleOnSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const { data } = await axios.post("/api/user/signin", {
+                email, password
+            })
+            console.log(data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <section>
             <Helmet>
@@ -15,13 +29,14 @@ const SignInScreen = () => {
             <Container >
                 <div className="py-5">
                     <h1>Sign in </h1>
-                    <Form>
+                    <Form onSubmit={handleOnSubmit}>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                                 type="email"
                                 id="email"
                                 required
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Form.Group>
                         <Form.Group>
@@ -30,6 +45,7 @@ const SignInScreen = () => {
                                 type="password"
                                 id="password"
                                 required
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </Form.Group>
                         <Button type="submit" className="bnt btn-warning mt-3">Sin In</Button>

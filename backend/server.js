@@ -5,16 +5,17 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 const router = require("./router/seedProduct")
 const productRoutes = require("./router/productRoutes")
-const userRouters=require("./router/userRoutes")
+const userRouters = require("./router/userRoutes")
 const app = express()
 const URI = process.env.MONGODB_URI
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use("/api/seed", router)
 app.use("/api/product", productRoutes)
 app.use("/api/user", userRouters)
 app.use((err, req, res, next) => {
-    res.status(500).send({status:err, message: err.message })
+    res.status(500).send({ status: err, message: err.message })
 })
 
 const connectDB = async () => {
