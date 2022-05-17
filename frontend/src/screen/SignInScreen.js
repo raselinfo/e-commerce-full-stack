@@ -5,6 +5,8 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from "axios"
 import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const SignInScreen = () => {
     const { state: { userInfo }, dispatch } = useContext(Store)
     const navigate = useNavigate()
@@ -23,7 +25,9 @@ const SignInScreen = () => {
             localStorage.setItem("userInfo", JSON.stringify(data))
             navigate(redirect || "/")
         } catch (err) {
-            alert("Invalid Email or Password")
+            toast.error('🦄 Wow so easy!', {
+                theme: "colored",
+            });
         }
     }
 
@@ -33,8 +37,14 @@ const SignInScreen = () => {
         }
     }, [navigate, redirect, userInfo])
 
+
+
     return (
         <section>
+            <ToastContainer
+                position="bottom-center"
+                limit={1}
+            />
             <Helmet>
                 <title>Sign In  </title>
             </Helmet>
