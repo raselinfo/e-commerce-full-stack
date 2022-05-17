@@ -1,12 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, Container, Form } from "react-bootstrap"
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation } from 'react-router-dom';
 import axios from "axios"
 import { Store } from '../Store';
-
+import { useNavigate } from 'react-router-dom';
 const SignInScreen = () => {
-    const { state, dispatch } = useContext(Store)
+    const { state: { userInfo }, dispatch } = useContext(Store)
+    const navigate = useNavigate()
     const { search } = useLocation()
     const redireactURL = new URLSearchParams(search).get('redirect')
     const redirect = redireactURL ? redireactURL : '/'
@@ -20,10 +21,17 @@ const SignInScreen = () => {
             })
             dispatch({ type: "USER_SIGNIN", payload: data })
             localStorage.setItem("userInfo", JSON.stringify(data))
+            navigate(redirect || "/")
         } catch (err) {
-            console.log(err)
+            alert("Invalid Email or Password")
         }
     }
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate(redirect)
+        }
+    }, [navigate, redirect, userInfo])
 
     return (
         <section>

@@ -23,6 +23,9 @@ const reducer = (state, { type, payload }) => {
         case "USER_SIGNIN": {
             return { ...state, userInfo: payload }
         }
+        case "SIGN_OUT": {
+            return { ...state, userInfo: null }
+        }
         default:
             return state
     }

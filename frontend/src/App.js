@@ -4,14 +4,18 @@ import { useContext } from "react"
 import { Store } from "./Store"
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import ProductScreen from "./screen/ProductScreen";
-import { Navbar, Container, Nav, Badge } from "react-bootstrap"
+import { Navbar, Container, Nav, Badge, NavDropdown } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
 import CartScreen from "./screen/CartScreen"
 import SignInScreen from "./screen/SignInScreen"
 
 function App() {
-  const { state: { cart: { cartItems
-  } } } = useContext(Store)
+  const { state: { cart, userInfo } ,dispatch} = useContext(Store)
+  
+  const signoutHandler = () => {
+    dispatch({type:"SIGN_OUT"})
+    localStorage.removeItem("userInfo")
+  }
   return (
     <>
       {/* Home Screen */}
@@ -24,9 +28,23 @@ function App() {
               </LinkContainer>
               <Nav>
                 <Link to="/cart" className="text-white">
-                  Cart {cartItems.length > 0 && <Badge bg="danger">{cartItems.reduce((acc, item) => acc += item.quantity, 0)}</Badge>}
+                  Cart {cart.cartItems.length > 0 && <Badge bg="danger">{cart.cartItems.reduce((acc, item) => acc += item.quantity, 0)}</Badge>}
                 </Link>
               </Nav>
+              {userInfo ? (
+                <NavDropdown title={userInfo.name}>
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>User Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/orderhistory">
+                    <NavDropdown.Item>Order History</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Divider />
+                  <Link to="#signout" onClick={signoutHandler}>Sign Out</Link>
+                </NavDropdown>
+              ) : (
+                <Link to="/signin">Sign IN</Link>
+              )}
             </header>
 
 
