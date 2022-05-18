@@ -7,6 +7,7 @@ import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import handleError from '../utils';
 const SignInScreen = () => {
     const { state: { userInfo }, dispatch } = useContext(Store)
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ const SignInScreen = () => {
             localStorage.setItem("userInfo", JSON.stringify(data))
             navigate(redirect || "/")
         } catch (err) {
-            toast.error('🦄 Wow so easy!', {
+            toast.error(handleError(err), {
                 theme: "colored",
             });
         }

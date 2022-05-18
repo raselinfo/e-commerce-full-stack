@@ -8,6 +8,7 @@ import { Navbar, Container, Nav, Badge, NavDropdown } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
 import CartScreen from "./screen/CartScreen"
 import SignInScreen from "./screen/SignInScreen"
+import ShippingAddressScreen from "./screen/ShippingAddressScreen"
 
 function App() {
   const { state: { cart, userInfo } ,dispatch} = useContext(Store)
@@ -59,6 +60,7 @@ function App() {
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
+              <Route path="/shipping" element={<ShippingAddressScreen />} />
             </Routes>
           </Container>
         </main>

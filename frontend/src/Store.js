@@ -3,9 +3,11 @@ import { createContext, useReducer } from "react"
 export const Store = createContext()
 const initialState = {
     cart: {
-        cartItems: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : []
+        cartItems: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [],
+        shippingAddress: localStorage.getItem("shippingAddress") ? JSON.parse(localStorage.getItem("shippingAddress")) : {},
     },
-    userInfo: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null
+    userInfo: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null,
+    
 }
 const reducer = (state, { type, payload }) => {
     switch (type) {
@@ -25,6 +27,10 @@ const reducer = (state, { type, payload }) => {
         }
         case "SIGN_OUT": {
             return { ...state, userInfo: null }
+        }
+        case "SAVE_SHIPPING_ADDRESS": {
+            return { ...state, cart: { ...state.cart, shippingAddress: payload
+} }
         }
         default:
             return state
