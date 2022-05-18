@@ -23,7 +23,7 @@ const ShippingAddressScreen = () => {
 
     useEffect(() => {
         if (!userInfo) {
-            navigate("/signin?redirect=shipping")
+            navigate("/signin?redirect=/shipping")
         }
     }, [userInfo, navigate])
     return (
