@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
+import CheckOutSteps from '../components/CheckOutSteps';
 
 const ShippingAddressScreen = () => {
     const { state: { cart: { shippingAddress }, userInfo }, dispatch } = useContext(Store)
@@ -31,7 +32,7 @@ const ShippingAddressScreen = () => {
             <Helmet>
                 <title>Shipping Address</title>
             </Helmet>
-
+            <CheckOutSteps step1 step2/>
             <div className="container small-container">
                 <h1 className="my-3">Shipping Address</h1>
                 <Form onSubmit={submitHandler}>

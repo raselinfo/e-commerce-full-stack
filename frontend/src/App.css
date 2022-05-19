@@ -1,6 +1,12 @@
-i{
-  color:#ca9908;
+i {
+  color: #ca9908;
 }
-.reviews{
-  color:#ca9908;
+
+.reviews {
+  color: #ca9908;
+}
+
+.checkout_steps>.active {
+  border-bottom: 0.2rem solid #f08000;
+  color        : #f08000;
 }
