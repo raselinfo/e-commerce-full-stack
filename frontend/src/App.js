@@ -10,6 +10,8 @@ import CartScreen from "./screen/CartScreen"
 import SignInScreen from "./screen/SignInScreen"
 import ShippingAddressScreen from "./screen/ShippingAddressScreen"
 import SignUpScreen from "./screen/SignUpScreen"
+import PaymentMethodScreen from "./screen/PaymentMethodScreen"
+import PlaceOrderScreen from "./screen/PlaceOrderScreen"
 
 function App() {
   const { state: { cart, userInfo } ,dispatch} = useContext(Store)
@@ -18,6 +20,7 @@ function App() {
     dispatch({type:"SIGN_OUT"})
     localStorage.removeItem("userInfo")
     localStorage.removeItem("shippingAddress")
+    localStorage.removeItem("paymentMethod")
   }
   return (
     <>
@@ -64,6 +67,8 @@ function App() {
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
+              <Route path="/payment" element={<PaymentMethodScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
             </Routes>
           </Container>
         </main>
