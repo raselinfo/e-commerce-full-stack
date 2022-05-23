@@ -7,6 +7,19 @@ import { Link, useNavigate } from "react-router-dom"
 const PlaceOrderScreen = () => {
     const { state: { cart }, dispatch } = useContext(Store)
     const navigate = useNavigate()
+
+    const round = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
+    // Items Price
+    cart.itemsPrice = round(
+        cart.cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0)
+    )
+    // Shipping Price . shipping price 0 if itemsPrice getter than 100
+    cart.shippingPrice = cart.itemsPrice > 100 ? round(0) : round(10)
+    // Tax Price (50%)
+    cart.taxPrice = round(0.15 * cart.itemsPrice)
+    // Total Price
+    cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice
+
     const placeOrderHandle = () => {
         console.log("hello");
     }
@@ -77,19 +90,19 @@ const PlaceOrderScreen = () => {
                                 </ListGroup.Item>
                                 <ListGroup.Item>
                                     <Row>
-                                        <Col>Items</Col>
+                                        <Col>Shipping</Col>
                                         <Col>${cart.shippingPrice.toFixed(2)}</Col>
                                     </Row>
                                 </ListGroup.Item>
                                 <ListGroup.Item>
                                     <Row>
-                                        <Col>Items</Col>
-                                        <Col>${cart.textPrice.toFixed(2)}</Col>
+                                        <Col>Tax</Col>
+                                        <Col>${cart.taxPrice.toFixed(2)}</Col>
                                     </Row>
                                 </ListGroup.Item>
                                 <ListGroup.Item>
                                     <Row>
-                                        <Col>Items</Col>
+                                        <Col>Order Total</Col>
                                         <Col>${cart.totalPrice.toFixed(2)}</Col>
                                     </Row>
                                 </ListGroup.Item>
