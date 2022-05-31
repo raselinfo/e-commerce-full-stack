@@ -34,7 +34,7 @@ const orderSchema = new Schema(
             email_address: String,
         },
         // Prices
-        itemPrice: { type: Number, required: true },
+        itemsPrice: { type: Number, required: true },
         shippingPrice: { type: Number, required: true },
         taxPrice: { type: Number, required: true },
         totalPrice: { type: Number, required: true },

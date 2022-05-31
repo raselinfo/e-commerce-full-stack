@@ -59,10 +59,11 @@ const PlaceOrderScreen = () => {
                         authorization: `Bearer ${userInfo.token}`
                     }
                 })
-            
+
 
             dispatch({ type: "SUCCESS" })
             localStorage.removeItem('cartItems');
+            ctxDispatch({ type: "CART_CLEAR" })
             navigate(`/order/${data.order._id}`);
         } catch (err) {
             dispatch({ type: "FAIL" })

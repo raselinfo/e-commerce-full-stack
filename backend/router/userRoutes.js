@@ -2,7 +2,7 @@ const router = require("express").Router()
 const asyncHandler = require("express-async-handler")
 const User = require("../model/User")
 var bcrypt = require('bcryptjs');
-const generateToken = require("../utils");
+const {generateToken} = require("../utils");
 
 router.post("/signin", asyncHandler(async (req, res) => {
     const { email, password } = req.body
