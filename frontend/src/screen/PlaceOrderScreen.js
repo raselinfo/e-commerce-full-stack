@@ -41,6 +41,7 @@ const PlaceOrderScreen = () => {
 
     const placeOrderHandle = async () => {
         dispatch({ type: "REQUEST" })
+        console.log("hel")
         try {
             let { data } = await axios.post('/api/orders',
                 {
@@ -58,6 +59,8 @@ const PlaceOrderScreen = () => {
                         authorization: `Bearer ${userInfo.token}`
                     }
                 })
+            
+
             dispatch({ type: "SUCCESS" })
             localStorage.removeItem('cartItems');
             navigate(`/order/${data.order._id}`);
@@ -89,6 +92,7 @@ const PlaceOrderScreen = () => {
             <CheckOutSteps step1 step2 step3 step4 />
             <Row>
                 <Col md={8}>
+                    <h2 className='mt-3'>Preview Order</h2>
                     <Card>
                         <Card.Body>
                             <Card.Title>Shipping</Card.Title>
