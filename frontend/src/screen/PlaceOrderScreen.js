@@ -41,7 +41,6 @@ const PlaceOrderScreen = () => {
 
     const placeOrderHandle = async () => {
         dispatch({ type: "REQUEST" })
-        console.log("hel")
         try {
             let { data } = await axios.post('/api/orders',
                 {

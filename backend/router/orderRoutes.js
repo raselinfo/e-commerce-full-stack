@@ -25,4 +25,13 @@ router.post("/", isAuth, expressAsyncHandler(async (req, res) => {
 
 }))
 
+router.get("/:id", isAuth, expressAsyncHandler(async (req, res) => {
+    const { id } = req.params
+    const order = await Order.findById(id)
+    if(order){
+       return res.send(order)
+    }
+    return res.status(404).send({message:"Order Not found"})
+}))
+
 module.exports = router
