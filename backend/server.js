@@ -12,6 +12,9 @@ const URI = process.env.MONGODB_URI
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.get("/api/key/paypal", (req, res) => {
+    res.send(process.env.PAYPAL_CLIENT_ID || 'sb')
+})
 app.use("/api/seed", router)
 app.use("/api/product", productRoutes)
 app.use("/api/user", userRouters)
