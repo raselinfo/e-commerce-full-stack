@@ -12,12 +12,13 @@ import ShippingAddressScreen from "./screen/ShippingAddressScreen"
 import SignUpScreen from "./screen/SignUpScreen"
 import PaymentMethodScreen from "./screen/PaymentMethodScreen"
 import PlaceOrderScreen from "./screen/PlaceOrderScreen"
+import OrderScreen from "./screen/OrderScreen"
 
 function App() {
-  const { state: { cart, userInfo } ,dispatch} = useContext(Store)
-  
+  const { state: { cart, userInfo }, dispatch } = useContext(Store)
+
   const signoutHandler = () => {
-    dispatch({type:"SIGN_OUT"})
+    dispatch({ type: "SIGN_OUT" })
     localStorage.removeItem("userInfo")
     localStorage.removeItem("shippingAddress")
     localStorage.removeItem("paymentMethod")
@@ -69,6 +70,7 @@ function App() {
               <Route path="/signup" element={<SignUpScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
+              <Route path="/order:id" element={<OrderScreen />} />
             </Routes>
           </Container>
         </main>
