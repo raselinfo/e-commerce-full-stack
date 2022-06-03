@@ -7,6 +7,7 @@ const router = require("./router/seedProduct")
 const productRoutes = require("./router/productRoutes")
 const userRouters = require("./router/userRoutes")
 const orderRoutes = require("./router/orderRoutes")
+const { isAuth } = require("./utils")
 const app = express()
 const URI = process.env.MONGODB_URI
 app.use(cors())
@@ -20,7 +21,7 @@ app.use("/api/orders", orderRoutes)
 app.use((err, req, res, next) => {
     res.status(500).send({ status: err, message: err.message })
 })
-app.get("/api/key/paypal", (req, res) => {
+app.get("/api/key/paypal", isAuth, (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb')
 })
 const connectDB = async () => {

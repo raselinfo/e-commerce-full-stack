@@ -28,10 +28,28 @@ router.post("/", isAuth, expressAsyncHandler(async (req, res) => {
 router.get("/:id", isAuth, expressAsyncHandler(async (req, res) => {
     const { id } = req.params
     const order = await Order.findById(id)
-    if(order){
-       return res.send(order)
+    if (order) {
+        return res.send(order)
     }
-    return res.status(404).send({message:"Order Not found"})
+    return res.status(404).send({ message: "Order Not found" })
+}))
+
+router.put("/:id/pay", isAuth, expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+    if (order) {
+        order.isPaid = true
+        order.paidAt = Date.now()
+        order.paymentResult = {
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.email_address
+        }
+        const updatedOrder = await order.save()
+        res.send({ message: "Order Paid", order: updatedOrder })
+    }else{
+        res.status(404).send({message:"Order Not found"})
+    }
 }))
 
 module.exports = router
