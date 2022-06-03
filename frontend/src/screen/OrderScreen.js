@@ -7,6 +7,7 @@ import { Store } from '../Store';
 import axios from "axios"
 import handleError from "../utils"
 import { Card, Col, ListGroup, Row } from 'react-bootstrap';
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js"
 const initialValue = {
     loading: true,
     error: "",
@@ -30,6 +31,7 @@ const OrderScreen = () => {
     const { state: { userInfo
     }, dispatch: ctxDispatch } = useContext(Store)
     const navigate = useNavigate()
+    const [{ options }, paypalDispatch] = usePayPalScriptReducer()
     useEffect(() => {
         if (!userInfo) {
             navigate(`/signin?redirect=/order/${id}`)
@@ -51,6 +53,15 @@ const OrderScreen = () => {
         }
         if (!order._id || (order._id && order._id !== id)) {
             fetchOrder()
+        } else {
+            const loadPaypalScript = async () => {
+                const { data: clientId } = await axios.get('/api/key/paypal', {
+                    headers: {
+                        authorization: `Bearer ${userInfo.token}`
+                    }
+                })
+            }
+            loadPaypalScript()
         }
     }, [userInfo, order, navigate])
 
