@@ -6,7 +6,7 @@ import MessageBox from "../components/MessageBox"
 import { Store } from '../Store';
 import axios from "axios"
 import handleError from "../utils"
-import { Card, Col, ListGroup, Row } from 'react-bootstrap';
+import { Card, Col, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js"
 const initialValue = {
     loading: true,
@@ -31,7 +31,14 @@ const OrderScreen = () => {
     const { state: { userInfo
     }, dispatch: ctxDispatch } = useContext(Store)
     const navigate = useNavigate()
-    const [{ options }, paypalDispatch] = usePayPalScriptReducer()
+    const [{ isPending }, paypalDispatch] = usePayPalScriptReducer()
+    const createOrder = (data, action) => {
+        return action.order.create({
+            purchase_units: [{
+                amount: { value: order.totalPrice }
+            }]
+        }).then((orderId)=>orderId)
+    }
     useEffect(() => {
         if (!userInfo) {
             navigate(`/signin?redirect=/order/${id}`)
@@ -60,10 +67,21 @@ const OrderScreen = () => {
                         authorization: `Bearer ${userInfo.token}`
                     }
                 })
+                paypalDispatch({
+                    type: "resetOptions",
+                    value: {
+                        'client-id': clientId,
+                        currency: "USD"
+                    }
+                })
+                paypalDispatch({
+                    type: "setLoadingStatus",
+                    value: "pending"
+                })
             }
             loadPaypalScript()
         }
-    }, [userInfo, order, navigate])
+    }, [userInfo, id, order, navigate, paypalDispatch])
 
 
     return (
@@ -166,6 +184,27 @@ const OrderScreen = () => {
                                                     <Col>{order.totalPrice.toFixed(2)}</Col>
                                                 </Row>
                                             </ListGroup.Item>
+                                            {
+                                                !order.isPaid && (
+                                                    <ListGroup.Item>
+                                                        {
+                                                            isPending ? (
+                                                                <Loading />
+                                                            ) : (
+                                                                <div>
+                                                                    <PayPalButtons
+                                                                        createOrder={createOrder}
+                                                                        onApprove={onApprove}
+                                                                        onError={onError}
+                                                                    >
+
+                                                                    </PayPalButtons>
+                                                                </div>
+                                                            )
+                                                        }
+                                                    </ListGroup.Item>
+                                                )
+                                            }
                                         </ListGroup>
                                     </Card.Body>
                                 </Card>
