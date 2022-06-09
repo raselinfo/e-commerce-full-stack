@@ -15,7 +15,6 @@ const SignInScreen = () => {
     const redirect = redireactURL ? redireactURL : '/'
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    console.log(redirect)
     const handleOnSubmit = async (e) => {
         e.preventDefault()
         try {

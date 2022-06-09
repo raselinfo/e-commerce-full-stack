@@ -13,6 +13,7 @@ import SignUpScreen from "./screen/SignUpScreen"
 import PaymentMethodScreen from "./screen/PaymentMethodScreen"
 import PlaceOrderScreen from "./screen/PlaceOrderScreen"
 import OrderScreen from "./screen/OrderScreen"
+
 function App() {
   const { state: { cart, userInfo }, dispatch } = useContext(Store)
 

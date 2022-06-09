@@ -18,6 +18,8 @@ const isAuth = (req, res, next) => {
             req.user = decode
             next()
         })
+    }else{
+        return res.status(404).send({ message: "Token Not found" })
     }
 }
 
