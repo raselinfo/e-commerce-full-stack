@@ -14,11 +14,10 @@ const isAuth = (req, res, next) => {
             if (err) {
                 return res.status(401).send({ message: "Invalid Token" })
             }
-            console.log(decode)
             req.user = decode
             next()
         })
-    }else{
+    } else {
         return res.status(404).send({ message: "Token Not found" })
     }
 }

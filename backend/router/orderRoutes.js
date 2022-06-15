@@ -35,6 +35,7 @@ router.get("/:id", isAuth, expressAsyncHandler(async (req, res) => {
 }))
 
 router.put("/:id/pay", isAuth, expressAsyncHandler(async (req, res) => {
+    console.log("Hello")
     const order = await Order.findById(req.params.id)
     if (order) {
         order.isPaid = true
