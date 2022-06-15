@@ -24,6 +24,12 @@ router.post("/", isAuth, expressAsyncHandler(async (req, res) => {
     }
 
 }))
+router.get("/mine", isAuth, expressAsyncHandler(async (req, res) => {
+    const { _id } = req.user
+    const orders = await Order.find({ user: _id })
+    res.send(orders)
+
+}))
 
 router.get("/:id", isAuth, expressAsyncHandler(async (req, res) => {
     const { id } = req.params
@@ -48,8 +54,8 @@ router.put("/:id/pay", isAuth, expressAsyncHandler(async (req, res) => {
         }
         const updatedOrder = await order.save()
         res.send({ message: "Order Paid", order: updatedOrder })
-    }else{
-        res.status(404).send({message:"Order Not found"})
+    } else {
+        res.status(404).send({ message: "Order Not found" })
     }
 }))
 
