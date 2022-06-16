@@ -34,7 +34,6 @@ router.post("/signup", asyncHandler(async (req, res) => {
         })
     } catch (err) {
         throw new Error(err.message)
-        return
     }
 
 }))
