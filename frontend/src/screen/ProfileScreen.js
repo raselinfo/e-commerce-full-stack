@@ -38,7 +38,7 @@ const ProfileScreen = () => {
         e.preventDefault();
         try {
             dispatch({ type: "REQUEST" })
-            const { data } = await axios.put('/api/users/profile', {
+            const { data } = await axios.put('/api/user/profile', {
                 name, email, password
             }, {
                 headers: {

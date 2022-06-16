@@ -2,7 +2,7 @@ import HomeScreen from "./screen/HomeScreen"
 import "./App.css"
 import { useContext } from "react"
 import { Store } from "./Store"
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom"
 import ProductScreen from "./screen/ProductScreen";
 import { Navbar, Container, Nav, Badge, NavDropdown } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
@@ -24,6 +24,7 @@ function App() {
     localStorage.removeItem("userInfo")
     localStorage.removeItem("shippingAddress")
     localStorage.removeItem("paymentMethod")
+
   }
   return (
     <>
@@ -49,7 +50,7 @@ function App() {
                     <NavDropdown.Item>Order History</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Divider />
-                  <Link to="#signout" onClick={signoutHandler}>Sign Out</Link>
+                  <Link to="/signin" onClick={signoutHandler}>Sign Out</Link>
                 </NavDropdown>
               ) : (
                 <Link to="/signin">Sign IN</Link>
