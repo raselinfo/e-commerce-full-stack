@@ -12,6 +12,7 @@ const orderRoutes = require("./router/orderRoutes")
 const { isAuth } = require("./utils")
 const app = express()
 const URI = process.env.MONGODB_URI
+const PORT = process.env.PORT || 4000
 app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
@@ -44,8 +45,8 @@ const connectDB = async () => {
             useUnifiedTopology: true,
         });
         console.log(`mongodb connected : ${conn.connection.host}`);
-        app.listen(4000, () => {
-            console.log(`http://localhost:4000`)
+        app.listen(PORT, () => {
+            console.log(`http://localhost:${PORT}`)
         })
     } catch (error) {
         console.error(`Error`);
