@@ -19,7 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 __dirname = path.resolve()
 
-app.use(express.static(path.join(__dirname, "/frontend/build")))
+app.use(express.static(path.join(__dirname, "../frontend/build")))
 app.use("/api/seed", router)
 app.use("/api/product", productRoutes)
 app.use("/api/user", userRouters)
@@ -36,7 +36,7 @@ app.get("/api/key/paypal", isAuth, (req, res) => {
 })
 // Sever the html file from the build folder
 app.use("*", (req, res) => {
-    res.send(path.join(__dirname, "/frontend/build/index.html"))
+    res.send(path.join(__dirname, "../frontend/build/index.html"))
 })
 const connectDB = async () => {
     try {
