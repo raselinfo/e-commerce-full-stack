@@ -16,14 +16,21 @@ router.get("/slug/:slug", async (req, res) => {
 
 })
 
+router.get("/categories", async (req, res) => {
+    const categories = await Product.find().distinct('category')
+    res.send(categories)
+})
+
 router.get("/:id", async (req, res) => {
-    const { id } = req.params  
-    const product =await Product.findById(id)
+    const { id } = req.params
+    const product = await Product.findById(id)
     if (product) {
         res.send(product)
     } else {
         res.status(404).json({ message: "Data Not found!" })
     }
 })
+
+
 
 module.exports = router
