@@ -1,12 +1,16 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from "axios"
 import handleError from '../utils';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet-async';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
+import Loading from '../components/Loading';
+import MessageBox from '../components/MessageBox';
+import Product from '../components/Product';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const prices = [
     {
@@ -44,8 +48,10 @@ export const ratings = [
     },
 ];
 const initialState = {
-    loading: true,
-    error: ""
+    loading: false,
+    error: "",
+    products: [],
+    countProducts: 0
 }
 const reducer = (state, { type, payload }) => {
     switch (type) {
@@ -67,7 +73,7 @@ const SearchScreen = () => {
     const rating = searchParams.get("rating") ?? "all"
     const order = searchParams.get("order") ?? "newest"
     const page = searchParams.get("page") || 1
-
+    const navigate = useNavigate()
     const [{ loading, error, products, pages, countProducts }, dispatch] = useReducer(reducer, initialState)
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -154,12 +160,66 @@ const SearchScreen = () => {
                             {ratings.map(r => {
                                 return <li key={r.name}>
                                     <Link to={r.rating === rating ? "fw-bold" : ""} to={getFilterUrl({ rating: r.rating })}>
-                                        <Rating numReviews={r.name} rating={r.raging} />
+                                        <Rating caption={r.name} rating={r.raging} />
                                     </Link>
                                 </li>
                             })}
+                            <li >
+                                <Link to={"all" === rating ? "fw-bold" : ""} to={getFilterUrl({ rating: "all" })}>
+                                    <Rating caption={" & up"} rating={0} />
+                                </Link>
+                            </li>
                         </ul>
                     </div>
+                </Col>
+                <Col md={9}>
+                    {loading ? <Loading /> : error ? <MessageBox /> : (
+                        <>
+                            <Row>
+                                <Col md={6}>
+                                    <div>
+                                        {countProducts === 0 ? "No" : countProducts} Result
+                                        {query !== "all" && " : " + query}
+                                        {category !== "all" && " : " + category}
+                                        {price !== "all" && " : " + price}
+                                        {rating !== "all" && " : " + rating}
+                                        {
+                                            (query !== "all" ||
+                                                category !== "all" ||
+                                                price !== "all" ||
+                                                rating !== "all") ? <Button onClick={() => navigate("/search")}>
+                                                <i className='fas fa-times-circle'></i>
+
+                                            </Button> : null
+                                        }
+                                    </div>
+                                </Col>
+                                <Col className="text-end">
+                                    <select value={order} onChange={(e) => navigate(getFilterUrl({ order: e.target.value }))}>
+                                        <option value="newest">Newest Arrivals</option>
+                                        <option value="lowest">Price: Log to High</option>
+                                        <option value="highest">Price: High to Log</option>
+                                        <option value="toprated">Avg. Customer Reviews</option>
+                                    </select>
+                                </Col>
+                            </Row>
+                            {products.length === 0 && <MessageBox > No Product Found</MessageBox>}
+                            <Row>
+                                {products.map(product => {
+                                    return <Col sm={6} lg={4} className="mb-3" key={product._id}>
+                                        <Product product={product} />
+                                    </Col>
+                                })}
+                            </Row>
+                            <div>
+                                {[...Array(pages).keys()].map(x => {
+                                    return <LinkContainer key={x + 1} to={getFilterUrl({ page: x + 1 })}>
+                                        
+                                    </LinkContainer>
+                                })}
+                            </div>
+                        </>
+                    )}
                 </Col>
             </Row>
         </div >
