@@ -51,7 +51,8 @@ const initialState = {
     loading: false,
     error: "",
     products: [],
-    countProducts: 0
+    countProducts: 0,
+    pages:1
 }
 const reducer = (state, { type, payload }) => {
     switch (type) {
@@ -75,21 +76,21 @@ const SearchScreen = () => {
     const page = searchParams.get("page") || 1
     const navigate = useNavigate()
     const [{ loading, error, products, pages, countProducts }, dispatch] = useReducer(reducer, initialState)
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const { data } = await axios.get(`/api/product/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`)
-    //             dispatch({ type: "SUCCESS", payload: data })
-    //             console.log(data)
-    //         } catch (err) {
-    //             dispatch({
-    //                 type: "FAIL",
-    //                 payload: handleError(err)
-    //             })
-    //         }
-    //     }
-    //     fetchData()
-    // }, [page, query, category, price, rating, order])
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(`/api/product/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`)
+                dispatch({ type: "SUCCESS", payload: data })
+                console.log(data)
+            } catch (err) {
+                dispatch({
+                    type: "FAIL",
+                    payload: handleError(err)
+                })
+            }
+        }
+        fetchData()
+    }, [page, query, category, price, rating, order])
 
     const [categories, setCategories] = useState([]);
     useEffect(() => {
@@ -214,7 +215,7 @@ const SearchScreen = () => {
                             <div>
                                 {[...Array(pages).keys()].map(x => {
                                     return <LinkContainer key={x + 1} to={getFilterUrl({ page: x + 1 })}>
-                                        
+                                        <Button className={(Number(page) === x + 1) ? "fw-block" : ""} variant="light">{x + 1}</Button>
                                     </LinkContainer>
                                 })}
                             </div>

@@ -5,6 +5,8 @@ router.get("/", async (req, res) => {
     const products = await Product.find()
     res.send(products)
 })
+
+
 router.get("/slug/:slug", async (req, res) => {
     const product = await Product.findOne({ slug: req.params.slug })
 
@@ -21,18 +23,20 @@ router.get("/categories", async (req, res) => {
     res.send(categories)
 })
 
+router.get("/search", (req, res) => {
+    
+    
+})
 router.get("/:id", async (req, res) => {
     const { id } = req.params
     const product = await Product.findById(id)
     if (product) {
-        res.send(product)
+        return res.send(product)
     } else {
         res.status(404).json({ message: "Data Not found!" })
     }
 })
 
-router.get("/search",(req,res)=>{
-    console.log("hello world")
-})
+
 
 module.exports = router
