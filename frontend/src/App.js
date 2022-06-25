@@ -37,7 +37,6 @@ function App() {
       try {
         const { data } = await axios.get('/api/product/categories')
         setCategories(data)
-        console.log("data", data)
       } catch (err) {
         toast.error(handleError(err))
       }

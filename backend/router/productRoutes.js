@@ -31,6 +31,8 @@ router.get("/:id", async (req, res) => {
     }
 })
 
-
+router.get("/search",(req,res)=>{
+    console.log("hello world")
+})
 
 module.exports = router
