@@ -24,11 +24,19 @@ There are three stack holder
 - Category => ID (Shirt)
 - Stock => String (20)
 - Brand => String (NX)
-- ratingReviews => ID (4.5 , Good)
+- reviews => ID (4.5 , Good)
 - CreatedAt => Date (10/10/2022)
 - UpdatedAt => Date (11/10/2022)
 
 ### Category
+
 - Name => String (Shirt)
+- CreatedAt => Date (10/10/2022)
+- UpdatedAt => Date (11/10/2022)
+
+### Review
+
+- Rating => Number (4.5)
+- text => String (Good Shirt)
 - CreatedAt => Date (10/10/2022)
 - UpdatedAt => Date (11/10/2022)
