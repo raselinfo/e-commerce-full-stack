@@ -37,6 +37,6 @@ There are three stack holder
 ### Review
 
 - Rating => Number (4.5)
-- review => String (Good Shirt)
+- text => String (Good Shirt)
 - CreatedAt => Date (10/10/2022)
 - UpdatedAt => Date (11/10/2022)
