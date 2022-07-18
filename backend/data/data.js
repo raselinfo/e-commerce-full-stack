@@ -1,0 +1,60 @@
+const data = {
+  products: [
+    {
+      name: "Nike Slim shirt",
+      slug: "nike-slim-shirt",
+      price: 50,
+      description: "high quality shirt",
+      image: "/images/p1.jpg",
+      category: "Shirt",
+      stock: 20,
+      brand: "Nike",
+      reviews: {
+        rating: 4.5,
+        text: "Goode Product",
+      },
+    },
+    {
+      name: "Adidas Fit Shirt",
+      slug: "adidas-fit-shir",
+      price: 250,
+      description: "high quality product",
+      image: "/images/p2.jpg",
+      category: "Shirt",
+      stock: 0,
+      brand: "Adidas",
+      reviews: {
+        rating: 4.0,
+        text: "Goode Product",
+      },
+    },
+    {
+      name: "Nike Slim Pant",
+      slug: "nike-slim-pant",
+      price: 25,
+      description: "high quality product",
+      image: "/images/p3.jpg",
+      category: "Pants",
+      stock: 15,
+      brand: "Adidas",
+      reviews: {
+        rating: 3.5,
+        text: "Goode Product",
+      },
+    },
+    {
+      name: "Puma Fit Pant",
+      slug: "puma-fit-pant",
+      price: 65,
+      description: "high quality product",
+      image: "/images/p4.jpg",
+      category: "Pants",
+      stock: 5,
+      brand: "Puma",
+      reviews: {
+        rating: 3.0,
+        text: "Goode Product",
+      },
+    },
+  ],
+};
