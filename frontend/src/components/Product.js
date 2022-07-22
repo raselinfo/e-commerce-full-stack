@@ -17,7 +17,7 @@ const Product = ({ product: { image, name, price, reviews, slug, stock } }) => {
       />
       <Link
         to={`/product/${slug}`}
-        className="underline text-blue-500 text-3xl font-bold mb-3 block"
+        className="underline text-blue-500 lg:text-3xl text-2xl font-bold mb-3 block"
       >
         {name}
       </Link>

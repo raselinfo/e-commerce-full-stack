@@ -1,4 +1,5 @@
 import { useEffect, useReducer } from "react";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "../components/ErrorMessage";
 import Loading from "../components/Loading";
@@ -53,13 +54,16 @@ const ProductDetails = () => {
     <ErrorMessage error={error} />
   ) : (
     <div className="container mx-auto">
+      <Helmet>
+        <title>{name}</title>
+      </Helmet>
       <div className="grid md:grid-cols-2 justify-center mt-12">
         <div>
           <img className="w-full" src={image} alt={name} />
         </div>
-        <div className="grid md:grid-cols-2 sm:grid-cols-1">
+        <div className="grid lg:grid-cols-2 sm:grid-cols-1">
           <div className="left-side">
-            <h3 className="text-5xl font-bold mb-5">{name}</h3>
+            <h3 className="md:text-5xl text-3xl font-bold mb-5">{name}</h3>
             <hr />
             <div className="my-3">
               <Rating reviews={reviews} />
@@ -69,7 +73,7 @@ const ProductDetails = () => {
             <hr className="mb-3" />
             <p className="font-bold">Description : {description}</p>
           </div>
-          <div className="right-side shadow-lg p-5 md:h-1/2">
+          <div className="right-side shadow-lg p-5 lg:h-2/6 h-6/6">
             <div>
               <div className="price font-bold text-left my-5">
                 <span>
@@ -86,7 +90,12 @@ const ProductDetails = () => {
                   ) : (
                     <>
                       <span>Status : </span>
-                      <span>Out of stock</span>
+                      <button
+                        disabled
+                        className="bg-red-500 p-1 mt-1 md:px-3 md:py-2 text-white rounded-lg"
+                      >
+                        Out of stock
+                      </button>
                     </>
                   )}
                 </span>

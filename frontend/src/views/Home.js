@@ -4,6 +4,7 @@ import axios from "../utils/axios";
 import formateError from "../utils/formateError";
 import ErrorMessage from "../components/ErrorMessage";
 import Loading from "../components/Loading";
+import Helmet from "react-helmet";
 const initialData = {
   loading: false,
   error: "",
@@ -44,17 +45,20 @@ const Home = () => {
   }, []);
   return (
     <section className="relative">
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       {loading ? (
         <Loading loading={loading} />
       ) : error ? (
         <ErrorMessage error={error} />
       ) : (
         <div className="md:container md:mx-auto">
-          <h1 className="text-5xl font-bold my-12">
+          <h1 className="md:text-5xl sm:text-4xl text-3xl font-bold my-12">
             <span className="text-yellow-500">Featured </span>
             Products 😃
           </h1>
-          <div className="gap-5  grid md:grid-cols-4 sm:grid-cols-2">
+          <div className="gap-5  grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1">
             {products.map((product) => {
               return <Product key={product._id} product={product} />;
             })}
