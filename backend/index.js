@@ -1,9 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 const logger = require("./utils/logger");
 const connectDB = require("./db/db");
 const errorMiddleware = require("./middleware/error/errorMiddleware.js");
 const { PORT, MONGODB_URI } = require("./config");
 const app = express();
+// Todo: Cors Install
+app.use(cors());
 // Todo: Logger
 logger(app);
 
