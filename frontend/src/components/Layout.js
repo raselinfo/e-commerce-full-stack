@@ -3,9 +3,9 @@ import Navbar from "./Navbar";
 const Layout = () => {
   const pathname = window.location.pathname;
   if (!(pathname.includes("/admin") || pathname.includes("/dashboard"))) {
-    return <Navbar />;
+    return <Navbar />
   }
-  return <div></div>;
+  return <div>Admin Navbar</div>
 };
 
 export default Layout;

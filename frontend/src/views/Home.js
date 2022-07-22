@@ -49,10 +49,16 @@ const Home = () => {
       ) : error ? (
         <ErrorMessage error={error} />
       ) : (
-        <div className="md:container md:mx-auto gap-5  grid md:grid-cols-4 sm:grid-cols-2">
-          {products.map((product) => {
-            return <Product key={product._id} product={product} />;
-          })}
+        <div className="md:container md:mx-auto">
+          <h1 className="text-5xl font-bold my-12">
+            <span className="text-yellow-500">Featured </span>
+            Products 😃
+          </h1>
+          <div className="gap-5  grid md:grid-cols-4 sm:grid-cols-2">
+            {products.map((product) => {
+              return <Product key={product._id} product={product} />;
+            })}
+          </div>
         </div>
       )}
     </section>

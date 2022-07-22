@@ -8,20 +8,19 @@ exports.seedProductController = async (req, res, next) => {
   try {
     await Product.deleteMany({});
     const categories = await Category.find();
-    const reviews = await Review.find();
 
-    const products = data.products.map((product) => {
+    const products = data.products.map(async (product) => {
+      const reviews = await Review.find({ product: product._id });
+
       const index = Math.floor(Math.random() * categories.length);
       const randomCategory = categories[index];
-      const randomReviews = reviews[index];
       return {
         ...product,
         category: randomCategory._id,
-        reviews: randomReviews._id,
+        reviews: reviews,
       };
     });
-
-    const seedProducts = await Product.insertMany(products);
+    const seedProducts = await Product.insertMany(await Promise.all(products));
     res.status(201).json({ message: "Success", data: seedProducts });
   } catch (err) {
     next(CustomError.severError(err));

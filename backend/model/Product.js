@@ -8,7 +8,7 @@ const productSchema = new Schema({
   category: { type: Schema.Types.ObjectId, ref: "Category" },
   stock: { type: Number, required: [true, "Stock is required"] },
   brand: { type: String, required: [true, "Brand is required"] },
-  reviews: { type: Schema.Types.ObjectId, ref: "Review" },
+  reviews: { type: [Schema.Types.ObjectId], ref: "Review" },
 });
 
 module.exports = model("Product", productSchema);

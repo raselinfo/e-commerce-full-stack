@@ -12,6 +12,7 @@ const data = {
       stock: 20,
       brand: "Nike",
       reviews: "review Id",
+      _id: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f0"),
     },
     {
       name: "Adidas Fit Shirt",
@@ -24,6 +25,7 @@ const data = {
       stock: 0,
       brand: "Adidas",
       reviews: "review Id",
+      _id: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f1"),
     },
     {
       name: "Nike Slim Pant",
@@ -36,6 +38,7 @@ const data = {
       stock: 15,
       brand: "Adidas",
       reviews: "review Id",
+      _id: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f2"),
     },
     {
       name: "Puma Fit Pant",
@@ -48,6 +51,7 @@ const data = {
       stock: 5,
       brand: "Puma",
       reviews: "review Id",
+      _id: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f3"),
     },
   ],
   category: [
@@ -62,18 +66,27 @@ const data = {
     {
       rating: 4.5,
       text: "Good Product",
+      product: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f0"),
+    },
+    {
+      rating: 4.5,
+      text: "Good Product",
+      product: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f0"),
     },
     {
       rating: 3.5,
       text: "Good Product",
+      product: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f1"),
     },
     {
       rating: 3.0,
       text: "Not Bad Product",
+      product: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f2"),
     },
     {
       rating: 2.5,
       text: "Bad Product",
+      product: mongoose.Types.ObjectId("62dac4f2cb81ebf743aa77f3"),
     },
   ],
 };
