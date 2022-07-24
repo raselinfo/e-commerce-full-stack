@@ -2,9 +2,10 @@ import React, { useEffect, useReducer } from "react";
 import Product from "../components/Product";
 import axios from "../utils/axios";
 import formateError from "../utils/formateError";
-import ErrorMessage from "../components/ErrorMessage";
 import Loading from "../components/Loading";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet-async";
+
+import MessageBox from "../components/MessageBox";
 const initialData = {
   loading: false,
   error: "",
@@ -33,10 +34,8 @@ const Home = () => {
     const fetchProducts = async () => {
       dispatch({ type: "REQUEST" });
       try {
-        const {
-          data: { data },
-        } = await axios.get("/products");
-        dispatch({ type: "SUCCESS", payload: data });
+        const { data } = await axios.get("/products");
+        dispatch({ type: "SUCCESS", payload: data.data });
       } catch (err) {
         dispatch({ type: "FAIL", payload: formateError(err) });
       }
@@ -51,7 +50,7 @@ const Home = () => {
       {loading ? (
         <Loading loading={loading} />
       ) : error ? (
-        <ErrorMessage error={error} />
+        <MessageBox error={error} />
       ) : (
         <div className="md:container md:mx-auto">
           <h1 className="md:text-5xl sm:text-4xl text-3xl font-bold my-12">

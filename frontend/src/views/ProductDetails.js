@@ -1,11 +1,11 @@
 import { useEffect, useReducer } from "react";
-import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
-import ErrorMessage from "../components/ErrorMessage";
+import ErrorMessage from "../components/MessageBox";
 import Loading from "../components/Loading";
 import Rating from "../components/Rating";
 import axios from "../utils/axios";
 import formateError from "../utils/formateError";
+import { Helmet } from "react-helmet-async";
 const initialState = {
   loading: false,
   error: "",
@@ -84,9 +84,20 @@ const ProductDetails = () => {
               <div className="font-bold">
                 <span>
                   {stock > 0 ? (
-                    <button className="bg-yellow-500 py-3 px-4 rounded-lg">
-                      Add To Cart
-                    </button>
+                    <>
+                      <div>
+                        <span>Status : </span>
+                        <button
+                          disabled
+                          className="bg-green-300 p-1 my-1 md:px-3 md:py-2 text-white rounded-lg"
+                        >
+                          In Stock
+                        </button>
+                      </div>
+                      <button className="bg-yellow-500 py-3 px-4 rounded-lg">
+                        Add To Cart
+                      </button>
+                    </>
                   ) : (
                     <>
                       <span>Status : </span>
