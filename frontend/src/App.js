@@ -1,4 +1,5 @@
 import "./App.css";
+import { ToastContainer } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Layout from "./components/Layout";
@@ -6,6 +7,7 @@ import ProductDetails from "./views/ProductDetails";
 function App() {
   return (
     <>
+      <ToastContainer theme="colored" />
       <Layout />
       <Routes>
         <Route path="/" element={<Home />} />

@@ -29,7 +29,6 @@ const Home = () => {
     reducer,
     initialData
   );
-
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: "REQUEST" });

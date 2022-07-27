@@ -40,3 +40,8 @@
 [class*="fa-"] {
   color:#EAB388;
 }
+
+.toast-error{
+  background:rgb(255, 0, 0);
+  color:#fff;
+}

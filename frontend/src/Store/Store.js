@@ -7,14 +7,29 @@ const initialState = {
     cartItems: [],
   },
 };
-const reducer = (state, { type, payload }) => {
+const reducer = (state, { type, payload = {} }) => {
   switch (type) {
     case "ADD_TO_CART":
+      const isExistItem = state.cart.cartItems.find(
+        (item) => item._id === payload._id
+      );
+
+      let newItems;
+      if (!isExistItem) {
+        newItems = [...state.cart.cartItems, payload];
+      } else {
+        newItems = state.cart.cartItems.map((item) => {
+          if (item._id === payload._id) {
+            item.quantity = payload.quantity;
+          }
+          return item;
+        });
+      }
       return {
         ...state,
         cart: {
           ...state.cart,
-          cartItems: [...state.cart.cartItems, payload],
+          cartItems: newItems,
         },
       };
     default:

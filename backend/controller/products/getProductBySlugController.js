@@ -1,10 +1,10 @@
-const getProduct = require("../../service/products/getSingleProduct");
+const getProductByProperty = require("../../service/products/getProductByProperty");
 const CustomError = require("../../utils/error");
 
-const getSingleProductController = async (req, res, next) => {
+const getProductBySlugController = async (req, res, next) => {
   const { slug } = req.params;
   try {
-    const product = await getProduct(slug);
+    const product = await getProductByProperty("slug", slug);
     if (!product) {
       return next(CustomError.notFound("Product Not Found!"));
     }
@@ -17,4 +17,4 @@ const getSingleProductController = async (req, res, next) => {
   }
 };
 
-module.exports = getSingleProductController;
+module.exports = getProductBySlugController;
