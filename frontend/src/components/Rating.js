@@ -11,7 +11,7 @@ const Rating = ({ reviews }) => {
     return (acc = item.rating);
   }, 0);
   return (
-    <div>
+    <div className="ratting_wrapper">
       <i
         className={
           rating >= 1
