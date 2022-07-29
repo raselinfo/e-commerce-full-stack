@@ -8,6 +8,9 @@ const initialState = {
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
   },
+  userInfo: localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : {},
 };
 const reducer = (state, { type, payload = {} }) => {
   switch (type) {

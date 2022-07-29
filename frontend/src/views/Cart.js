@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import MessageBox from "../components/MessageBox";
 import CartItem from "../components/CartItem";
 import { Store } from "../Store/Store";
+import { Link } from "react-router-dom";
 const Cart = () => {
   const {
     state: {
@@ -32,9 +33,17 @@ const Cart = () => {
             <CartItem key={product._id} product={product} />
           ))}
         </div>
-        <div className="right shadow-lg mt-14 lg:mt-0  lg:col-span-1 p-3 h-36">
-          <h3 className="sm:text-3xl font-bold">Subtotal (10 items):</h3>
-          <h3 className="sm:text-3xl font-bold">💲{totalAmount}</h3>
+        <div className="right shadow-lg mt-14 lg:mt-0  lg:col-span-1 p-3 h-52">
+          <h3 className="sm:text-3xl font-bold">
+            Subtotal ({cartItems.length}) :
+          </h3>
+          <h3 className="sm:text-3xl font-bold mt-3">💲{totalAmount}</h3>
+          <Link
+            to="/checkout"
+            className="bg-yellow-500 py-4 px-5 block font-bold rounded-xl text-2xl mt-5 hover:bg-yellow-600"
+          >
+            🛒Proceed To Checkout
+          </Link>
         </div>
       </div>
     </div>

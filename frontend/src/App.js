@@ -5,6 +5,10 @@ import Home from "./views/Home";
 import Layout from "./components/Layout";
 import ProductDetails from "./views/ProductDetails";
 import Cart from "./views/Cart";
+import Checkout from "./views/Checkout";
+import SignIn from "./views/SignIn";
+import Protected from "./Protected Route/Protected";
+import SignUp from "./views/SignUp";
 function App() {
   return (
     <>
@@ -15,6 +19,16 @@ function App() {
         <Route path="/admin" element={<h1>Hello Admin</h1>} />
         <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/checkout"
+          element={
+            <Protected>
+              <Checkout />
+            </Protected>
+          }
+        />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </>
   );
