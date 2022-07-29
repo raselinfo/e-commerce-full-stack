@@ -27,7 +27,7 @@ const Product = ({ product }) => {
       <span className="font-bold md:text-2xl block my-2">${product.price}</span>
       {product.stock > 0 ? (
         <button
-          onClick={() => handelAddToCart(product)}
+          onClick={() => handelAddToCart(product, { increase: true })}
           className="bg-yellow-500 p-1 mt-1 rounded-lg  md:px-3 md:py-2"
         >
           Ad to cart

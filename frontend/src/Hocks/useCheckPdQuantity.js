@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import axios from "../utils/axios";
 import formateError from "../utils/formateError";
 import { Store } from "../Store/Store";
@@ -9,13 +9,18 @@ const useCheckPdQuantity = () => {
     dispatch,
   } = useContext(Store);
 
-  const fetchProduct = async (product) => {
+  const fetchProduct = async (product, { increase }) => {
     if (product._id) {
       try {
         const existProduct = cart.cartItems.find(
           (pd) => pd._id === product._id
         );
-        const quantity = existProduct ? existProduct.quantity + 1 : 1;
+        const quantity = existProduct
+          ? increase
+            ? existProduct.quantity + 1
+            : existProduct.quantity - 1
+          : 1;
+
         //  Todo: Check Stock in DB
         const {
           data: { data },
@@ -36,10 +41,10 @@ const useCheckPdQuantity = () => {
     }
   };
 
-  const handelAddToCart = async (pd) => {
+  const handelAddToCart = async (pd, { increase = false, toastMsg = true }) => {
     try {
-      const { success } = (await fetchProduct(pd)) || "";
-      if (success) {
+      const { success } = (await fetchProduct(pd, { increase })) || "";
+      if (toastMsg && success) {
         toast.success("😃 Product Added To Cart", {
           position: "top-right",
           autoClose: 3000,
@@ -47,7 +52,9 @@ const useCheckPdQuantity = () => {
           closeOnClick: true,
           pauseOnHover: true,
         });
-      } else {
+      }
+
+      if (toastMsg && !success) {
         toast.error("😥 Product Out Of Stock!", {
           toastId: "product_out_of_stock",
           position: "top-right",

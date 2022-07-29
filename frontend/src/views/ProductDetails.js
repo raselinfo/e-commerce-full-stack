@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ErrorMessage from "../components/MessageBox";
 import Loading from "../components/Loading";
 import Rating from "../components/Rating";
@@ -26,16 +26,21 @@ const reducer = (state, { type, payload }) => {
   }
 };
 const ProductDetails = () => {
-  const {handelAddToCart}=useCheckPdQuantity()
+  const navigate = useNavigate();
+  const { handelAddToCart } = useCheckPdQuantity();
   const { slug } = useParams();
   const [{ loading, error, product }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
-  const handleCart = () => {
-    console.log("hello")
-    handelAddToCart(product);
+  const handleCart = async () => {
+    try {
+      await handelAddToCart(product, { increase: true });
+      navigate("/cart");
+    } catch (err) {
+      console.log(formateError(err));
+    }
   };
 
   useEffect(() => {
