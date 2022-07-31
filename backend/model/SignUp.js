@@ -10,22 +10,13 @@ const userSchema = new Schema(
     email: {
       type: String,
       require: [true, "Email is required"],
-      match: [
-        /^([a-zA-Z0-9_-.]+)@([a-zA-Z0-9_-.]+).([a-zA-Z]{2,5})$/,
-        "Please Provide Valid Email",
-      ],
+      match: [/^S+@S+.S+$/, "Please Provide Valid Email"],
     },
+    image: { type: String, required: true },
     password: {
       type: String,
       required: [true, "Password is required"],
-      //should contain at least one digit
-      //should contain at least one lower case
-      //should contain at least one upper case
-      //should contain at least 8 from the mentioned characters
-      match: [
-        /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{7,}$/,
-        "Passwd Mast be match the mentioned rules",
-      ],
+      minLength: [8, "Password must be 8 Character"],
     },
   },
   {

@@ -5,18 +5,26 @@ const connectDB = require("./db/db");
 const errorMiddleware = require("./middleware/error/errorMiddleware.js");
 const { PORT, MONGODB_URI } = require("./config");
 const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Todo: Cors Install
 app.use(cors());
+
 // Todo: Logger
 logger(app);
 
 /**
   // Todo: Routes:
- * Seed Products and Users
+ * Seed Products and Users Routes
  * Product Routes
+ * Auth Routes
  */
 app.use("/api/v1", require("./routes/seedRoutes"));
 app.use("/api/v1", require("./routes/productRoutes"));
+app.use("/api/v1", require("./routes/auth/authRoutes"));
 
 // Todo: Health Route
 app.get("/api/v1/health", (req, res) => {

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import getQueryString from "../utils/getQueryString";
 const SignIn = () => {
   const { redirect } = getQueryString(["redirect"]);
+  const [isShowPass, setIsShowPass] = useState(false);
 
   return (
     <div>
@@ -25,17 +26,31 @@ const SignIn = () => {
             />
           </div>
           <div className="input__group my-5">
-            <label className="block text-2xl" htmlFor="email">
+            <label className="block text-2xl" htmlFor="password">
               Password<span className="text-red-500 font-bold">*</span>
             </label>
             <input
               className="block shadow-md py-4 px-5 text-lg font-bold rounded-lg w-full"
-              type="email"
-              name="email"
-              id="email"
+              type={isShowPass ? "text":"password"}
+              name="password"
+              id="password"
               placeholder="Enter your password"
             />
+            <label htmlFor="show" className="text-lg mr-3 select-none">
+              Show Password
+            </label>
+            <input
+              onChange={(e) =>
+                setIsShowPass((prev) => {
+                  return !prev;
+                })
+              }
+              type="checkbox"
+              name="show"
+              id="show"
+            />
           </div>
+
           <div>
             <button className="bg-yellow-500 py-4 px-5 rounded-xl font-2xl font-bold hover:bg-yellow-600">
               Sign In

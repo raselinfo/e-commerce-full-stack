@@ -3,6 +3,6 @@ const singUpController = require("../../controller/auth/singUpController")
 const router=require("express").Router()
 
 
-router.post('/signup',singUpController)
+router.post('/auth/signup',singUpController)
 
 module.exports=router
