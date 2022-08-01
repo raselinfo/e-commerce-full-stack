@@ -9,6 +9,7 @@ import Checkout from "./views/Checkout";
 import SignIn from "./views/SignIn";
 import Protected from "./Protected Route/Protected";
 import SignUp from "./views/SignUp";
+import VerifyMail from "./views/VerifyMail";
 function App() {
   return (
     <>
@@ -29,6 +30,7 @@ function App() {
         />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/Verify/:token/:email" element={<VerifyMail />} />
       </Routes>
     </>
   );

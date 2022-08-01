@@ -26,7 +26,9 @@ const signUp = async (user) => {
     const result = await sendMail({
       to: newToken.email,
       subject: "Email Verification",
-      html: `${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.token}/${newToken.email}">Verify</a>`,
+      html: `<p style="font-size:30px;font-weight:bold">
+      ${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.token}/${newToken.email}">Verify</a>
+      </p>`,
     });
     // Todo:Save user to database
     if (result.accepted.length) {
