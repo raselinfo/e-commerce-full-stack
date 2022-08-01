@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.ratting_wrapper [class*="fa-"] {
+  color:#EAB388;
+}
+
+.toast-error{
+  background:rgb(255, 0, 0);
+  color:#fff;
+}
+.form__wrapper{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}

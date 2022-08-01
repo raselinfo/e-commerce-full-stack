@@ -2,9 +2,10 @@
   "scripts": {
     "server": "cd backend && yarn dev",
     "client": "cd frontend && yarn start",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "dev": "concurrently \"yarn client\" \"yarn server\""
   },
   "dependencies": {
-    "concurrently": "^7.2.2"
+    "concurrently": "^7.2.2",
+    "dompurify": "^2.3.10"
   }
 }
