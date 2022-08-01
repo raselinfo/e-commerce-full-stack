@@ -1,5 +1,10 @@
 const User = require("../../model/SignUp");
-const signUP = (user) => {
+/**
+ *
+ * @param {{name,email,image,password}} user
+ * @returns User Data
+ */
+const signUp = (user) => {
   return new User({
     name: user.name,
     email: user.email,

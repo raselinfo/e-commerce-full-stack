@@ -9,8 +9,8 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
+      unique: true,
       require: [true, "Email is required"],
-      match: [/^S+@S+.S+$/, "Please Provide Valid Email"],
     },
     image: { type: String, required: true },
     password: {
