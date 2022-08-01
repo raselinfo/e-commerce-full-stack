@@ -1,4 +1,5 @@
 const express = require("express");
+const multer = require("multer");
 const cors = require("cors");
 const logger = require("./utils/logger");
 const connectDB = require("./db/db");
@@ -7,8 +8,10 @@ const { PORT, MONGODB_URI } = require("./config");
 const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
+app.use(multer().array());
+app.use(express.static('public'))
 
 // Todo: Cors Install
 app.use(cors());

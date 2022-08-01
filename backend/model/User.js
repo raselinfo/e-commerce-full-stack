@@ -12,7 +12,7 @@ const userSchema = new Schema(
       unique: true,
       require: [true, "Email is required"],
     },
-    image: { type: String, required: true },
+    image: { type: Object, required: true },
     password: {
       type: String,
       required: [true, "Password is required"],

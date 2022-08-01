@@ -2,9 +2,14 @@ import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import getQueryString from "../utils/getQueryString";
 import { useDropzone } from "react-dropzone";
+import axios from "../utils/axios";
 const SignIn = () => {
   const { redirect } = getQueryString(["redirect"]);
   const [isShowPass, setIsShowPass] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
   const [image, setImage] = useState("");
   const [isError, setIsError] = useState("");
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
@@ -30,6 +35,23 @@ const SignIn = () => {
     maxSize: 2e6,
   });
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    axios
+      .post("/auth/signup", {
+        name,
+        email,
+        image,
+        password,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <div className="form__wrapper shadow-lg p-5 mt-5  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg">
@@ -51,6 +73,7 @@ const SignIn = () => {
               name="name"
               id="name"
               placeholder="Enter your Name"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="input__group mb-3">
@@ -80,6 +103,7 @@ const SignIn = () => {
               name="email"
               id="email"
               placeholder="Enter your email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="input__group my-5">
@@ -92,6 +116,7 @@ const SignIn = () => {
               name="password"
               id="password"
               placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <label htmlFor="show" className="text-lg mr-3 select-none">
               Show Password
@@ -118,10 +143,14 @@ const SignIn = () => {
               name="confirm_password"
               id="confirm_password"
               placeholder="Confirm your password"
+              onChange={(e) => setConfirmPass(e.target.value)}
             />
           </div>
           <div>
-            <button className="bg-yellow-500 py-4 px-5 rounded-xl font-2xl font-bold hover:bg-yellow-600">
+            <button
+              onClick={handleRegister}
+              className="bg-yellow-500 py-4 px-5 rounded-xl font-2xl font-bold hover:bg-yellow-600"
+            >
               Register
             </button>
           </div>
