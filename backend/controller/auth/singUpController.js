@@ -19,7 +19,15 @@ const singUpController = async (req, res, next) => {
 
   try {
     // Todo: Save user to Database
-    const user = await signUp(value);
+    const { existUser, user, error } = await signUp(value);
+    if (existUser) {
+      return res
+        .status(409)
+        .json({ message: "User already exist please verify or login" });
+    }
+    if (error) {
+      res.send(500).json({ message: error });
+    }
     return res.status(200).json({ message: "Success", data: user });
   } catch (err) {
     next(err);

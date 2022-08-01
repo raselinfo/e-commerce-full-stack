@@ -18,6 +18,7 @@ const userSchema = new Schema(
       required: [true, "Password is required"],
       minLength: [8, "Password must be 8 Character"],
     },
+    verified: { type: Boolean, default: false },
   },
   {
     timestamps: true,

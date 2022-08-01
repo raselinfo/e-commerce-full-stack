@@ -1,16 +1,48 @@
-const User = require("../../model/SignUp");
+const User = require("../../model/User");
+const UserService = require("../User/UserService");
+const sendMail = require("../mail/sendMail");
+const { BASE_CLIENT_URL } = require("../../config");
+const Token = require("../../model/Token");
+const JwtService = require("../jwt/JWT");
 /**
  *
  * @param {{name,email,image,password}} user
  * @returns User Data
  */
-const signUp = (user) => {
-  return new User({
-    name: user.name,
-    email: user.email,
-    image: user.image,
-    password: user.password,
-  }).save();
+const signUp = async (user) => {
+  try {
+    const existUser = await UserService.findByProperty("email", user.email);
+    if (existUser) {
+      return { existUser: true };
+    }
+    const token = JwtService.sign({ email: user.email });
+    const newToken = await new Token({
+      email: user.email,
+      token: token,
+    }).save();
+    // Todo:Send mail
+    const result = await sendMail({
+      to: newToken.email,
+      subject: "Email Verification",
+      html: `${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.token}/${newToken.email}">Verify</a>`,
+    });
+    console.log(result.accepted.length);
+    // Todo:Save user to database
+    if (result.accepted.length) {
+      const newUser = new User({
+        name: user.name,
+        email: user.email,
+        image: user.image,
+        password: user.password,
+      });
+      const savedUser = await newUser.save();
+      return { user: savedUser, result };
+    }else{
+      return {error:"Email Not Send"}
+    }
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 module.exports = signUp;
