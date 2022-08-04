@@ -1,9 +1,30 @@
-import React, { useCallback, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useReducer, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import getQueryString from "../utils/getQueryString";
 import { useDropzone } from "react-dropzone";
 import axios from "../utils/axios";
+import { SyncLoader } from "react-spinners/";
+import { toast } from "react-toastify";
+import formateError from "../utils/formateError";
+const initialState = {
+  error: "",
+  loading: false,
+};
+const reducer = (state, { type, payload }) => {
+  switch (type) {
+    case "REQUEST":
+      return { ...state, loading: true };
+    case "SUCCESS":
+      return { ...state, loading: false };
+    case "FAIL":
+      return { ...state, loading: false, error: payload };
+    default:
+      return state;
+  }
+};
 const SignIn = () => {
+  const [{ loading, error }, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
   const { redirect } = getQueryString(["redirect"]);
   const [isShowPass, setIsShowPass] = useState(false);
   const [name, setName] = useState("");
@@ -34,27 +55,60 @@ const SignIn = () => {
     maxFiles: 1,
     maxSize: 2e6,
   });
-
-  const handleRegister = (e) => {
+  // Get Redirect Query
+  const handleRegister = async (e) => {
     e.preventDefault();
-    axios
-      .post("/auth/signup", {
+    dispatch({ type: "REQUEST" });
+    try {
+      await axios.post("/auth/signup", {
         name,
         email,
         image,
         password,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+
+      dispatch({ type: "SUCCESS" });
+      toast.success(
+        "Please Check your email box for verify your account.Check also spam folder in your email box.Then Login",
+        {
+          position: "bottom-right",
+          autoClose: 10000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+        }
+      );
+
+      navigate(`/signin?redirect=${redirect}`);
+    } catch (err) {
+      dispatch({ type: "FAIL" });
+      toast.error(formateError(err), {
+        position: "bottom-right",
+        autoClose: 10000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      console.log(err);
+    }
+  };
+
+  const validateInput = () => {
+    return name &&
+      email &&
+      password &&
+      confirmPass &&
+      name.length >= 3 &&
+      password === confirmPass &&
+      password.length >= 8 &&
+      email.includes("@gmail.com")
+      ? true
+      : false;
   };
 
   return (
     <div>
-      <div className="form__wrapper shadow-lg p-5 mt-5  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg">
+      <div className="form__wrapper bg-white shadow-lg mt-20 p-3  lg:w-2/6 md:w-3/6 w-full rounded-lg">
         <h3 className="text-5xl font-bold my-10 text-center">
           Sign
           <span className="text-yellow-500"> UP</span>
@@ -75,6 +129,11 @@ const SignIn = () => {
               placeholder="Enter your Name"
               onChange={(e) => setName(e.target.value)}
             />
+            {name.length < 3 && (
+              <p className="text-yellow-600 font-bold">
+                Name minimum length should be 3 character
+              </p>
+            )}
           </div>
           <div className="input__group mb-3">
             <label className="block text-2xl" htmlFor="image">
@@ -92,6 +151,9 @@ const SignIn = () => {
               )}
             </div>
             <p>{isError}</p>
+            {!image && (
+              <p className="text-yellow-600 font-bold">Image is required</p>
+            )}
           </div>
           <div className="input__group">
             <label className="block text-2xl" htmlFor="email">
@@ -105,6 +167,14 @@ const SignIn = () => {
               placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
             />
+            {!email && (
+              <p className="text-yellow-600 font-bold">Email is required</p>
+            )}
+            {!email.includes("@gmail.com") && (
+              <p className="text-yellow-600 font-bold">
+                Please Write Valid Email
+              </p>
+            )}
           </div>
           <div className="input__group my-5">
             <label className="block text-2xl" htmlFor="password">
@@ -122,7 +192,7 @@ const SignIn = () => {
               Show Password
             </label>
             <input
-              onChange={(e) =>
+              onChange={() =>
                 setIsShowPass((prev) => {
                   return !prev;
                 })
@@ -131,6 +201,11 @@ const SignIn = () => {
               name="show"
               id="show"
             />
+            {password.length < 8 && (
+              <p className="text-yellow-600 font-bold">
+                Password minimum length should be 8 character
+              </p>
+            )}
           </div>
 
           <div className="input__group my-5">
@@ -145,13 +220,33 @@ const SignIn = () => {
               placeholder="Confirm your password"
               onChange={(e) => setConfirmPass(e.target.value)}
             />
+            {password !== confirmPass && (
+              <p className="text-yellow-600 font-bold">Password Not Match!</p>
+            )}
           </div>
+
           <div>
             <button
               onClick={handleRegister}
-              className="bg-yellow-500 py-4 px-5 rounded-xl font-2xl font-bold hover:bg-yellow-600"
+              className={`py-4 px-5 rounded-xl font-2xl font-bold  ${
+                validateInput() && !loading
+                  ? "bg-yellow-500 hover:bg-yellow-600"
+                  : "bg-gray-100 text-gray-300"
+              }`}
+              disabled={validateInput() && !loading ? false : true}
             >
-              Register
+              <div>
+                <SyncLoader
+                  color="#000"
+                  loading={loading}
+                  cssOverride={{
+                    marginRight: 10,
+                  }}
+                  margin={5}
+                  size={10}
+                />
+                {!loading ? "Register" : "Wait"}
+              </div>
             </button>
           </div>
           <div>

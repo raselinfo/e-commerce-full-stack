@@ -33,7 +33,7 @@ process.env.NODE_ENV.trim("") !== "development" && preventInspect();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <HelmetProvider>
       <StoreProvider>
         <BrowserRouter>
@@ -41,5 +41,5 @@ root.render(
         </BrowserRouter>
       </StoreProvider>
     </HelmetProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

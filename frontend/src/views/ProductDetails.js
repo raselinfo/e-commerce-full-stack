@@ -69,9 +69,13 @@ const ProductDetails = () => {
       </Helmet>
       <div className="grid md:grid-cols-2 justify-center mt-12">
         <div>
-          <img className="w-full" src={product.image} alt={product.name} />
+          <img
+            className="w-full rounded-lg"
+            src={product.image}
+            alt={product.name}
+          />
         </div>
-        <div className="grid lg:grid-cols-2 sm:grid-cols-1">
+        <div className="grid lg:grid-cols-2 sm:grid-cols-1 p-5 lg:h-2/6 h-6/6 bg-white ml-3 rounded-lg">
           <div className="left-side">
             <h3 className="md:text-5xl text-3xl font-bold mb-5">
               {product.name}
@@ -85,7 +89,7 @@ const ProductDetails = () => {
             <hr className="mb-3" />
             <p className="font-bold">Description : {product.description}</p>
           </div>
-          <div className="right-side shadow-lg p-5 lg:h-2/6 h-6/6">
+          <div className="right-side p-5 lg:h-2/6 h-6/6">
             <div>
               <div className="price font-bold text-left my-5">
                 <span>

@@ -20,7 +20,7 @@ const CartItem = ({ product }) => {
   };
 
   return (
-    <div className="left grid grid-cols-4 lg:grid-cols-5 items-center shadow-lg  p-3">
+    <div className="left bg-white rounded-lg mb-3 grid grid-cols-4 lg:grid-cols-5 items-center shadow-lg  p-3">
       <div className="flex flex-col lg:flex-row lg:items-center lg:col-span-2 gap-2">
         <Link
           className="text-blue-500 font-bold"

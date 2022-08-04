@@ -3,11 +3,11 @@ const signUp = require("../../service/auth/signUp");
 const singUpController = async (req, res, next) => {
   if (!req.body) res.status(422).json({ message: "Please provide valid data" });
   const userSchema = Joi.object({
-    name: Joi.string().max(15).min(3).required(),
+    name: Joi.string().max(15).min(3).trim().required(),
     email: Joi.string().email({
       minDomainSegments: 2,
       tlds: { allow: ["com"] },
-    }),
+    }).trim().lowercase().required(),
     image: Joi.string().required(),
     password: Joi.string().min(8).required(),
   });
