@@ -52,7 +52,7 @@ const Home = () => {
         <MessageBox error={error} />
       ) : (
         <div className="md:container md:mx-auto">
-          <h1 className="md:text-5xl sm:text-4xl text-3xl font-bold my-12">
+          <h1 className="md:text-5xl text-white sm:text-4xl text-3xl font-bold my-12">
             <span className="text-yellow-500">Featured </span>
             Products 😃
           </h1>

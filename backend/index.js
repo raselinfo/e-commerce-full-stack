@@ -1,5 +1,4 @@
 const express = require("express");
-const multer = require("multer");
 const cors = require("cors");
 const logger = require("./utils/logger");
 const connectDB = require("./db/db");
@@ -10,7 +9,7 @@ const app = express();
 // Middleware
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
-app.use(multer().array());
+
 app.use(express.static('public'))
 
 // Todo: Cors Install
@@ -24,10 +23,12 @@ logger(app);
  * Seed Products and Users Routes
  * Product Routes
  * Auth Routes
+ * Verify Email
  */
 app.use("/api/v1", require("./routes/seedRoutes"));
 app.use("/api/v1", require("./routes/productRoutes"));
 app.use("/api/v1", require("./routes/auth/authRoutes"));
+app.use("/api/v1", require("./routes/verify/emailVerifyRoutes"));
 
 // Todo: Health Route
 app.get("/api/v1/health", (req, res) => {

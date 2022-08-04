@@ -11,7 +11,7 @@ const Product = ({ product }) => {
   };
 
   return (
-    <div className=" p-5 shadow-lg" onClick={seeDetailsPageHandler}>
+    <div className=" p-5 shadow-lg bg-white rounded-lg" onClick={seeDetailsPageHandler}>
       <img
         className="w-full hover:scale-95 transition-all cursor-pointer"
         src={product.image}

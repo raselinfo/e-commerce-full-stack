@@ -24,7 +24,7 @@ const Cart = () => {
       <Helmet>
         <title>Cart</title>
       </Helmet>
-      <h2 className="sm:text-5xl font-bold my-5 text-2xl">
+      <h2 className="sm:text-5xl text-white font-bold my-5 text-2xl">
         Shopping <span className="text-yellow-500">Cart</span> 🛒
       </h2>
       <div className="grid lg:grid-cols-3 lg:gap-5">
@@ -33,7 +33,7 @@ const Cart = () => {
             <CartItem key={product._id} product={product} />
           ))}
         </div>
-        <div className="right shadow-lg mt-14 lg:mt-0  lg:col-span-1 p-3 h-52">
+        <div className="right shadow-lg mt-14 lg:mt-0 bg-white rounded-lg lg:col-span-1 p-3 h-52">
           <h3 className="sm:text-3xl font-bold">
             Subtotal ({cartItems.length}) :
           </h3>

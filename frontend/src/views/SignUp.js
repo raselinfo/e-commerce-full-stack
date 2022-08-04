@@ -108,7 +108,7 @@ const SignIn = () => {
 
   return (
     <div>
-      <div className="form__wrapper shadow-lg p-5 mt-5  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg">
+      <div className="form__wrapper bg-white shadow-lg mt-20 p-3  lg:w-2/6 md:w-3/6 w-full rounded-lg">
         <h3 className="text-5xl font-bold my-10 text-center">
           Sign
           <span className="text-yellow-500"> UP</span>
