@@ -2,5 +2,5 @@ const verifyEmailController = require("../../controller/verify/verifyEmailContro
 
 const router = require("express").Router();
 
-router.post("/verify/email/:token/:email", verifyEmailController);
+router.get("/verify/email/:token/:email", verifyEmailController);
 module.exports = router;
