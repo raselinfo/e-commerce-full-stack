@@ -2,10 +2,10 @@ import React, { useEffect, useReducer } from "react";
 import Product from "../components/Product";
 import axios from "../utils/axios";
 import formateError from "../utils/formateError";
-import Loading from "../components/Loading";
 import { Helmet } from "react-helmet-async";
-
 import MessageBox from "../components/MessageBox";
+import ProductSkeleton from "../Skeleton/ProductSkeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const initialData = {
   loading: false,
   error: "",
@@ -41,13 +41,26 @@ const Home = () => {
     };
     fetchProducts();
   }, []);
+
   return (
     <section className="relative">
       <Helmet>
         <title>Home</title>
       </Helmet>
       {loading ? (
-        <Loading loading={loading} />
+        <div className="md:container md:mx-auto">
+          <h1 className="md:text-5xl text-white sm:text-4xl text-3xl font-bold my-12">
+            <Skeleton width={400}/>
+          </h1>
+          <div className="gap-5  grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1">
+            {Array(4 * 2)
+              .fill(0)
+              .map((_, index) => {
+                console.log("skeleton");
+                return <ProductSkeleton key={index} />;
+              })}
+          </div>
+        </div>
       ) : error ? (
         <MessageBox error={error} />
       ) : (
