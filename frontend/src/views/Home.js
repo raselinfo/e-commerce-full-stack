@@ -50,13 +50,12 @@ const Home = () => {
       {loading ? (
         <div className="md:container md:mx-auto">
           <h1 className="md:text-5xl text-white sm:text-4xl text-3xl font-bold my-12">
-            <Skeleton width={400}/>
+            <Skeleton width={400} />
           </h1>
           <div className="gap-5  grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1">
             {Array(4 * 2)
               .fill(0)
               .map((_, index) => {
-                console.log("skeleton");
                 return <ProductSkeleton key={index} />;
               })}
           </div>

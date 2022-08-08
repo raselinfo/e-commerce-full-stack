@@ -81,7 +81,7 @@ const SignIn = () => {
 
       navigate(`/signin?redirect=${redirect}`);
     } catch (err) {
-      dispatch({ type: "FAIL" });
+      dispatch({ type: "FAIL", payload: formateError(err) });
       toast.error(formateError(err), {
         position: "bottom-right",
         autoClose: 10000,
@@ -89,7 +89,6 @@ const SignIn = () => {
         closeOnClick: true,
         pauseOnHover: true,
       });
-      console.log(err);
     }
   };
 
