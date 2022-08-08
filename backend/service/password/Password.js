@@ -5,8 +5,8 @@ class Password {
    * @param {String} User Password
    * @returns Hash Password
    */
-  static hash(payload) {
-    return bcrypt.has(payload, 10);
+  static hash(password) {
+    return bcrypt.hash(password, 10);
   }
 
   /**

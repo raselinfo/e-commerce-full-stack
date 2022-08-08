@@ -5,7 +5,7 @@ const { BASE_CLIENT_URL } = require("../../config");
 const Token = require("../../model/Token");
 const JwtService = require("../jwt/JWT");
 const uploadImage = require("../../utils/imageHandler");
-const bcrypt = require("bcrypt");
+const Password = require("../Password/Password");
 /**
  *
  * @param {{name,email,image,password}} user
@@ -17,7 +17,9 @@ const signUp = async (user) => {
     if (existUser) {
       return { existUser: true };
     }
-
+    // Todo:  Hash Password
+    const hasPassword = await Password.hash(user.password);
+    // Todo: Token Generate
     const token = JwtService.sign({ email: user.email });
     const newToken = await new Token({
       email: user.email,
@@ -38,13 +40,12 @@ const signUp = async (user) => {
         user.image,
         user.email.split("@")[0]
       );
-      // Todo Hash Password
-
+      // Todo: Save user in database
       const newUser = new User({
         name: user.name,
         email: user.email,
         image: { url: imageResult.url, public_id: imageResult.public_id },
-        password: user.password,
+        password: hasPassword,
       });
       const savedUser = await newUser.save();
       return { user: savedUser };
