@@ -37,6 +37,7 @@ const signUp = async (user) => {
         user.image,
         user.email.split("@")[0]
       );
+      // Todo Hash Password
 
       const newUser = new User({
         name: user.name,
