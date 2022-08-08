@@ -5,6 +5,7 @@ const { BASE_CLIENT_URL } = require("../../config");
 const Token = require("../../model/Token");
 const JwtService = require("../jwt/JWT");
 const uploadImage = require("../../utils/imageHandler");
+const bcrypt = require("bcrypt");
 /**
  *
  * @param {{name,email,image,password}} user
