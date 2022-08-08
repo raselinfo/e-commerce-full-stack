@@ -7,7 +7,7 @@ const ProductDetailsSkeleton = () => {
         <div>
           <Skeleton height={"100vh"} />
         </div>
-        <div className="grid sm:grid-cols-1 p-5 lg:h-2/6 h-6/6 bg-white ml-3 rounded-lg">
+        <div className="grid sm:grid-cols-1 p-5 lg:h-2/6 h-6/6  ml-3 rounded-lg">
           <Skeleton height={"100%"} width={"100%"}/>
         </div>
       </div>
