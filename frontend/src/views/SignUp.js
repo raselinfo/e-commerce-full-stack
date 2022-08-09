@@ -34,6 +34,8 @@ const SignIn = () => {
   const [confirmPass, setConfirmPass] = useState("");
   const [image, setImage] = useState("");
   const [isError, setIsError] = useState("");
+
+  // Todo: Image Dropzone 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     setIsError("");
     setImage({});
@@ -56,7 +58,7 @@ const SignIn = () => {
     maxFiles: 1,
     maxSize: 2e6,
   });
-  // Get Redirect Query
+  //Todo: Get Redirect Query
   const handleRegister = async (e) => {
     e.preventDefault();
     dispatch({ type: "REQUEST" });
@@ -92,7 +94,7 @@ const SignIn = () => {
       });
     }
   };
-
+// Todo: Validate Input
   const validateInput = () => {
     return name &&
       email &&
