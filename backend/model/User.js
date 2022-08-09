@@ -18,6 +18,11 @@ const userSchema = new Schema(
       required: [true, "Password is required"],
       minLength: [8, "Password must be 8 Character"],
     },
+    role: {
+      type: String,
+      enum: ["USER", "ADMIN"],
+      default: "USER",
+    },
     verified: { type: Boolean, default: false },
   },
   {

@@ -46,6 +46,10 @@ const reducer = (state, { type, payload = {} }) => {
       );
       localStorage.setItem("cartItems", JSON.stringify(newItems));
       return { ...state, cart: { ...state.cart, cartItems: newItems } };
+
+    case "SAVE_USER":
+      localStorage.setItem("userInfo", JSON.stringify(payload));
+      return { ...state, userInfo: payload };
     default:
       return state;
   }

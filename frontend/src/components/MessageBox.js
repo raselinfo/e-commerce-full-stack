@@ -1,7 +1,6 @@
 import DOMPurify from "dompurify";
 const MessageBox = ({ error, message }) => {
   let text = error ? `❌ ${error}` : message;
-  console.log(text);
   return (
     <div
       className={`md:w-6/12 p-5 mx-auto mt-5 ${

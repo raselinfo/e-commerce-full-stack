@@ -1,12 +1,12 @@
 import { useEffect, useReducer } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ErrorMessage from "../components/MessageBox";
-import Loading from "../components/Loading";
 import Rating from "../components/Rating";
 import axios from "../utils/axios";
 import formateError from "../utils/formateError";
 import { Helmet } from "react-helmet-async";
 import useCheckPdQuantity from "../Hocks/useCheckPdQuantity.js";
+import ProductDetailsSkeleton from "../Skeleton/ProductDetailsSkeleton";
 const initialState = {
   loading: false,
   error: "",
@@ -59,7 +59,7 @@ const ProductDetails = () => {
   }, [slug]);
 
   return loading ? (
-    <Loading />
+    <ProductDetailsSkeleton />
   ) : error ? (
     <ErrorMessage error={error} />
   ) : (

@@ -10,6 +10,7 @@ import SignIn from "./views/SignIn";
 import Protected from "./Protected Route/Protected";
 import SignUp from "./views/SignUp";
 import VerifyMail from "./views/VerifyMail";
+import AuthProtect from "./Protected Route/AuthProtect";
 function App() {
   return (
     <>
@@ -28,9 +29,30 @@ function App() {
             </Protected>
           }
         />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/Verify/:token/:email" element={<VerifyMail />} />
+        <Route
+          path="/signin"
+          element={
+            <AuthProtect>
+              <SignIn />
+            </AuthProtect>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <AuthProtect>
+              <SignUp />
+            </AuthProtect>
+          }
+        />
+        <Route
+          path="/Verify/:token/:email"
+          element={
+            <AuthProtect>
+              <VerifyMail />
+            </AuthProtect>
+          }
+        />
       </Routes>
     </>
   );

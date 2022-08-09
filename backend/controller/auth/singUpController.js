@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const signUp = require("../../service/auth/signUp");
+const signUp = require("../../service/auth/signUpService");
 const singUpController = async (req, res, next) => {
   if (!req.body) res.status(422).json({ message: "Please provide valid data" });
   const userSchema = Joi.object({

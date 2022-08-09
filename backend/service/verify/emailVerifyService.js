@@ -12,7 +12,8 @@ const emailVerify = async (userToken, email) => {
     isValidUser.verified = true;
     const updatedUser = await isValidUser.save();
     if (updatedUser) {
-      const deleteToken = await isValidToken.remove();
+      // const deleteToken = await isValidToken.remove();
+      const deleteToken = await Token.remove({ email: email });
       if (deleteToken) return { success: "OK" };
     }
   } catch (err) {

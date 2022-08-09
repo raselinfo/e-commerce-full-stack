@@ -17,6 +17,7 @@ const Product = ({ product }) => {
         src={product.image}
         alt={product.name}
       />
+     
       <Link
         to={`/product/${product.slug}`}
         className="underline text-blue-500 lg:text-3xl text-2xl font-bold mb-3 block"

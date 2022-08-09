@@ -11,6 +11,9 @@ class CustomError {
   static notFound(message = "Not Found!", status = 404) {
     return new CustomError(formateError(message), status);
   }
+  static unauthorized(message = "Unauthorized", status = 401) {
+    return new CustomError(formateError(message), status);
+  }
   static severError(message = "Server Error", status = 501) {
     return new CustomError(formateError(message), status);
   }
