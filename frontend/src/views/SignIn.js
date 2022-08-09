@@ -108,13 +108,13 @@ const SignIn = () => {
 
           <div>
             <button
-              onClick={singInHandler}
+              onClick={validateForm() && !loading ? singInHandler : undefined}
               className={`${
-                validateForm()
+                validateForm() && !loading
                   ? " bg-yellow-500  hover:bg-yellow-600"
                   : "bg-gray-100 text-gray-300"
               } py-4 px-5 rounded-xl font-2xl font-bold`}
-              disabled={validateForm() ? false : true}
+              disabled={validateForm() && !loading ? false : true}
             >
               <SyncLoader
                 color="#000"

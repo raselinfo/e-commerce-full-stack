@@ -6,6 +6,7 @@ import axios from "../utils/axios";
 import { SyncLoader } from "react-spinners/";
 import { toast } from "react-toastify";
 import formateError from "../utils/formateError";
+import AuthSocialIcons from "../components/AuthSocialIcons";
 const initialState = {
   error: "",
   loading: false,
@@ -113,7 +114,7 @@ const SignIn = () => {
           <span className="text-yellow-500"> UP</span>
         </h3>
         <div className="image__wrapper">
-          {image && <img className="h-32 mt-3 avater" src={image} alt="" />}
+          {image && <img className="h-32 mt-3 avater" src={image} alt={name} />}
         </div>
         <form className="">
           <div className="input__group mb-3">
@@ -127,6 +128,7 @@ const SignIn = () => {
               id="name"
               placeholder="Enter your Name"
               onChange={(e) => setName(e.target.value)}
+              required
             />
             {name.length < 3 && (
               <p className="text-yellow-600 font-bold">
@@ -142,7 +144,7 @@ const SignIn = () => {
               {...getRootProps()}
               className="border-dashed border-2 py-4 px-5 border-gray-500 mt-2 rounded-lg bg-red-50"
             >
-              <input {...getInputProps()} />
+              <input {...getInputProps()} required />
               {isDragActive ? (
                 <p>Drop the file here....</p>
               ) : (
@@ -165,10 +167,9 @@ const SignIn = () => {
               id="email"
               placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
-            {!email && (
-              <p className="text-yellow-600 font-bold">Email is required</p>
-            )}
+
             {!email.includes("@gmail.com") && (
               <p className="text-yellow-600 font-bold">
                 Please Write Valid Email
@@ -186,6 +187,7 @@ const SignIn = () => {
               id="password"
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <label htmlFor="show" className="text-lg mr-3 select-none">
               Show Password
@@ -218,6 +220,7 @@ const SignIn = () => {
               id="confirm_password"
               placeholder="Confirm your password"
               onChange={(e) => setConfirmPass(e.target.value)}
+              required
             />
             {password !== confirmPass && (
               <p className="text-yellow-600 font-bold">Password Not Match!</p>
@@ -226,7 +229,7 @@ const SignIn = () => {
 
           <div>
             <button
-              onClick={handleRegister}
+              onClick={validateInput() && !loading ? handleRegister : undefined}
               className={`py-4 px-5 rounded-xl font-2xl font-bold  ${
                 validateInput() && !loading
                   ? "bg-yellow-500 hover:bg-yellow-600"
@@ -247,6 +250,9 @@ const SignIn = () => {
                 {!loading ? "Register" : "Wait"}
               </div>
             </button>
+          </div>
+          <div className="social__wrapper">
+            <AuthSocialIcons />
           </div>
           <div>
             <p className="font-bold text-lg mt-3">
