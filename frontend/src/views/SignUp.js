@@ -35,7 +35,7 @@ const SignIn = () => {
   const [image, setImage] = useState("");
   const [isError, setIsError] = useState("");
 
-  // Todo: Image Dropzone 
+  // Todo: Image Dropzone
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     setIsError("");
     setImage({});
@@ -94,7 +94,7 @@ const SignIn = () => {
       });
     }
   };
-// Todo: Validate Input
+  // Todo: Validate Input
   const validateInput = () => {
     return name &&
       email &&
@@ -106,6 +106,19 @@ const SignIn = () => {
       email.includes("@gmail.com")
       ? true
       : false;
+  };
+
+  // Todo: Google Handler
+  const googleHandler = () => {
+    console.log("Google");
+  };
+  // Todo: Facebook Handler
+  const facebookHandler = () => {
+    console.log("facebook");
+  };
+  // Todo: Github Handler
+  const githubHandler = () => {
+    console.log("github");
   };
 
   return (
@@ -254,7 +267,11 @@ const SignIn = () => {
             </button>
           </div>
           <div className="social__wrapper">
-            <AuthSocialIcons />
+            <AuthSocialIcons
+              facebookHandler={facebookHandler}
+              googleHandler={googleHandler}
+              githubHandler={githubHandler}
+            />
           </div>
           <div>
             <p className="font-bold text-lg mt-3">

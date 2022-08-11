@@ -56,7 +56,7 @@ const development = ({ method, url, status, date, time, id, body, jwt }) => {
       str += `🆔 ID        * ${tokens.id(req, res)}\n`;
     }
     if (body) {
-      str += `💪 Body      * ${tokens.body(req, res)}\n`;
+      str += `💪 Body      * ${tokens.body(req, res).slice(0,221)}\n`;
     }
     if (jwt) {
       str += `👑 JWT       * ${tokens.token(req, res)}\n`;
