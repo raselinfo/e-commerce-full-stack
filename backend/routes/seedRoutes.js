@@ -4,6 +4,7 @@ const {
   seedReviews,
   seedCategoryController,
 } = require("../controller/seed/seedControllers");
+
 router.post("/seedProduct", seedProductController);
 
 router.post("/seedCategories", seedCategoryController);

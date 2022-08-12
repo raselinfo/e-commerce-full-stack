@@ -87,7 +87,7 @@ const logger = (app, data) => {
   // Custom header authorization formatter
   morgan.token("token", (req) => req.headers.authorization);
 
-  process.env.NODE_ENV.trim(" ") === "development"
+  process.env.MODE === "development"
     ? app.use(development(options))
     : app.use(production);
 };

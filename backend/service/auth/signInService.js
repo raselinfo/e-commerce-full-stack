@@ -25,7 +25,7 @@ const signInService = async ({ email, password }) => {
         to: newToken.email,
         subject: "Email Verification",
         html: `<p style="font-size:30px;font-weight:bold">
-      ${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.token}/${newToken.email}">Verify</a>
+      ${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.email}/${newToken.token}">Verify</a>
       </p>`,
       });
       if (accepted.length) {

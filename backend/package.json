@@ -5,7 +5,7 @@
   },
   "scripts": {
     "dev": "SET NODE_ENV=development && nodemon index.js",
-    "start": "SET NODE_ENV=production && node index.js"
+    "start": "node index.js"
   },
   "keywords": [
     "example",

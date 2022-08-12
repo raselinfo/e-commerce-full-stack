@@ -1,5 +1,5 @@
 const getProducts = require("../../service/products/getProducts");
-const CustomError = require("../../utils/error");
+const CustomError = require("../../utils/Error");
 const getAllProductsController = async (_req, res, next) => {
   try {
     const products = await getProducts();
