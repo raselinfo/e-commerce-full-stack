@@ -110,7 +110,8 @@ const SignIn = () => {
 
   // Todo: Google Handler
   const googleHandler = () => {
-    console.log("Google");
+    console.log("google")
+    window.open("http://localhost:4000/api/v1/auth/google", "_self");
   };
   // Todo: Facebook Handler
   const facebookHandler = () => {

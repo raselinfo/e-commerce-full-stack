@@ -18,6 +18,7 @@ app.use(express.static("public"));
 
 // Todo: Cors Install
 app.use(cors());
+
 // Todo: Express Session
 app.use(
   session({
@@ -29,7 +30,8 @@ app.use(
 );
 
 // Todo: Passport Middleware
-app.use([passport.initialize(), passport.session()]);
+app.use(passport.initialize());
+app.use(passport.session());
 // Todo: Logger
 logger(app);
 

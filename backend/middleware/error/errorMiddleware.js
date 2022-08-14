@@ -12,7 +12,6 @@ const errorMiddleware = (err, req, res, next) => {
   if (err instanceof CustomError) {
     error = {
       ...error,
-      message,
     };
   }
   if (err instanceof ValidationError) {
