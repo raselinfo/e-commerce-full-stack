@@ -46,7 +46,7 @@ function App() {
           }
         />
         <Route
-          path="/Verify/:token/:email"
+          path="/Verify/:email/:token"
           element={
             <AuthProtect>
               <VerifyMail />

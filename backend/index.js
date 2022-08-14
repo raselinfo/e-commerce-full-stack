@@ -1,20 +1,35 @@
+// Passport
+require("./service/passport/passport");
+const passport = require("passport");
 const express = require("express");
+const session = require("express-session");
 const cors = require("cors");
 const logger = require("./utils/logger");
 const connectDB = require("./db/db");
 const errorMiddleware = require("./middleware/error/errorMiddleware.js");
-const { PORT, MONGODB_URI } = require("./config");
+const { PORT, MONGODB_URI, SESSION_SECRET } = require("./config");
 const app = express();
 
 // Middleware
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('public'))
+app.use(express.static("public"));
 
 // Todo: Cors Install
 app.use(cors());
+// Todo: Express Session
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+  })
+);
 
+// Todo: Passport Middleware
+app.use([passport.initialize(), passport.session()]);
 // Todo: Logger
 logger(app);
 

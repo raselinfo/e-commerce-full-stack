@@ -45,9 +45,10 @@ const signUp = async (user) => {
         name: user.name,
         email: user.email,
         image: { url: imageResult.url, public_id: imageResult.public_id },
-        password: hasPassword,
+        ["local.password"]: hasPassword,
       });
       const savedUser = await newUser.save();
+      console.log(savedUser);
       return { user: savedUser };
     } else {
       return { error: "Email Not Send" };

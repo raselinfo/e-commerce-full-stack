@@ -16,6 +16,7 @@ const option = (animateData) => {
 
 const VerifyMail = () => {
   const { token, email } = useParams();
+
   const [isVerify, setIsVerify] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {

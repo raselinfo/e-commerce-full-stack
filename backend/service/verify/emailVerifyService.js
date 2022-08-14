@@ -3,6 +3,7 @@ const Token = require("../../model/Token");
 const JwtService = require("../jwt/JWT");
 const emailVerify = async (userToken, email) => {
   try {
+    
     await JwtService.verify(userToken);
     const isValidUser = await User.findOne({ email });
     const isValidToken = await Token.findOne({ email, token: userToken });
