@@ -24,16 +24,15 @@ const googleSignIn = async ({ email, name, picture, verified }) => {
     const newUser = await new User({
       email,
       name,
-      image: picture,
+      image: { url: picture },
       verified: verified,
     }).save();
     newUser.image.public_id = undefined;
+
     token = createToken({
       name: newUser.name,
       email: newUser.email,
-      image: {
-        url: newUser.image,
-      },
+      image: newUser.image,
       role: newUser.role,
       id: newUser._id,
     });

@@ -26,6 +26,7 @@ const Google = ({
         verified: email_verified,
       });
       const userData = jwt_decode(data?.data);
+      console.log(userData);
       ctxDispatch({
         type: "SAVE_USER",
         payload: {

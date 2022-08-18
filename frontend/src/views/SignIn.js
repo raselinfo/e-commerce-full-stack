@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import getQueryString from "../utils/getQueryString";
 import axios from "../utils/axios";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import formatError from "../utils/formateError";
 import { Store } from "../Store/Store";
 import jwt_decode from "jwt-decode";
+import Google from "../components/Google";
 const SignIn = () => {
   const { redirect } = getQueryString(["redirect"]);
   const [isShowPass, setIsShowPass] = useState(false);
@@ -15,6 +16,8 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const { dispatch: ctxDispatch } = useContext(Store);
   const navigate = useNavigate();
+  const signUpRef = useRef(null);
+  
   // Todo: Validate Form
   const validateForm = () => {
     return email.includes("@gmail.com") && password.length;
@@ -139,6 +142,9 @@ const SignIn = () => {
               />
               {!loading ? "Sign In" : "Wait"}
             </button>
+          </div>
+          <div className="flex justify-center" ref={signUpRef}>
+            <Google isOneTapOpen={false} buttonPlace={signUpRef} />
           </div>
           <div>
             <p className="font-bold text-lg mt-3">
