@@ -16,9 +16,7 @@ const userSchema = new Schema(
     local: {
       password: String,
     },
-    google: {
-      googl_id: String,
-    },
+  
     role: {
       type: String,
       enum: ["USER", "ADMIN"],

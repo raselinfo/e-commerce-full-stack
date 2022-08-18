@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Store } from "../Store/Store";
 import jwt_decode from "jwt-decode";
+import axios from "../utils/axios";
 const Google = ({
   isOneTapOpen = true,
   isOpenLoginButton = true,
@@ -11,12 +12,23 @@ const Google = ({
     dispatch: ctxDispatch,
   } = useContext(Store);
 
-  const handleCallbackResponse = (response) => {
+  const handleCallbackResponse = async (response) => {
     const { email, email_verified, name, picture } = jwt_decode(
       response.credential
     );
+    try {
+      const { data } = await axios.post("/auth/google/signin", {
+        email: email,
+        name: name,
+        picture: picture,
+        verified: email_verified,
+      });
+      const userData = jwt_decode(data?.data);
+      ctxDispatch({type:})
+    } catch (err) {
+      console.log(err);
+    }
   };
-  console.log(buttonPlace);
 
   useEffect(() => {
     if (!(Object.keys(userInfo).length && userInfo.email)) {
@@ -44,8 +56,6 @@ const Google = ({
       }
     }
   }, [isOneTapOpen, isOpenLoginButton, userInfo, buttonPlace]);
-
-  return <div>{/* <div id="signInDiv"></div> */}</div>;
 };
 
 export default Google;
