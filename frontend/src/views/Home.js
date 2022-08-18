@@ -5,8 +5,7 @@ import formateError from "../utils/formateError";
 import { Helmet } from "react-helmet-async";
 import MessageBox from "../components/MessageBox";
 import ProductSkeleton from "../Skeleton/ProductSkeleton";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import getQueryString from "../utils/getQueryString";
+import Skeleton from "react-loading-skeleton";
 const initialData = {
   loading: false,
   error: "",
@@ -30,7 +29,8 @@ const Home = () => {
     reducer,
     initialData
   );
-
+ 
+  
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: "REQUEST" });
@@ -41,17 +41,6 @@ const Home = () => {
         dispatch({ type: "FAIL", payload: formateError(err) });
       }
     };
-    const { email } = getQueryString(["email"]);
-
-    const getUser = async () => {
-      try {
-        const user = await axios.get(`/auth/login/success?email=${email}`);
-        console.log(user);
-      } catch (err) {
-        console.log("Error", err);
-      }
-    };
-    getUser();
     fetchProducts();
   }, []);
 
@@ -60,6 +49,7 @@ const Home = () => {
       <Helmet>
         <title>Home</title>
       </Helmet>
+     
       {loading ? (
         <div className="md:container md:mx-auto">
           <h1 className="md:text-5xl text-white sm:text-4xl text-3xl font-bold my-12">

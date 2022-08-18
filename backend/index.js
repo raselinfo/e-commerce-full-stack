@@ -1,13 +1,10 @@
 // Passport
-require("./service/passport/passport");
-const passport = require("passport");
 const express = require("express");
-const session = require("express-session");
 const cors = require("cors");
 const logger = require("./utils/logger");
 const connectDB = require("./db/db");
 const errorMiddleware = require("./middleware/error/errorMiddleware.js");
-const { PORT, MONGODB_URI, SESSION_SECRET } = require("./config");
+const { PORT, MONGODB_URI } = require("./config");
 const app = express();
 
 // Middleware
@@ -19,19 +16,7 @@ app.use(express.static("public"));
 // Todo: Cors Install
 app.use(cors());
 
-// Todo: Express Session
-app.use(
-  session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-  })
-);
 
-// Todo: Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session());
 // Todo: Logger
 logger(app);
 
