@@ -1,4 +1,10 @@
-import React, { useCallback, useReducer, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import getQueryString from "../utils/getQueryString";
 import { useDropzone } from "react-dropzone";
@@ -6,7 +12,7 @@ import axios from "../utils/axios";
 import { SyncLoader } from "react-spinners/";
 import { toast } from "react-toastify";
 import formateError from "../utils/formateError";
-import AuthSocialIcons from "../components/AuthSocialIcons";
+import Google from "../components/Google";
 const initialState = {
   error: "",
   loading: false,
@@ -34,6 +40,9 @@ const SignIn = () => {
   const [confirmPass, setConfirmPass] = useState("");
   const [image, setImage] = useState("");
   const [isError, setIsError] = useState("");
+  const [pathName, setPathName] = useState("");
+
+  const googleRef = useRef(null);
 
   // Todo: Image Dropzone
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
@@ -108,19 +117,11 @@ const SignIn = () => {
       : false;
   };
 
-  // Todo: Google Handler
-  const googleHandler = () => {
-    console.log("Google");
-  };
-  // Todo: Facebook Handler
-  const facebookHandler = () => {
-    console.log("facebook");
-  };
-  // Todo: Github Handler
-  const githubHandler = () => {
-    console.log("github");
-  };
+  useEffect(() => {
+    setPathName(window.location.pathname);
+  }, []);
 
+  console.log(pathName === "/signup");
   return (
     <div>
       <div className="form__wrapper bg-white shadow-lg mt-20 p-3  lg:w-2/6 md:w-3/6 w-full rounded-lg">
@@ -266,12 +267,8 @@ const SignIn = () => {
               </div>
             </button>
           </div>
-          <div className="social__wrapper">
-            <AuthSocialIcons
-              facebookHandler={facebookHandler}
-              googleHandler={googleHandler}
-              githubHandler={githubHandler}
-            />
+          <div className="social__wrapper flex justify-center" ref={googleRef}>
+            <Google isOneTapOpen={false} buttonPlace={googleRef} />
           </div>
           <div>
             <p className="font-bold text-lg mt-3">

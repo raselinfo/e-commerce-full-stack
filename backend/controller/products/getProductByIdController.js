@@ -1,5 +1,5 @@
 const getProductByProperty = require("../../service/products/getProductByProperty");
-const CustomError = require("../../utils/error");
+const CustomError = require("../../utils/Error");
 
 const getProductByIdController = async (req, res, next) => {
   try {

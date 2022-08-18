@@ -13,11 +13,10 @@ const userSchema = new Schema(
       require: [true, "Email is required"],
     },
     image: { type: Object, required: true },
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-      minLength: [8, "Password must be 8 Character"],
+    local: {
+      password: String,
     },
+  
     role: {
       type: String,
       enum: ["USER", "ADMIN"],

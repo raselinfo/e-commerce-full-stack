@@ -30,7 +30,7 @@ const signUp = async (user) => {
       to: newToken.email,
       subject: "Email Verification",
       html: `<p style="font-size:30px;font-weight:bold">
-      ${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.token}/${newToken.email}">Verify</a>
+      ${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.email}/${newToken.token}">Verify</a>
       </p>`,
     });
     // Todo:Save user to database
@@ -45,9 +45,10 @@ const signUp = async (user) => {
         name: user.name,
         email: user.email,
         image: { url: imageResult.url, public_id: imageResult.public_id },
-        password: hasPassword,
+        ["local.password"]: hasPassword,
       });
       const savedUser = await newUser.save();
+      console.log(savedUser);
       return { user: savedUser };
     } else {
       return { error: "Email Not Send" };

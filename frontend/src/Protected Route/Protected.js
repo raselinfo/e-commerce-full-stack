@@ -6,7 +6,7 @@ const Protected = ({ children }) => {
   const {
     state: { userInfo },
   } = useContext(Store);
-  return !userInfo._id ? (
+  return !userInfo.email ? (
     <Navigate to={`/signin?redirect=${pathName}`} />
   ) : (
     children

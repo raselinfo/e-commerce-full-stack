@@ -1,5 +1,5 @@
 const formateError = (err) => {
-  return err.message ? err.message : err;
+  return err?.message ? err?.message : err;
 };
 
 class CustomError {

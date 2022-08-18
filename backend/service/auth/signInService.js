@@ -25,7 +25,7 @@ const signInService = async ({ email, password }) => {
         to: newToken.email,
         subject: "Email Verification",
         html: `<p style="font-size:30px;font-weight:bold">
-      ${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.token}/${newToken.email}">Verify</a>
+      ${user.name} Please verify your profile by clicking this link <a href="${BASE_CLIENT_URL}/verify/${newToken.email}/${newToken.token}">Verify</a>
       </p>`,
       });
       if (accepted.length) {
@@ -35,7 +35,7 @@ const signInService = async ({ email, password }) => {
       }
     }
     //  Todo: Match Password
-    const match = await Password.verify(password, user.password);
+    const match = await Password.verify(password, user.local.password);
     if (!match) {
       return { error: "Password Not Match" };
     }
@@ -53,10 +53,6 @@ const signInService = async ({ email, password }) => {
 
     return {
       data: {
-        name: user.name,
-        _id: user._id,
-        email: user.email,
-        image: user.image.url,
         token: token,
       },
     };

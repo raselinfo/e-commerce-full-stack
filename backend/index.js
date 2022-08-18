@@ -1,3 +1,4 @@
+// Passport
 const express = require("express");
 const cors = require("cors");
 const logger = require("./utils/logger");
@@ -10,10 +11,11 @@ const app = express();
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('public'))
+app.use(express.static("public"));
 
 // Todo: Cors Install
 app.use(cors());
+
 
 // Todo: Logger
 logger(app);

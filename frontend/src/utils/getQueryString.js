@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @param {Array} quires []
  * @returns {Object} Object{}
  */
@@ -7,13 +7,13 @@
 const getQueryString = (quires = []) => {
   const queryString = window.location.search;
   const parameters = new URLSearchParams(queryString);
+
   const allQuires = quires.reduce((acc, item) => {
-    acc[item] = parameters.get("redirect") ?? "/";
+    acc[item] = parameters.get(item) ?? "/";
     return acc;
   }, {});
 
   return allQuires;
 };
 
-
-export default getQueryString
+export default getQueryString;

@@ -2,7 +2,7 @@ const data = require("../../data/data");
 const Product = require("../../model/Product");
 const Category = require("../../model/Category.js");
 const Review = require("../../model/Review.js");
-const CustomError = require("../../utils/error");
+const CustomError = require("../../utils/Error");
 
 exports.seedProductController = async (req, res, next) => {
   try {
