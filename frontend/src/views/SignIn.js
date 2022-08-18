@@ -6,6 +6,7 @@ import { SyncLoader } from "react-spinners/";
 import { toast } from "react-toastify";
 import formatError from "../utils/formateError";
 import { Store } from "../Store/Store";
+import jwt_decode from "jwt-decode";
 const SignIn = () => {
   const { redirect } = getQueryString(["redirect"]);
   const [isShowPass, setIsShowPass] = useState(false);
@@ -29,7 +30,18 @@ const SignIn = () => {
       try {
         const data = await axios.post("auth/signin", formData);
         if (data.status === 202) {
-          ctxDispatch({ type: "SAVE_USER", payload: data.data.data });
+          const userObject = jwt_decode(data.data.data.token);
+          console.log(userObject);
+          ctxDispatch({
+            type: "SAVE_USER",
+            payload: {
+              email: userObject.email,
+              name: userObject.name,
+              role: userObject.role,
+              id: userObject._id,
+              image: userObject.image,
+            },
+          });
           toast.success("Sign In Successful", {
             position: "bottom-right",
             autoClose: 10000,

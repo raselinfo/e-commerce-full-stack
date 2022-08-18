@@ -11,6 +11,7 @@ const googleSignIn = async ({ email, name, picture, verified }) => {
   try {
     const existUser = await UserService.findByProperty("email", email);
     if (existUser) {
+      existUser.image.public_id = undefined;
       token = createToken({
         name: existUser.name,
         email: existUser.email,
@@ -26,14 +27,15 @@ const googleSignIn = async ({ email, name, picture, verified }) => {
       image: picture,
       verified: verified,
     }).save();
-
+    newUser.image.public_id = undefined;
     token = createToken({
       name: newUser.name,
       email: newUser.email,
       image: {
-        url: newUser.image
+        url: newUser.image,
       },
       role: newUser.role,
+      id: newUser._id,
     });
 
     return { data: token };
