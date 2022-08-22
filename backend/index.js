@@ -26,11 +26,13 @@ logger(app);
  * Product Routes
  * Auth Routes
  * Verify Email
+ * Forgot Password
  */
 app.use("/api/v1", require("./routes/seedRoutes"));
 app.use("/api/v1", require("./routes/productRoutes"));
 app.use("/api/v1", require("./routes/auth/authRoutes"));
 app.use("/api/v1", require("./routes/verify/emailVerifyRoutes"));
+app.use("/api/v1", require("./routes/forgotPassword/forgotPasswordRoutes"));
 
 // Todo: Health Route
 app.get("/api/v1/health", (req, res) => {

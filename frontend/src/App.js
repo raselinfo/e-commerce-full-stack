@@ -12,6 +12,7 @@ import SignUp from "./views/SignUp";
 import VerifyMail from "./views/VerifyMail";
 import AuthProtect from "./Protected Route/AuthProtect";
 import Google from "./components/Google";
+import ForgotPassword from "./views/ForgotPassword";
 const rootPath = window.location.pathname;
 function App() {
   return (
@@ -56,6 +57,8 @@ function App() {
             </AuthProtect>
           }
         />
+        <Route path="/reset/password/:token" element={<ForgotPassword />} />
+        <Route path="*" element={<h1>Not Found 404 </h1>}/>
       </Routes>
     </>
   );

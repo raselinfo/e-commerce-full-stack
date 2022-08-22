@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "formik": "^2.2.9",
     "glamor": "^2.20.40",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
@@ -22,7 +23,8 @@
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.3",
     "react-toastify": "^9.0.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
