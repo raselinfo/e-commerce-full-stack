@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 
 /**
  * // Todo: Custom Form
@@ -8,19 +8,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
  * @param {function} onSubmit (values,{setSubmitting})=>{}
  * @returns Values on onSubmit function
  */
-const CustomForm = ({ fields, onSubmit, validation }) => {
+const CustomForm = ({ fields, onSubmit, validation, children }) => {
   const initialValue = {
     ...fields,
   };
-
-  const inputFeilds = Object.keys(fields).map((key) => {
-    return (
-      <span key={key}>
-        <Field type={key} name={key} />
-        <ErrorMessage name={key} component="p" />
-      </span>
-    );
-  });
 
   return (
     <Formik
@@ -28,14 +19,8 @@ const CustomForm = ({ fields, onSubmit, validation }) => {
       validationSchema={validation}
       onSubmit={onSubmit}
     >
-      {(props) => {
-        console.log(props);
-        return (
-          <Form>
-            {inputFeilds}
-            <button type="submit">Submit</button>
-          </Form>
-        );
+      {() => {
+        return <Form>{children}</Form>;
       }}
     </Formik>
   );
