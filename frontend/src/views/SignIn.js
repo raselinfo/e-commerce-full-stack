@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import getQueryString from "../utils/getQueryString";
 import axios from "../utils/axios";
@@ -15,6 +15,7 @@ import Button from "../components/Button/Button";
 const SignIn = () => {
   const { redirect } = getQueryString(["redirect"]);
   const [loading, setLoading] = useState(false);
+  const [isShowPass, setIsShowPass] = useState(false);
   const { dispatch: ctxDispatch } = useContext(Store);
   const navigate = useNavigate();
   const signUpRef = useRef(null);
@@ -23,17 +24,18 @@ const SignIn = () => {
   const fields = {
     email: "",
     password: "",
+    showPass: "",
   };
 
   const validationSchema = yup.object().shape({
     email: yup
       .string()
-      .email("Please Enter Valid Email")
-      .required("Email is Required"),
+      .email("⚠️ Please Enter Valid Email")
+      .required("⚠️ Email is Required"),
     password: yup
       .string()
-      .min(8, "Password should be minimum 8 character")
-      .required("Password is required"),
+      .min(8, "⚠️ Password should be minimum 8 character")
+      .required("⚠️ Password is required"),
   });
 
   const onSubmitHandler = ({ email, password }) => {
@@ -78,7 +80,12 @@ const SignIn = () => {
       }
     })();
   };
-
+  // Get Custom Form Values
+  const getValues = (values) => {
+    setTimeout(() => {
+      setIsShowPass(values);
+    }, 0);
+  };
   return (
     // <div>
     <div className="form__wrapper shadow-lg p-5 bg-white  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg">
@@ -87,13 +94,14 @@ const SignIn = () => {
         Sign
         <span className="text-yellow-500"> In</span>
       </h3>
-      
+
       {/* Custom Form */}
       <div className="input__group">
         <CustomForm
           fields={fields}
           validation={validationSchema}
           onSubmit={onSubmitHandler}
+          getValues={(values) => getValues(values.showPass)}
         >
           {/* Email Field */}
           <InputField
@@ -104,9 +112,23 @@ const SignIn = () => {
           {/* Password Field */}
           <InputField
             placeholder="Enter Your Password"
-            type="password"
+            type={isShowPass ? "text" : "password"}
             name="password"
           />
+          {/* Show Password */}
+          <div>
+            <label className="select-none" htmlFor="showPass">
+              Show Password
+            </label>
+            <InputField
+              type="checkbox"
+              name="showPass"
+              className=" w-auto inline ml-3"
+              onChange={(e) => {
+                console.log(e.target.value);
+              }}
+            />
+          </div>
           <Button
             text={loading ? "Wait" : "Sign In"}
             className={loading && "text-gray-300"}

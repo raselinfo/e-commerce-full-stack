@@ -11,15 +11,18 @@ const InputField = ({
   type = "text",
   name: fieldName = "text",
   placeholder = "",
+  className: classes = "",
 }) => {
   return (
     <>
       <Field
         type={type}
         name={fieldName || type}
-        className="block shadow-md py-4 px-5 text-lg font-bold rounded-lg w-full mb-3"
+        className={`block shadow-md py-4 px-5 text-lg font-bold rounded-lg w-full mb-3 ${classes}`}
         placeholder={placeholder}
+        id={fieldName}
       />
+
       <ErrorMessage
         name={fieldName || type}
         component="p"

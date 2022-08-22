@@ -225,6 +225,20 @@ const SignIn = () => {
             )}
           </div>
 
+          ----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+          -------------------------------
           <div className="input__group my-5">
             <label className="block text-2xl" htmlFor="confirm_password">
               Confirm Password<span className="text-red-500 font-bold">*</span>
