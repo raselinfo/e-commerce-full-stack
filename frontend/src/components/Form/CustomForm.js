@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 
 /**
@@ -6,12 +6,14 @@ import { Formik, Form } from "formik";
  * @param {Object} fields Object
  * @param {Object} validation Yup validation Schema
  * @param {function} onSubmit (values,{setSubmitting})=>{}
+ * @param {function} getValues (values)=>{}
  * @returns Values on onSubmit function
  */
-const CustomForm = ({ fields, onSubmit, validation, children }) => {
+const CustomForm = ({ fields, onSubmit, validation, children, getValues }) => {
   const initialValue = {
     ...fields,
   };
+ 
 
   return (
     <Formik
@@ -19,7 +21,8 @@ const CustomForm = ({ fields, onSubmit, validation, children }) => {
       validationSchema={validation}
       onSubmit={onSubmit}
     >
-      {() => {
+      {({ values }) => {
+        getValues && getValues(values);
         return <Form>{children}</Form>;
       }}
     </Formik>
