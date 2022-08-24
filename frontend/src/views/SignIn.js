@@ -142,6 +142,15 @@ const SignIn = () => {
         </CustomForm>
 
         {/* Footer Part */}
+        <div>
+          {" "}
+          <Link
+            to="/forgot/password"
+            className="text-blue-500 underline font-bold mt-2 block"
+          >
+            Forgot Password?
+          </Link>
+        </div>
         <div className="flex justify-center" ref={signUpRef}>
           <Google isOneTapOpen={false} buttonPlace={signUpRef} />
         </div>

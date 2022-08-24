@@ -13,6 +13,7 @@ import VerifyMail from "./views/VerifyMail";
 import AuthProtect from "./Protected Route/AuthProtect";
 import Google from "./components/Google";
 import ForgotPassword from "./views/ForgotPassword";
+import ResetPassword from "./views/ResetPassword";
 const rootPath = window.location.pathname;
 function App() {
   return (
@@ -58,10 +59,7 @@ function App() {
           }
         />
         <Route path="/forgot/password" element={<ForgotPassword />} />
-        <Route
-          path="/reset/password/:token"
-          element={<h1>REset Passworod</h1>}
-        />
+        <Route path="/reset/password/:token" element={<ResetPassword />} />
         <Route path="*" element={<h1>Not Found 404 </h1>} />
       </Routes>
     </>
