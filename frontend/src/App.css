@@ -1,4 +1,3 @@
-
 .ratting_wrapper [class*="fa-"] {
   color: #EAB388;
 }
@@ -15,3 +14,8 @@
   transform: translate(-50%, -50%);
 }
 
+#spinner {
+  position: absolute !important;
+  top:0;
+  left:0;
+}

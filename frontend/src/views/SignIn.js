@@ -1,8 +1,8 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import getQueryString from "../utils/getQueryString";
 import axios from "../utils/axios";
-import { SyncLoader } from "react-spinners/";
+import { BarLoader } from "react-spinners/";
 import { toast } from "react-toastify";
 import formatError from "../utils/formateError";
 import { Store } from "../Store/Store";
@@ -124,25 +124,19 @@ const SignIn = () => {
               type="checkbox"
               name="showPass"
               className=" w-auto inline ml-3"
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
             />
           </div>
-          <Button
-            text={loading ? "Wait" : "Sign In"}
-            className={loading && "text-gray-300"}
-            disabled={loading}
-            variant={loading ? "gray" : "primary"}
-          >
-            <SyncLoader
+          <Button text={loading ? "Wait..." : "Sign In"} disabled={loading}>
+            <BarLoader
               color="#000"
               loading={loading}
+              id="spinner"
               cssOverride={{
                 marginRight: 10,
               }}
               margin={5}
               size={10}
+              disabled={loading}
             />
           </Button>
         </CustomForm>

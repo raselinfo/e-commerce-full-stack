@@ -26,13 +26,13 @@ const Button = ({
 }) => {
   return (
     <button
-      className={` p-1 mt-1 md:px-3 md:py-2 rounded-lg font-bold ${classes}`}
+      className={` p-1 mt-1 md:px-3 md:py-2 rounded-lg font-bold overflow-hidden relative ${classes}`}
       style={colorSchema[variant]}
       onClick={onClick}
       disabled={disabled}
       type={type}
     >
-      {children && children} {text}
+      {children && children} <span className="block">{text}</span>
     </button>
   );
 };

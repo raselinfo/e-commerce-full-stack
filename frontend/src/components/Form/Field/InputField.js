@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Field, ErrorMessage } from "formik";
 
 /**
@@ -7,12 +7,15 @@ import { Field, ErrorMessage } from "formik";
  * @returns A input Field
  */
 
-const InputField = ({
-  type = "text",
-  name: fieldName = "text",
-  placeholder = "",
-  className: classes = "",
-}) => {
+const InputField = (
+  {
+    type = "text",
+    name: fieldName = "text",
+    placeholder = "",
+    className: classes = "",
+  },
+  ref
+) => {
   return (
     <>
       <Field
@@ -32,4 +35,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default forwardRef(InputField);
