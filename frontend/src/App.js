@@ -57,8 +57,12 @@ function App() {
             </AuthProtect>
           }
         />
-        <Route path="/reset/password/:token" element={<ForgotPassword />} />
-        <Route path="*" element={<h1>Not Found 404 </h1>}/>
+        <Route path="/forgot/password" element={<ForgotPassword />} />
+        <Route
+          path="/reset/password/:token"
+          element={<h1>REset Passworod</h1>}
+        />
+        <Route path="*" element={<h1>Not Found 404 </h1>} />
       </Routes>
     </>
   );

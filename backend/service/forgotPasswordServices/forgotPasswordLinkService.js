@@ -26,10 +26,8 @@ const forgotPasswordLinkService = async (email) => {
       to: user.email,
       subject: `${STORE_NAME}: Password Reset`,
       html: `
-       <h1> ${user.name} this is your reset password link. Don't share this link with anyone.</h1><br>
-      <button><a href="${BASE_CLIENT_URL}/reset/password/${newDbToken.token}">Reset Password</a></button>
-      <br>
-      <b>${BASE_CLIENT_URL}/reset/password/${newDbToken.token}</b>
+       <h1> ${user.name} this is your reset password link. Don't share this link with anyone.</h1>
+     <a style="font-weight:bold;font-size:20px;text-decoration:none" href="${BASE_CLIENT_URL}/reset/password/${newDbToken.token}">Reset Password</a>
       `,
     });
     // Todo: Send Success Message
