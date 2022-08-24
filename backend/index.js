@@ -16,7 +16,6 @@ app.use(express.static("public"));
 // Todo: Cors Install
 app.use(cors());
 
-
 // Todo: Logger
 logger(app);
 
@@ -27,12 +26,14 @@ logger(app);
  * Auth Routes
  * Verify Email
  * Forgot Password
+ * Reset Password
  */
 app.use("/api/v1", require("./routes/seedRoutes"));
 app.use("/api/v1", require("./routes/productRoutes"));
 app.use("/api/v1", require("./routes/auth/authRoutes"));
 app.use("/api/v1", require("./routes/verify/emailVerifyRoutes"));
 app.use("/api/v1", require("./routes/forgotPassword/forgotPasswordRoutes"));
+app.use("/api/v1", require("./routes/resetPassword/resetPassRoutes"));
 
 // Todo: Health Route
 app.get("/api/v1/health", (req, res) => {
