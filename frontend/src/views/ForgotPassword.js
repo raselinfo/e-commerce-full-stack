@@ -9,7 +9,7 @@ import formatError from "../utils/formateError";
 import { BarLoader } from "react-spinners";
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
-  const submitHandler = async ({ email }, data) => {
+  const submitHandler = async ({ email }, { resetForm }) => {
     if (loading) return;
     if (!email) {
       return toast.error("Enter Email First", {
@@ -35,7 +35,7 @@ const ForgotPassword = () => {
         });
       }
       setLoading(false);
-      data.resetForm();
+      resetForm();
     } catch (err) {
       toast.error(formatError(err), {
         position: "bottom-right",

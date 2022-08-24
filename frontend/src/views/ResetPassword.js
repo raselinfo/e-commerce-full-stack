@@ -5,9 +5,17 @@ import CustomForm from "../components/Form/CustomForm";
 import InputField from "../components/Form/Field/InputField";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import { useParams, useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import axios from "../utils/axios";
+import formateError from "../utils/formateError";
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
+  const { token } = useParams();
+  const navigate = useNavigate();
+  const decoded = jwt_decode(token);
+
   //   Todo: Form Validation
   const fields = {
     password: "",
@@ -29,7 +37,10 @@ const ResetPassword = () => {
   });
 
   //   Todo: Submit Handler
-  const submitHandler = ({ password, confirm_password }, data) => {
+  const submitHandler = async (
+    { password, confirm_password },
+    { resetForm }
+  ) => {
     if (loading) return;
     if (password !== confirm_password) {
       return toast.error("Password Not Same", {
@@ -40,7 +51,35 @@ const ResetPassword = () => {
         pauseOnHover: true,
       });
     }
-    data.resetForm();
+    try {
+      setLoading(true);
+      const data = await axios.post(`/reset/password/${token}`, {
+        password,
+        confirm_password,
+        email: decoded.email,
+      });
+      if (data.status === 200) {
+        toast.success(data.data.message, {
+          position: "bottom-right",
+          autoClose: 10000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+        });
+      }
+      resetForm();
+      setLoading(false);
+      navigate("/signin");
+    } catch (err) {
+      toast.error(formateError(err), {
+        position: "bottom-right",
+        autoClose: 10000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      setLoading(false);
+    }
   };
 
   return (

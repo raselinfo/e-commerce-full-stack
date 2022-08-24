@@ -39,10 +39,9 @@ const resetPassService = async ({
     // Delete Forgot Token
     await ForgotPassword.deleteMany({ email: existUser.email });
     // Todo: Return Success Message
-    return { result: "Success" };
+    return { result: "Password Change Success" };
   } catch (error) {
     return { error };
   }
 };
 module.exports = resetPassService;
-// $2b$10$o55D9PjooA.qlsImiYl9tOuvs/YxBm0rEENycUrIlFUzy4pD7Zm7.
