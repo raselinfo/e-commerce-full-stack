@@ -2,7 +2,6 @@ import { useCallback, useContext, useEffect } from "react";
 import { Store } from "../Store/Store";
 import jwt_decode from "jwt-decode";
 import axios from "../utils/axios";
-import formateError from "../utils/formateError";
 import { toast } from "react-toastify";
 const Google = ({
   isOneTapOpen = true,
@@ -27,7 +26,6 @@ const Google = ({
           verified: email_verified,
         });
         const userData = jwt_decode(data?.data);
-        console.log(userData);
         ctxDispatch({
           type: "SAVE_USER",
           payload: {

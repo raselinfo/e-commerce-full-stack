@@ -16,6 +16,11 @@
 
 #spinner {
   position: absolute !important;
-  top:0;
-  left:0;
+  top     : 0;
+  left    : 0;
+}
+
+.dropdown {
+  left   : -40px;
+  z-index: 999999999999999;
 }

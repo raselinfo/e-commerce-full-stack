@@ -1,4 +1,6 @@
 {
+  "license": "MIT",
+  "private": true,
   "scripts": {
     "server": "cd backend && yarn dev",
     "client": "cd frontend && yarn start",

@@ -50,6 +50,10 @@ const reducer = (state, { type, payload = {} }) => {
     case "SAVE_USER":
       localStorage.setItem("userInfo", JSON.stringify(payload));
       return { ...state, userInfo: payload };
+
+    case "SIGN_OUT":
+      localStorage.removeItem("userInfo");
+      return { ...state, cart: { ...state.cart }, userInfo: {} };
     default:
       return state;
   }
