@@ -5,7 +5,6 @@ import Home from "./views/Home";
 import Layout from "./components/Layout";
 import ProductDetails from "./views/ProductDetails";
 import Cart from "./views/Cart";
-import Checkout from "./views/Checkout";
 import SignIn from "./views/SignIn";
 import Protected from "./Protected Route/Protected";
 import SignUp from "./views/SignUp";
@@ -14,6 +13,8 @@ import AuthProtect from "./Protected Route/AuthProtect";
 import Google from "./components/Google";
 import ForgotPassword from "./views/ForgotPassword";
 import ResetPassword from "./views/ResetPassword";
+import Shipping from "./views/Shipping";
+
 const rootPath = window.location.pathname;
 function App() {
   return (
@@ -27,10 +28,26 @@ function App() {
         <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route
-          path="/checkout"
+          path="/shipping"
           element={
             <Protected>
-              <Checkout />
+              <Shipping />
+            </Protected>
+          }
+        />
+        <Route
+          path="/order"
+          element={
+            <Protected>
+              <Shipping />
+            </Protected>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <Protected>
+              <Shipping />
             </Protected>
           }
         />
