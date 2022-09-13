@@ -9,13 +9,16 @@ import { useNavigate } from "react-router-dom";
 const Shipping = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { dispatch: ctxDispatch } = useContext(Store);
+  const {
+    state: { userInfo },
+    dispatch: ctxDispatch,
+  } = useContext(Store);
   const fields = {
-    name: "",
-    address: "",
-    city: "",
-    postal: "",
-    country: "",
+    name: userInfo.address_details.name || "",
+    address: userInfo.address_details.address || "",
+    city: userInfo.address_details.city || "",
+    postal: userInfo.address_details.postal || "",
+    country: userInfo.address_details.country || "",
   };
   const onSubmit = (values) => {
     setLoading(true);
