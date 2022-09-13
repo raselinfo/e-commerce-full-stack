@@ -3,11 +3,14 @@ import { Store } from "../Store/Store";
 import jwt_decode from "jwt-decode";
 import axios from "../utils/axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const Google = ({
   isOneTapOpen = true,
   isOpenLoginButton = true,
   buttonPlace,
+  redirectUrl = "/",
 }) => {
+  const navigate = useNavigate();
   const {
     state: { userInfo },
     dispatch: ctxDispatch,
@@ -37,6 +40,7 @@ const Google = ({
             // [userData.image.public_id]: undefined,
           },
         });
+        navigate(redirectUrl);
       } catch (err) {
         toast.error("Can Not Login. Try Again", {
           position: "bottom-right",

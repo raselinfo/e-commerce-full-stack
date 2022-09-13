@@ -57,7 +57,7 @@ const reducer = (state, { type, payload = {} }) => {
 
     case "SAVE_ADDRESS":
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      const updatedUser = { ...userInfo, address_details: { ...payload } };
+      const updatedUser = { ...userInfo, shipping_address: { ...payload } };
       localStorage.setItem("userInfo", JSON.stringify(updatedUser));
       return {
         ...state,

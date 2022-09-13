@@ -14,11 +14,11 @@ const Shipping = () => {
     dispatch: ctxDispatch,
   } = useContext(Store);
   const fields = {
-    name: userInfo.address_details.name || "",
-    address: userInfo.address_details.address || "",
-    city: userInfo.address_details.city || "",
-    postal: userInfo.address_details.postal || "",
-    country: userInfo.address_details.country || "",
+    name: userInfo.address_details?.name || "",
+    address: userInfo.address_details?.address || "",
+    city: userInfo.address_details?.city || "",
+    postal: userInfo.address_details?.postal || "",
+    country: userInfo.address_details?.country || "",
   };
   const onSubmit = (values) => {
     setLoading(true);

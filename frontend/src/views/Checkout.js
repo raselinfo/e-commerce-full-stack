@@ -10,7 +10,6 @@ const CheckOut = () => {
   let RenderElement = <h1>Loading</h1>;
   const [currentStep, setCurrentStep] = useState(step);
   const location = useLocation();
-
   useEffect(() => {
     if (step === "shipping") {
       setCurrentStep("shipping");
