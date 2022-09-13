@@ -2,22 +2,23 @@ import React, { forwardRef } from "react";
 import { Field, ErrorMessage } from "formik";
 
 /**
- *
- * @param {{type,fieldName}} {type,fieldName}
+ *  InputField
+ * @param {{type,fieldName,placeholder,className}} {type,fieldName}
  * @returns A input Field
  */
-
 const InputField = (
   {
     type = "text",
     name: fieldName = "text",
     placeholder = "",
     className: classes = "",
+    children,
   },
   ref
 ) => {
   return (
     <>
+      {children} 
       <Field
         type={type}
         name={fieldName || type}

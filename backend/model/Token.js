@@ -4,5 +4,5 @@ const tokenSchema = new Schema({
   token: { type: String, required: true },
 });
 
-const Token = model("Token", tokenSchema);
+const Token = model("Token", tokenSchema,"verify_token");
 module.exports = Token;

@@ -16,6 +16,71 @@
 
 #spinner {
   position: absolute !important;
-  top:0;
-  left:0;
+  top     : 0;
+  left    : 0;
+}
+
+.dropdown {
+  left   : -40px;
+  z-index: 999999999999999;
+}
+
+.step_icon {
+  position: relative;
+}
+
+.step_icon::after {
+  content  : "";
+  position : absolute;
+  width    : 245px;
+  height   : 10px;
+  right    : 0;
+  top      : 50%;
+  left     : 99%;
+  transform: translate(0%, -50%);
+}
+
+
+.step_container {
+  width   : 50%;
+  margin  : 0 auto;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 1455px) {
+  .step_icon::after {
+    width: 180px;
+  }
+}
+
+@media only screen and (max-width: 1070px) {
+  .step_container {
+    width: 100%;
+  }
+
+  .step_icon::after {
+    width: 250px;
+  }
+}
+
+@media only screen and (max-width: 775px) {
+  .step_icon::after {
+    width: 210px;
+  }
+
+  .step_icon {
+    font-size: 25px;
+    width    : 50px;
+    height   : 50px;
+  }
+
+  .step {
+    font-size: 18px !important;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .step_container {
+    display: none;
+  }
 }

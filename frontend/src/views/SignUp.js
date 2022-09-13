@@ -40,7 +40,6 @@ const SignIn = () => {
   const { redirect } = getQueryString(["redirect"]);
   const [image, setImage] = useState("");
   const [isError, setIsError] = useState("");
-  const [pathName, setPathName] = useState("");
   const [isShowPass, setIsShowPass] = useState(false);
   const googleRef = useRef(null);
 
@@ -67,7 +66,7 @@ const SignIn = () => {
     maxFiles: 1,
     maxSize: 2e6,
   });
-  //Todo: Get Redirect Query
+  // Todo: Get Redirect Query
   const handleRegister = async ({
     name,
     email,
@@ -134,24 +133,24 @@ const SignIn = () => {
   const validationSchema = yup.object().shape({
     name: yup
       .string()
-      .min(10, "Name should not be less than 10 character")
-      .max(25, "Name should not be more than 25 character")
-      .required("Name Is Required"),
+      .min(10, "⚠️ Name should not be less than 10 character")
+      .max(25, "⚠️ Name should not be more than 25 character")
+      .required("⚠️ Name Is Required"),
     email: yup
       .string()
-      .lowercase("Email should be lowercase")
-      .email("Field should contain a valid e-mail")
-      .required("E-mail is required"),
+      .lowercase("⚠️ Email should be lowercase")
+      .email("⚠️ Field should contain a valid e-mail")
+      .required("⚠️ E-mail is required"),
     password: yup
       .string()
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        "⚠️ Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
       )
-      .required("Password is required"),
+      .required("⚠️ Password is required"),
     confirm_password: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Password must match"),
+      .oneOf([yup.ref("password"), null], "⚠️ Password must match"),
   });
 
   return (
@@ -204,7 +203,9 @@ const SignIn = () => {
                 <p>Drop One image here.or click to select files</p>
               )}
             </div>
-            {isError && <p className="text-yellow-600 font-bold">{isError}</p>}
+            {isError && (
+              <p className="text-yellow-600 font-bold">⚠️ {isError}</p>
+            )}
           </div>
           {/* Email */}
           <label className="block text-2xl" htmlFor="email">

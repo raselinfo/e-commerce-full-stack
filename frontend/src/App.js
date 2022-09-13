@@ -5,7 +5,6 @@ import Home from "./views/Home";
 import Layout from "./components/Layout";
 import ProductDetails from "./views/ProductDetails";
 import Cart from "./views/Cart";
-import Checkout from "./views/Checkout";
 import SignIn from "./views/SignIn";
 import Protected from "./Protected Route/Protected";
 import SignUp from "./views/SignUp";
@@ -13,6 +12,9 @@ import VerifyMail from "./views/VerifyMail";
 import AuthProtect from "./Protected Route/AuthProtect";
 import Google from "./components/Google";
 import ForgotPassword from "./views/ForgotPassword";
+import ResetPassword from "./views/ResetPassword";
+import CheckOut from "./views/Checkout";
+
 const rootPath = window.location.pathname;
 function App() {
   return (
@@ -29,10 +31,11 @@ function App() {
           path="/checkout"
           element={
             <Protected>
-              <Checkout />
+              <CheckOut />
             </Protected>
           }
         />
+
         <Route
           path="/signin"
           element={
@@ -58,10 +61,7 @@ function App() {
           }
         />
         <Route path="/forgot/password" element={<ForgotPassword />} />
-        <Route
-          path="/reset/password/:token"
-          element={<h1>REset Passworod</h1>}
-        />
+        <Route path="/reset/password/:token" element={<ResetPassword />} />
         <Route path="*" element={<h1>Not Found 404 </h1>} />
       </Routes>
     </>
