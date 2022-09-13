@@ -44,7 +44,7 @@ const Cart = () => {
               </h3>
               <h3 className="sm:text-3xl font-bold mt-3">💲{totalAmount}</h3>
               <Link
-                to="/shipping"
+                to="/checkout?step=shipping"
                 className="bg-yellow-500 py-4 px-5 block font-bold rounded-xl text-2xl mt-5 hover:bg-yellow-600"
               >
                 🛒Proceed To Checkout

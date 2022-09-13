@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import getQueryString from "../../utils/getQueryString";
+import { useNavigate } from "react-router-dom";
 const stepBarSchema = [
   {
     id: 1,
@@ -22,23 +23,25 @@ const stepBarSchema = [
 ];
 
 const StepBar = ({ steps = stepBarSchema }) => {
-  const currentURL = window.location.pathname.split("/")[1];
+  const navigate = useNavigate();
+  const { step } = getQueryString(["step"]);
+  const currentStep = step;
   const [states, setStates] = useState([]);
   const lastIndex = (id) => {
     return stepBarSchema.length === id;
   };
 
   useEffect(() => {
-    if (currentURL === "shipping") {
+    if (currentStep === "shipping") {
       setStates(["SHIPPING"]);
-    }
-    if (currentURL === "payment") {
+    } else if (currentStep === "payment") {
       setStates(["SHIPPING", "PAYMENT"]);
-    }
-    if (currentURL === "order") {
+    } else if (currentStep === "order") {
       setStates(["SHIPPING", "PAYMENT", "ORDER"]);
+    } else {
+      navigate("/");
     }
-  }, [currentURL]);
+  }, [currentStep, navigate]);
 
   return (
     <div className="step_container flex  ">

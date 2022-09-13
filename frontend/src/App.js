@@ -13,7 +13,7 @@ import AuthProtect from "./Protected Route/AuthProtect";
 import Google from "./components/Google";
 import ForgotPassword from "./views/ForgotPassword";
 import ResetPassword from "./views/ResetPassword";
-import Shipping from "./views/Shipping";
+import CheckOut from "./views/Checkout";
 
 const rootPath = window.location.pathname;
 function App() {
@@ -28,29 +28,14 @@ function App() {
         <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route
-          path="/shipping"
+          path="/checkout"
           element={
             <Protected>
-              <Shipping />
+              <CheckOut />
             </Protected>
           }
         />
-        <Route
-          path="/order"
-          element={
-            <Protected>
-              <Shipping />
-            </Protected>
-          }
-        />
-        <Route
-          path="/payment"
-          element={
-            <Protected>
-              <Shipping />
-            </Protected>
-          }
-        />
+
         <Route
           path="/signin"
           element={
