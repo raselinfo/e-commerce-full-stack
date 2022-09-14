@@ -79,19 +79,28 @@ const Payment = () => {
             <img className="w-24" src={Stripe} alt="stripe" />
           </label>
         </div>
-        <Button onClick={savePaymentMethod} text="NEXT" className="text-2xl">
-          <BarLoader
-            color="#000"
-            loading={loading}
-            id="spinner"
-            cssOverride={{
-              marginRight: 10,
-            }}
-            margin={5}
-            size={10}
-            disabled={loading}
+        <div className="flex gap-3">
+          <Button
+            text="BACK"
+            onClick={() =>
+              navigate("/checkout?step=shipping", { replace: true })
+            }
+            className="text-2xl"
           />
-        </Button>
+          <Button onClick={savePaymentMethod} text="NEXT" className="text-2xl">
+            <BarLoader
+              color="#000"
+              loading={loading}
+              id="spinner"
+              cssOverride={{
+                marginRight: 10,
+              }}
+              margin={5}
+              size={10}
+              disabled={loading}
+            />
+          </Button>
+        </div>
       </div>
     </div>
   );
