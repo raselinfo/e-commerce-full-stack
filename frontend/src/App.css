@@ -47,6 +47,12 @@
   overflow: hidden;
 }
 
+.payment_checkbox {
+  display   : inline-block;
+  width     : 30px;
+  height    : 30px;
+}
+
 @media only screen and (max-width: 1455px) {
   .step_icon::after {
     width: 180px;
