@@ -4,11 +4,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "dompurify": "^2.4.1",
     "formik": "^2.2.9",
     "glamor": "^2.20.40",
     "js-cookie": "^3.0.1",
@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI= react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -57,9 +57,5 @@
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.6"
-  },
-  "resolutions": {
-    "**/react": "17.0.2",
-    "**/react-dom": "17.0.2"
   }
 }
