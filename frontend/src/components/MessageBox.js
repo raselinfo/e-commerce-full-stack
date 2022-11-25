@@ -1,4 +1,6 @@
+
 import DOMPurify from 'dompurify';
+
 const MessageBox = ({ error, message }) => {
   let text = error ? `❌ ${error}` : message;
   return (

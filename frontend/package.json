@@ -31,8 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:docker": "WATCHPACK_POLLING=true react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI= react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -58,5 +57,9 @@
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.6"
+  },
+  "resolutions": {
+    "**/react": "17.0.2",
+    "**/react-dom": "17.0.2"
   }
 }
