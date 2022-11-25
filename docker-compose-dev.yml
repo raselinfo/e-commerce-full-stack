@@ -28,7 +28,7 @@ services:
 
   # Client
   client:
-    container_name: client
+    container_name: client_container
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
