@@ -47,6 +47,18 @@
   overflow: hidden;
 }
 
+.payment_checkbox {
+  display: inline-block;
+  width  : 30px;
+  height : 30px;
+}
+
+.order_edit {
+  position: absolute;
+  top     : 10px;
+  right   : 10px;
+}
+
 @media only screen and (max-width: 1455px) {
   .step_icon::after {
     width: 180px;

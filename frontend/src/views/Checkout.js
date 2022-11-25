@@ -10,14 +10,13 @@ const CheckOut = () => {
   let RenderElement = <h1>Loading</h1>;
   const [currentStep, setCurrentStep] = useState(step);
   const location = useLocation();
-
   useEffect(() => {
     if (step === "shipping") {
       setCurrentStep("shipping");
     } else if (step === "payment") {
       setCurrentStep("payment");
     } else {
-      setCurrentStep("place_order");
+      setCurrentStep("order");
     }
   }, [step, location]);
 
@@ -26,7 +25,7 @@ const CheckOut = () => {
     RenderElement = Shipping;
   } else if (currentStep === "payment") {
     RenderElement = Payment;
-  } else if (currentStep === "place_order") {
+  } else if (currentStep === "order") {
     RenderElement = PlaceOrder;
   } else {
     return <Navigate to="/" replace />;

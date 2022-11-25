@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  # API
+  api:
+    container_name: e-commerce-api
+    build: ./backend/Dockerfile.prod
+    restart: always
+    ports:
+      - 5000:5000
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo_db
+    volumes:
+      - .:/user/src/app:ro
+      - /user/src/app/node_modules
+  # MOngoDB
+  mongo_db:
+    container_name: mongo_db_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_db:/data/db
+
+  # Client
+  client:
+    container_name: client
+    build: ./frontend/Dockerfile.prod
+    restart: always
+    ports:
+      - 4000:4000
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - mongo_db
+      - api
+    volumes:
+      - .:/user/src/app:ro
+      - /user/src/app/node_modules
+
+# Mondodb Volume
+volumes:
+  mongo_db: {}

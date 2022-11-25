@@ -10,16 +10,20 @@ const Shipping = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const {
-    state: { userInfo },
+    state: {
+      cart: { shipping_address },
+    },
     dispatch: ctxDispatch,
   } = useContext(Store);
+  // Fields
   const fields = {
-    name: userInfo.address_details.name || "",
-    address: userInfo.address_details.address || "",
-    city: userInfo.address_details.city || "",
-    postal: userInfo.address_details.postal || "",
-    country: userInfo.address_details.country || "",
+    name: shipping_address?.name || "",
+    address: shipping_address?.address || "",
+    city: shipping_address?.city || "",
+    postal: shipping_address?.postal || "",
+    country: shipping_address?.country || "",
   };
+  // Submit Handler
   const onSubmit = (values) => {
     setLoading(true);
     if (!values.name) return false;
@@ -27,6 +31,7 @@ const Shipping = () => {
     setLoading(false);
     navigate("/checkout?step=payment");
   };
+  // Yup Validation
   const validation = yup.object({
     name: yup
       .string()
@@ -37,6 +42,8 @@ const Shipping = () => {
     postal: yup.number().min(3).required("Postal code is required!"),
     country: yup.string().min(2).required("Country is required!"),
   });
+
+  // JSX
   return (
     <div className="md:w-1/2 sm:w-full mx-auto bg-white md:my-28 p-5 rounded-lg">
       <h2 className="text-4xl mb-5 font-bold uppercase">
@@ -73,7 +80,7 @@ const Shipping = () => {
             Country <span className="text-red-500 font-bold">*</span>
           </label>
         </InputField>
-        <Button text="Submit" className="text-2xl">
+        <Button text="NEXT" className="text-2xl">
           <BarLoader
             color="#000"
             loading={loading}

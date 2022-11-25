@@ -18,7 +18,7 @@ const Cart = () => {
 
   return !cartItems.length ? (
     <MessageBox
-      message={`No products. <a href="/" class="text-red-700 underline decoration-red-4 text-lg block">continue shopping</a>`}
+      message={`No products. <a href="/" className="text-red-700 underline decoration-red-4 text-lg block">continue shopping</a>`}
     />
   ) : (
     <div className="container mx-auto">

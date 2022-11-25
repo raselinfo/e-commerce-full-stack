@@ -13,7 +13,8 @@ import InputField from "../components/Form/Field/InputField";
 import * as yup from "yup";
 import Button from "../components/Button/Button";
 const SignIn = () => {
-  const { redirect } = getQueryString(["redirect"]);
+  const { redirect, step } = getQueryString(["redirect", "step"]);
+  const redirectUrl = `${redirect}${step && "?step=" + step}`.trim();
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
   const { dispatch: ctxDispatch } = useContext(Store);
@@ -66,7 +67,7 @@ const SignIn = () => {
             pauseOnHover: false,
           });
           setLoading(false);
-          navigate(redirect);
+          navigate(redirectUrl);
         }
       } catch (err) {
         toast.error(formatError(err), {
@@ -152,7 +153,11 @@ const SignIn = () => {
           </Link>
         </div>
         <div className="flex justify-center" ref={signUpRef}>
-          <Google isOneTapOpen={false} buttonPlace={signUpRef} />
+          <Google
+            redirectUrl={redirectUrl}
+            isOneTapOpen={false}
+            buttonPlace={signUpRef}
+          />
         </div>
         <div>
           <p className="font-bold text-lg mt-3">
