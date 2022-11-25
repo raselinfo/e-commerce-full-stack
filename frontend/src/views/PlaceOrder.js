@@ -17,11 +17,11 @@ const PlaceOrder = () => {
   }, [payment_method, navigate]);
 
   return (
-    <div className="md:w-5/6 sm:w-full mx-auto  md:my-28 p-5 rounded-lg">
+    <div className="md:w-5/6  mx-auto  md:my-28">
       <h2 className="text-5xl mb-5 text-white font-bold ">
         Preview <span className="text-yellow-500">Order</span>
       </h2>
-      <div className="flex gap-5">
+      <div className="flex  gap-y-5 lg:gap-x-5 flex-col lg:flex-row justify-center">
         <div className="left order-1 w-full">
           {/* Shipping Details */}
           <div className="bg-white rounded-xl relative p-5 mb-5">
@@ -73,7 +73,7 @@ const PlaceOrder = () => {
           </div>
         </div>
         {/* Right */}
-        <div className="bg-white p-5 rounded-xl order-2 w-1/2">
+        <div className="bg-white p-5 rounded-xl order-2 w-full md:w-1/2">
           <h3 className="text-3xl font-bold">
             Order <span className="text-yellow-500">Summary</span>
           </h3>
