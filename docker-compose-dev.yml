@@ -22,7 +22,7 @@ services:
     image: mongo:latest
     restart: always
     ports:
-      - 27017:27017
+      - 2717:27017
     volumes:
       - mongo_db:/data/db
 
