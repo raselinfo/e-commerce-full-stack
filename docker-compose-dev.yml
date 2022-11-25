@@ -3,7 +3,9 @@ services:
   # API
   api:
     container_name: e-commerce-api
-    build: ./backend/Dockerfile.dev
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
     restart: always
     ports:
       - 4000:4000
@@ -27,7 +29,9 @@ services:
   # Client
   client:
     container_name: client
-    build: ./frontend/Dockerfile.dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     restart: always
     ports:
       - 3000:3000
