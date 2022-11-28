@@ -1,0 +1,25 @@
+name: Node CI
+on:
+  - pull_request
+  - push
+
+jobs:
+  frontend:
+    name: Frontend Task
+    runs-on: ubuntu-latest
+    needs: backend
+    steps:
+      - name: Checkout Codes
+        uses: actions/checkout@v2.5.0
+      
+      - name: Install Frontend Dependance
+        run: |
+          pwd
+          ls
+          cd frontend
+          ls
+          yarn install --frozen---frozen-lockfile
+          ls
+
+      - name: Run Tast
+        run: yarn test
