@@ -17,4 +17,5 @@ jobs:
           yarn install --frozen---frozen-lockfile      
       - name: Run Tast
         run: |
+          cd frontend
           yarn test
