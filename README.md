@@ -4,11 +4,11 @@
 
 ### Frontend
 
-<a href="https://e-commerce-full-stack-one.vercel.app/">Preview</a>
+<a href="https://e-commerce-full-stack-one.vercel.app/" target="_blank">Preview</a>
 
 ### Backend
 
-<a href="https://ecommerceserver.onrender.com/api/v1">Preview</a>
+<a href="https://ecommerceserver.onrender.com/api/v1" target="_blank">Preview</a>
 
 ## Requirement
 
@@ -48,3 +48,7 @@ There are three stack holder
 - text => String (Good Shirt)
 - CreatedAt => Date (10/10/2022)
 - UpdatedAt => Date (11/10/2022)
+
+
+## Google Developer console
+<a href="https://console.cloud.google.com/apis/dashboard">Visit</a>
