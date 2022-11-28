@@ -3,11 +3,6 @@ const { v4: uuid } = require("uuid");
 const fs = require("fs");
 const path = require("path");
 
-// Save the production log
-const accessLogStream = fs.createWriteStream(
-  path.resolve("logs", "access.log"),
-  { flags: "a" }
-);
 
 // Production log
 const production = morgan(
@@ -22,8 +17,7 @@ const production = morgan(
         id: tokens["id"](req, res),
       }) + ";"
     );
-  },
-  { stream: accessLogStream }
+  }
 );
 
 // Development log
