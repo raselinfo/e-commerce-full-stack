@@ -1,6 +1,5 @@
 import React, {
   useCallback,
-  useEffect,
   useReducer,
   useRef,
   useState,
