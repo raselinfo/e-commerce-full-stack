@@ -1,4 +1,4 @@
-name: CI
+name: Node CI
 on:
   - pull_request
   - push
@@ -22,4 +22,6 @@ jobs:
           cat package.json
 
       - name: Run Tast
-        run: yarn test
+        run: |
+          ls
+          yarn test
