@@ -1,17 +1,17 @@
 // Passport
-const express = require("express");
-const cors = require("cors");
-const logger = require("./utils/logger");
-const connectDB = require("./db/db");
-const errorMiddleware = require("./middleware/error/errorMiddleware.js");
-const { PORT, MONGODB_URI } = require("./config");
+const express = require('express');
+const cors = require('cors');
+const logger = require('./utils/logger');
+const connectDB = require('./db/db');
+const errorMiddleware = require('./middleware/error/errorMiddleware.js');
+const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
 // Middleware
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 // Todo: Cors Install
 app.use(cors());
@@ -28,16 +28,16 @@ logger(app);
  * Forgot Password
  * Reset Password
  */
-app.use("/api/v1", require("./routes/seedRoutes"));
-app.use("/api/v1", require("./routes/productRoutes"));
-app.use("/api/v1", require("./routes/auth/authRoutes"));
-app.use("/api/v1", require("./routes/verify/emailVerifyRoutes"));
-app.use("/api/v1", require("./routes/forgotPassword/forgotPasswordRoutes"));
-app.use("/api/v1", require("./routes/resetPassword/resetPassRoutes"));
+app.use('/api/v1', require('./routes/seedRoutes'));
+app.use('/api/v1', require('./routes/productRoutes'));
+app.use('/api/v1', require('./routes/auth/authRoutes'));
+app.use('/api/v1', require('./routes/verify/emailVerifyRoutes'));
+app.use('/api/v1', require('./routes/forgotPassword/forgotPasswordRoutes'));
+app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 
 // Todo: Health Route
-app.get("/api/v1/health", (req, res) => {
-  res.send("OK");
+app.get('/api/v1/health', (req, res) => {
+  res.send('OK');
 });
 
 // Todo: Error Middleware
@@ -52,5 +52,5 @@ connectDB(MONGODB_URI)
     });
   })
   .catch((err) => {
-    console.log("Error: ", err);
+    console.log('Error: ', err);
   });

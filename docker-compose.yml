@@ -1,49 +1,40 @@
 version: '3.9'
 services:
-  # API
-  api:
-    container_name: e-commerce-api
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.prod
-    restart: always
-    ports:
-      - 5000:5000
-    env_file:
-      - ./backend/.env
-    depends_on:
-      - mongo_db
-    volumes:
-      - .:/user/src/app:ro
-      - /user/src/app/node_modules
-  # MOngoDB
-  mongo_db:
-    container_name: mongo_db_container
-    image: mongo:latest
-    restart: always
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo_db:/data/db
-
   # Client
   client:
-    container_name: client
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.prod
-    restart: always
+    container_name: client_container
+    build: ./frontend
     ports:
-      - 4000:4000
+      - '3000:3000'
     env_file:
       - ./frontend/.env
     depends_on:
-      - mongo_db
-      - api
+      - mongo
+      - server
     volumes:
-      - .:/user/src/app:ro
+      - ./frontend:/user/src/app
       - /user/src/app/node_modules
+  # Server
+  server:
+    container_name: server_container
+    build: ./backend
+    ports:
+      - '4000:4000'
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/user/src/app
+      - /user/src/app/node_modules
+  # MOngoDB
+  mongo:
+    container_name: mongo_container
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_db:/data/db
 
-# Mondodb Volume
 volumes:
   mongo_db: {}
