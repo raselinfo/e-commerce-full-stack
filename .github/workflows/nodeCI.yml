@@ -12,17 +12,9 @@ jobs:
         uses: actions/checkout@v2.5.0
 
       - name: Install Frontend Dependance
-        run: |
-          pwd
-          ls
-          cd frontend
-          ls
-          yarn install --frozen---frozen-lockfile
-          ls
-          cat package.json
-
+        run: |         
+          cd frontend         
+          yarn install --frozen---frozen-lockfile      
       - name: Run Tast
         run: |
-          cd frontend
-          ls
           yarn test
