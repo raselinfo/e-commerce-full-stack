@@ -19,6 +19,7 @@ jobs:
           ls
           yarn install --frozen---frozen-lockfile
           ls
+          cat package.json
 
       - name: Run Tast
         run: yarn test
