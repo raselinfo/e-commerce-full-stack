@@ -18,7 +18,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Todo: Cors Install
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+    optionsSuccessStatus:200
+  })
+);
 
 // Todo: Logger
 // logger(app);
