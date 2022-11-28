@@ -23,5 +23,6 @@ jobs:
 
       - name: Run Tast
         run: |
+          cd frontend
           ls
           yarn test
