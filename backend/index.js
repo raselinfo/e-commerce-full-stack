@@ -7,6 +7,10 @@ const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
+
+const morgan = require('morgan');
+morgan('tiny');
+
 // Middleware
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +21,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 // Todo: Logger
-logger(app);
+// logger(app);
 
 /**
   // Todo: Routes:
