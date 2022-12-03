@@ -2,12 +2,11 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
-  "engines": {
-    "node": "16.x"
-  },
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "vitest --run --reporter verbose",
+    "test:watch": "vitest"
   },
   "keywords": [
     "example",
