@@ -30,6 +30,7 @@ jobs:
         run: |
           node -v
           npm -v
+          nvm -v
       - name: Checkout Codes
         uses: actions/checkout@v2.5.0
       
