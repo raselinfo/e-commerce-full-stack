@@ -30,7 +30,9 @@ jobs:
         run: |
           node -v
           npm -v
-          nvm -v
+          curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+          sudo apt install nodejs
+          node -v
       - name: Checkout Codes
         uses: actions/checkout@v2.5.0
       
