@@ -32,7 +32,7 @@ jobs:
       - name: Install Node Version
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 14
       - name: Install Backend Dependance
         run: |
           cd backend
