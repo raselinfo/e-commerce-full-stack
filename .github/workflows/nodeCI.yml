@@ -26,16 +26,12 @@ jobs:
     name: Backend Task
     runs-on: ubuntu-latest
     steps:
-      - name: Node Version
-        run: |
-          node -v
-          npm -v
-          curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-          node -v
       - name: Checkout Codes
         uses: actions/checkout@v2.5.0
-      
+      - name: Install Node Version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
       - name: Install Backend Dependance
         run: |
           cd backend
