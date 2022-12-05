@@ -21,6 +21,7 @@ jobs:
         run: |
           cd frontend
           yarn test
+          node -v
 
   backend:
     name: Backend Task
