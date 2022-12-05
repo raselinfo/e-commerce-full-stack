@@ -3,7 +3,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon -L --inspect=0.0.0.0 index.js",
     "start": "node index.js",
     "test": "vitest --run --reporter verbose",
     "test:watch": "vitest"
