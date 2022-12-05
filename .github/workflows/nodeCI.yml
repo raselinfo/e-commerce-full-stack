@@ -12,7 +12,10 @@ jobs:
       
       - name: Checkout Codes
         uses: actions/checkout@v2.5.0
-
+      - name: Install Node Version
+        uses: actions/setup-node@v3
+        with:
+            node-version: 14
       - name: Install Frontend Dependance
         run: |         
           cd frontend         
