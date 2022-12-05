@@ -41,3 +41,4 @@ jobs:
           cd backend
           yarn install --frozen-lockfile
           ls
+          node -v
