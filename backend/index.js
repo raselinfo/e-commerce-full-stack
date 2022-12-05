@@ -7,7 +7,6 @@ const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
-
 const morgan = require('morgan');
 morgan('tiny');
 
@@ -21,12 +20,12 @@ app.use(express.static('public'));
 app.use(
   cors({
     origin: '*',
-    optionsSuccessStatus:200
+    optionsSuccessStatus: 200,
   })
 );
 
 // Todo: Logger
-// logger(app);
+logger(app);
 
 /**
   // Todo: Routes:
@@ -46,6 +45,7 @@ app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
+  console.log('Hello 🥰 i am rasel hossain');
   res.send('OK');
 });
 
