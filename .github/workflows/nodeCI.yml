@@ -15,7 +15,7 @@ jobs:
       - name: Install Node Version
         uses: actions/setup-node@v3
         with:
-            node-version: 14
+            node-version: 16
       - name: Install Frontend Dependance
         run: |         
           cd frontend         
@@ -35,7 +35,7 @@ jobs:
       - name: Install Node Version
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Install Backend Dependance
         run: |
           cd backend
