@@ -3,7 +3,9 @@ const Error = require("../../utils/Error");
 const JWT = require("../jwt/JWT");
 const { JWT_SECRET } = require("../../config");
 const UserService = require("../User/UserService");
-const Password = require("../password/password");
+
+const Password = require('../Password/Password.js');
+
 const ForgotPassword = require("../../model/ForgotPassword");
 const resetPassService = async ({
   password,

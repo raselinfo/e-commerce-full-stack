@@ -1,47 +1,14 @@
-DB
-```js
-module.exports = () => {
-  mongoose
-    .connect(process.env.MONGODB_URI, {
-      dbName: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      pass: process.env.DB_PASS,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false
-    })
-    .then(() => {
-      console.log('Mongodb connected....');
-    })
-    .catch(err => console.log(err.message));
-
-  mongoose.connection.on('connected', () => {
-    console.log('Mongoose connected to db...');
-  });
-
-  mongoose.connection.on('error', err => {
-    console.log(err.message);
-  });
-
-  mongoose.connection.on('disconnected', () => {
-    console.log('Mongoose connection is disconnected...');
-  });
-
-  process.on('SIGINT', () => {
-    mongoose.connection.close(() => {
-      console.log(
-        'Mongoose connection is disconnected due to app termination...'
-      );
-      process.exit(0);
-    });
-  });
-};
-
-```
-
 # E-Commerce (Full Stack)
 
 ![Image Title](./images/delivery.webp)
+
+### Frontend
+
+<a href="https://e-commerce-full-stack-one.vercel.app/" target="_blank">Preview</a>
+
+### Backend
+
+<a href="https://ecommerceserver.onrender.com/api/v1" target="_blank">Preview</a>
 
 ## Requirement
 
@@ -82,3 +49,6 @@ There are three stack holder
 - CreatedAt => Date (10/10/2022)
 - UpdatedAt => Date (11/10/2022)
 
+
+## Google Developer console
+<a href="https://console.cloud.google.com/apis/dashboard">Visit</a>

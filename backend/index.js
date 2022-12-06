@@ -7,6 +7,9 @@ const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
+const morgan = require('morgan');
+morgan('tiny');
+
 // Middleware
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
@@ -14,7 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Todo: Cors Install
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+    optionsSuccessStatus: 200,
+  })
+);
 
 // Todo: Logger
 logger(app);
@@ -37,6 +45,7 @@ app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
+  console.log('Hello 🥰 i am rasel hossain');
   res.send('OK');
 });
 
