@@ -4,7 +4,7 @@ const addShippingChargeService = async (value) => {
   const { city, amount, discountCharge, charge } = value;
   try {
     const newShippingPrice = new ShippingPrice({
-      city,
+      city: city.toLowerCase().trim(),
       amount,
       discountCharge,
       charge,

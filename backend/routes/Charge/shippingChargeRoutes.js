@@ -5,7 +5,7 @@ const getShippingChargeController = require('../../controller/Charge/getShipping
 router.post('/addShippingCharge', addShippingChargeController);
 
 
-// router.get('/getShippingCharge', getShippingChargeController);
+router.get('/getShippingCharge', getShippingChargeController);
 
 module.exports = router;
 
