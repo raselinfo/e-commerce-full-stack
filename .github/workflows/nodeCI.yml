@@ -20,7 +20,7 @@ jobs:
         run: |         
           cd frontend         
           yarn install --frozen-lockfile      
-      - name: Run Tast
+      - name: Run Test
         run: |
           cd frontend
           yarn test
@@ -42,3 +42,5 @@ jobs:
           yarn install --frozen-lockfile
           ls
           node -v
+
+          
