@@ -1,6 +1,6 @@
 const JOI = require('joi');
 const addShippingChargeService = require('../../service/charge/addShippingChargeService');
-const addShippingChargeController = (req, res, next) => {
+const addShippingChargeController = async (req, res, next) => {
   if (!req.body)
     return res.status(422).json({ message: 'Provide Valid Data!' });
   // Validate Data
@@ -16,9 +16,15 @@ const addShippingChargeController = (req, res, next) => {
     return next(error);
   }
   try {
-    const result = addShippingChargeService(value);
+    const { result, error } = await addShippingChargeService(value);
+    if (error) {
+      return res.status(409).json({ error: error });
+    }
+    return res
+      .status(201)
+      .json({ message: 'Shipping Charge Create Successfully', data: result });
   } catch (err) {
-    return;
+    return next(err);
   }
 };
 
