@@ -1,14 +1,14 @@
-import { useCallback, useContext, useEffect } from "react";
-import { Store } from "../Store/Store";
-import jwt_decode from "jwt-decode";
-import axios from "../utils/axios";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useContext, useEffect } from 'react';
+import { Store } from '../Store/Store';
+import jwt_decode from 'jwt-decode';
+import axios from '../utils/axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const Google = ({
   isOneTapOpen = true,
   isOpenLoginButton = true,
   buttonPlace,
-  redirectUrl = "/",
+  redirectUrl = '/',
 }) => {
   const navigate = useNavigate();
   const {
@@ -22,28 +22,27 @@ const Google = ({
         response.credential
       );
       try {
-        const { data } = await axios.post("/auth/google/signin", {
+        const { data } = await axios.post('/auth/google/signin', {
           email: email,
           name: name,
           picture: picture,
           verified: email_verified,
         });
         const userData = jwt_decode(data?.data);
+        console.log(userData);
         ctxDispatch({
-          type: "SAVE_USER",
+          type: 'SAVE_USER',
           payload: {
             name: userData.name,
             email: userData.email,
             image: userData.image,
-            role: userData.role,
-            id: userData.id,
             // [userData.image.public_id]: undefined,
           },
         });
         navigate(redirectUrl);
       } catch (err) {
-        toast.error("Can Not Login. Try Again", {
-          position: "bottom-right",
+        toast.error('Can Not Login. Try Again', {
+          position: 'bottom-right',
           autoClose: 10000,
           hideProgressBar: true,
           closeOnClick: true,
@@ -51,7 +50,7 @@ const Google = ({
         });
       }
     },
-    [ctxDispatch]
+    [ctxDispatch, redirectUrl, navigate]
   );
   useEffect(() => {
     if (!(Object.keys(userInfo).length && userInfo.email)) {
@@ -59,7 +58,7 @@ const Google = ({
       window?.google?.accounts?.id.initialize({
         client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
         callback: handleCallbackResponse,
-        ux_mode: "popup",
+        ux_mode: 'popup',
         cancel_on_tap_outside: false,
       });
       if (isOpenLoginButton) {
@@ -68,9 +67,9 @@ const Google = ({
           // Button place is a ref
           buttonPlace?.current,
           {
-            theme: "outline",
-            size: "large",
-            shape: "pill",
+            theme: 'outline',
+            size: 'large',
+            shape: 'pill',
           }
         );
       }

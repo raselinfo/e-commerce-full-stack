@@ -19,7 +19,11 @@ app.use(express.static('public'));
 // Todo: Cors Install
 app.use(
   cors({
-    origin: '*',
+    credentials: true,
+    origin: [
+      'http://localhost:3000',
+      'https://e-commerce-full-stack-one.vercel.app',
+    ],
     optionsSuccessStatus: 200,
   })
 );
@@ -43,7 +47,6 @@ app.use('/api/v1', require('./routes/verify/emailVerifyRoutes'));
 app.use('/api/v1', require('./routes/forgotPassword/forgotPasswordRoutes'));
 app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 app.use('/api/v1', require('./routes/Charge/shippingChargeRoutes'));
-
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {

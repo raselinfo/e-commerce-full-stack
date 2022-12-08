@@ -1,7 +1,8 @@
-import Axios from "axios";
-console.log(process.env.REACT_APP_SERVER_URL);
+import Axios from 'axios';
+
 const axios = Axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
+  withCredentials: true,
 });
 
 export default axios;
