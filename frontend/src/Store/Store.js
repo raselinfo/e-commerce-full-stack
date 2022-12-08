@@ -54,6 +54,7 @@ const reducer = (state, { type, payload = {} }) => {
       return { ...state, cart: { ...state.cart, cartItems: newItems } };
 
     case "SAVE_USER":
+      console.log(payload)
       localStorage.setItem("userInfo", JSON.stringify(payload));
       return { ...state, userInfo: payload };
 

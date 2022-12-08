@@ -54,8 +54,6 @@ const SignIn = () => {
             payload: {
               email: userObject.email,
               name: userObject.name,
-              role: userObject.role,
-              id: userObject._id,
               image: userObject.image,
             },
           });
