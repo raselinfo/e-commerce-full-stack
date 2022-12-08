@@ -26,6 +26,7 @@ app.use(
       'https://accounts.google.com',
       'https://accounts.google.com/gsi/log',
       'https://lh3.googleusercontent.com',
+      'https://developers.google.com/oauthplayground',
     ],
     optionsSuccessStatus: 200,
   })
