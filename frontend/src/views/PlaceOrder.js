@@ -1,7 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from '../Store/Store';
 import { useNavigate } from 'react-router-dom';
+import axios from '../utils/axios';
+import formateError from '../utils/formateError';
 const PlaceOrder = () => {
   const navigate = useNavigate();
   const {
@@ -16,18 +18,33 @@ const PlaceOrder = () => {
   const itemPrice = decimal(
     cartItems.reduce((acc, item) => (acc += item.quantity * item.price), 0)
   );
-  
-  const city="Dhaka"
+  console.log(shipping_address);
+  const city = 'Dhak';
   // if client buy mode then 100$ ,then he don't need to pay shipping price.
   // const shippingPrice = itemPrice > 100 ? decimal(0) : (
-    
+
   // );
+
+  // Fetch Shipping Details
+  const shippingHandler = useCallback(async () => {
+    try {
+      const result = await axios.get(
+        // `getShippingCharge?city=${shipping_address.city}`
+        `getShippingCharge?city=${city}`
+      );
+      console.log(result);
+    } catch (err) {
+      formateError(err);
+      console.log(err);
+    }
+  }, [shipping_address.city]);
   // Redirect Payment screen if payment method not exist
   useEffect(() => {
+    // redirect payment step if payment method not present
     if (!payment_method) {
       navigate('/checkout?step=payment', { replace: true });
     }
-  }, [payment_method, navigate]);
+  }, [payment_method, navigate, shipping_address.city]);
 
   return (
     <div className='md:w-5/6  mx-auto  md:my-28'>
