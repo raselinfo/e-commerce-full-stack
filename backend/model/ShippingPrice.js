@@ -8,5 +8,5 @@ const shippingPriceSchema = new Schema({
   timestamps:true
 });
 
-module.exports = model('ShippingCharge', shippingPriceSchema, 'ShippingCharge');
+module.exports = model('ShippingCharge', shippingPriceSchema, 'shippingCharge');
 
