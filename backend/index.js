@@ -23,6 +23,9 @@ app.use(
     origin: [
       'http://localhost:3000',
       'https://e-commerce-full-stack-one.vercel.app',
+      'https://accounts.google.com',
+      'https://accounts.google.com/gsi/log',
+      'https://lh3.googleusercontent.com',
     ],
     optionsSuccessStatus: 200,
   })
