@@ -150,3 +150,10 @@ export default fetchHandler;
     }
 
 ```
+
+## Create Token Secret using node modules
+
+```js
+require('crypto').randomBytes(64).toString('hex')
+'d46842e82a460b9bb2483a9aced74e6fbbc45cf4ac241b18284de22ad9c2eb7c9e1f20f29ae89ff50cd0e24cb7497614dd20d44ce66fd0f392f9f8e04a924773'
+```
