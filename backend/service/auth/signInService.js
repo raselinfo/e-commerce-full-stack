@@ -13,11 +13,9 @@ const signInService = async ({ email, password, res }) => {
     }
     // Todo: Check if user verified
     if (!user.verified) {
-      const emailVerifyToken = await JWT.signAccessToken(
-        {
-          email: user.email,
-        }
-      );
+      const emailVerifyToken = await JWT.signAccessToken({
+        email: user.email,
+      });
       // Save Token to Database
       const newToken = await new Token({
         token: emailVerifyToken,
@@ -52,20 +50,19 @@ const signInService = async ({ email, password, res }) => {
     });
 
     // Refresh Token
-    const refreshToken = await JWT.signRefreshToken(
-      {
-        name: user.name,
-        _id: user._id,
-        email: user.email,
-        role: user.role,
-        image: user.image.url,
-      }
-    );
+    const refreshToken = await JWT.signRefreshToken({
+      name: user.name,
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+      image: user.image.url,
+    });
     res.cookie('refreshToken', refreshToken, {
       path: '/',
       httpOnly: true,
       sameSite: 'lax',
-      maxAge: 8760 * 60 * 60 * 1000, // 1 year
+      maxAge: 8760 * 60 * 60 * 1000, // 1 year,
+      secure: true,
     });
 
     return {
