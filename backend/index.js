@@ -21,7 +21,6 @@ app.use(express.static('public'));
 // Todo: Cors Install
 app.use(
   cors({
-    credentials: true,
     origin: [
       'http://localhost:3000',
       'https://e-commerce-full-stack-one.vercel.app',
@@ -30,7 +29,8 @@ app.use(
       'https://lh3.googleusercontent.com',
       'https://developers.google.com/oauthplayground',
     ],
-    optionsSuccessStatus: 200,
+    // optionsSuccessStatus: 200,
+    credentials: true,
     exposedHeaders: ['set-cookie'],
   })
 );
