@@ -5,6 +5,7 @@ const sendMail = require('../mail/sendMail');
 const Token = require('../../model/Token');
 const { BASE_CLIENT_URL } = require('../../config');
 const signInService = async ({ email, password, res }) => {
+  console.log("✅✅✅","inside signInservice")
   try {
     // Todo: Check if user exist or not
     const user = await UserService.findByProperty('email', email);
