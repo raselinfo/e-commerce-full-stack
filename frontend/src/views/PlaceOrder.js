@@ -4,8 +4,10 @@ import { Store } from '../Store/Store';
 import { useNavigate } from 'react-router-dom';
 import axios from '../utils/axios';
 import formateError from '../utils/formateError';
+import pAxios from '../Hocks/useAxios';
 const PlaceOrder = () => {
   const navigate = useNavigate();
+  const privateAxios = pAxios();
   const {
     state: {
       cart: { cartItems, payment_method, shipping_address },
@@ -37,14 +39,25 @@ const PlaceOrder = () => {
       formateError(err);
       console.log(err);
     }
-  }, [shipping_address.city]);
+  }, []);
+  
   // Redirect Payment screen if payment method not exist
   useEffect(() => {
     // redirect payment step if payment method not present
-    if (!payment_method) {
+    if (!payment_method || !shipping_address || cartItems.length === 0) {
       navigate('/checkout?step=payment', { replace: true });
     }
-  }, [payment_method, navigate, shipping_address.city]);
+  }, [payment_method, navigate, shipping_address, cartItems]);
+
+  // CALL API
+  const callAPI = async () => {
+    try {
+      const result = await privateAxios.post('/test');
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className='md:w-5/6  mx-auto  md:my-28'>
@@ -106,6 +119,9 @@ const PlaceOrder = () => {
         <div className='bg-white p-5 rounded-xl order-2 w-full md:w-1/2'>
           <h3 className='text-3xl font-bold'>
             Order <span className='text-yellow-500'>Summary</span>
+            <button className='border-8' onClick={callAPI}>
+              Protect API
+            </button>
           </h3>
         </div>
       </div>

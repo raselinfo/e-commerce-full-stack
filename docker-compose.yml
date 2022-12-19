@@ -3,11 +3,15 @@ services:
   # Client
   client:
     container_name: client_container
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - '3000:3000'
     env_file:
       - ./frontend/.env
+    networks:
+      - emazona-mearn
     depends_on:
       - mongo
       - server
@@ -17,13 +21,18 @@ services:
   # Server
   server:
     container_name: server_container
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - '4000:4000'
     env_file:
       - ./backend/.env
+    networks:
+      - emazona-mearn
     depends_on:
       - mongo
+  
     volumes:
       - ./backend:/user/src/app
       - /user/src/app/node_modules
@@ -31,10 +40,19 @@ services:
   mongo:
     container_name: mongo_container
     image: mongo
+    restart: always
     ports:
-      - '27017:27017'
+      - 27018:27017
+    env_file:
+      - ./DB/.env
+    networks:
+      - emazona-mearn
     volumes:
       - mongo_db:/data/db
 
+networks:
+  emazona-mearn:
+    driver: bridge
 volumes:
-  mongo_db: {}
+  mongo_db:
+    external: true

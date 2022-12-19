@@ -1,11 +1,36 @@
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../../config");
+const jwt = require('jsonwebtoken');
+const { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } = require('../../config');
+console.log('JWT_REFRESh_SECRET', JWT_REFRESH_SECRET);
+
+
 class JwtService {
-  static sign(payload, expiry = "15m", secret = JWT_SECRET) {
+  /**
+   *
+   * @param {user} payload
+   * @param {"time"} expiry
+   * @param {*} secret
+   * @returns token
+   */
+  static signAccessToken(payload, expiry = '1m', secret = JWT_ACCESS_SECRET) {
     return jwt.sign(payload, secret, { expiresIn: expiry });
   }
-
-  static verify(payload, secret = JWT_SECRET) {
+  static signRefreshToken(
+    payload,
+    expiry = '365d',
+    secret = JWT_REFRESH_SECRET
+  ) {
+    return jwt.sign(payload, secret, { expiresIn: expiry });
+  }
+  /**
+   *
+   * @param {token} payload
+   * @param {*} secret
+   * @returns
+   */
+  static verifyAccessToken(payload, secret = JWT_ACCESS_SECRET) {
+    return jwt.verify(payload, secret);
+  }
+  static verifyRefreshToken(payload, secret = JWT_REFRESH_SECRET) {
     return jwt.verify(payload, secret);
   }
 }

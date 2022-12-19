@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Store } from "../Store/Store";
-import Button from "./Button/Button";
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Store } from '../Store/Store';
+import Button from './Button/Button';
+import publicAxios from '../utils/axios';
+import { toast } from 'react-toastify';
 const Navbar = () => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const {
@@ -17,12 +19,12 @@ const Navbar = () => {
   useEffect(() => {
     const handleDropdown = () => {
       if (isShowDropdown) {
-        const body = window.document.getElementById("htmlBody");
-        body.addEventListener("click", function (e) {
+        const body = window.document.getElementById('htmlBody');
+        body.addEventListener('click', function (e) {
           if (
-            e.target.id !== "dropdown" &&
-            e.target.className !== "drop_item" &&
-            e.target.id !== "avatar"
+            e.target.id !== 'dropdown' &&
+            e.target.className !== 'drop_item' &&
+            e.target.id !== 'avatar'
           ) {
             setIsShowDropdown(false);
           }
@@ -32,47 +34,67 @@ const Navbar = () => {
     handleDropdown();
   }, [isShowDropdown]);
 
-  const handleSignOut = () => {
-    ctxDispatch({ type: "SIGN_OUT" });
+  const handleSignOut = async () => {
+    try {
+      const result = await publicAxios.post('/logout');
+      if (result.status === 200) {
+        ctxDispatch({ type: 'SIGN_OUT' });
+        return toast.success('Login Fail', {
+          position: 'bottom-right',
+          autoClose: 10000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+        });
+      }
+    } catch (err) {
+      return toast.error('Login Fail', {
+        position: 'bottom-right',
+        autoClose: 10000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
+    }
   };
 
   return (
-    <div className="bg-gray-700  font-bold flex items-center">
-      <h1 className="text-3xl text-white p-5">
-        <Link to="/">RaselFashion.</Link>
+    <div className='bg-gray-700  font-bold flex items-center'>
+      <h1 className='text-3xl text-white p-5'>
+        <Link to='/'>RaselFashion.</Link>
       </h1>
-      <Link to="/cart" className="p-5 text-2xl flex  text-white">
+      <Link to='/cart' className='p-5 text-2xl flex  text-white'>
         Cart
-        <span className="bg-red-700 inline-block w-10 h-10 text-center rounded-full leading-10 ml-2">
+        <span className='bg-red-700 inline-block w-10 h-10 text-center rounded-full leading-10 ml-2'>
           {countTotalProduct}
         </span>
       </Link>
       {userInfo?.email ? (
-        <div className="relative">
+        <div className='relative'>
           {/* Avatar */}
           <img
-            id="avatar"
+            id='avatar'
             onClick={() => setIsShowDropdown(!isShowDropdown)}
-            className="w-14 h-14 rounded-full cursor-pointer"
+            className='w-14 h-14 rounded-full cursor-pointer'
             src={userInfo.image.url || userInfo.image}
             alt={userInfo?.name}
           />
           {isShowDropdown && (
             <div
-              id="dropdown"
+              id='dropdown'
               onClick={() => setIsShowDropdown(true)}
-              className="dropdown absolute rounded-lg bg-white  w-40 overflow-hidden"
+              className='dropdown absolute rounded-lg bg-white  w-40 overflow-hidden'
             >
-              <ul className="text-center">
-                <li className="drop_item text-gray-500 mb-3 py-1 px-5 ">
+              <ul className='text-center'>
+                <li className='drop_item text-gray-500 mb-3 py-1 px-5 '>
                   {userInfo?.name}
                 </li>
-                <li className="drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer">
+                <li className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'>
                   Order History
                 </li>
                 <li
                   onClick={handleSignOut}
-                  className="drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer"
+                  className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'
                 >
                   Sign Out
                 </li>
@@ -81,8 +103,8 @@ const Navbar = () => {
           )}
         </div>
       ) : (
-        <Link to="/signin">
-          <Button text="Sign In" />
+        <Link to='/signin'>
+          <Button text='Sign In' />
         </Link>
       )}
     </div>
