@@ -29,13 +29,15 @@ const Google = ({
           verified: email_verified,
         });
         const userData = jwt_decode(data?.data);
-        console.log(userData);
+        // Set Token Inside Session Storage
+        sessionStorage.setItem('accessToken', data?.data);
         ctxDispatch({
           type: 'SAVE_USER',
           payload: {
             name: userData.name,
             email: userData.email,
             image: userData.image,
+            role: userData.role,
             // [userData.image.public_id]: undefined,
           },
         });
