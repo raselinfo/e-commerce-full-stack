@@ -1,9 +1,9 @@
-const signInService = require("../../service/auth/signInService");
-const Error = require("../../utils/Error");
+const signInService = require('../../service/auth/signInService');
+const Error = require('../../utils/Error');
 const signInController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const { data, error } = await signInService({ email, password,res });
+    const { data, error } = await signInService({ email, password, res });
 
     if (error) {
       return res.status(401).json({
@@ -11,8 +11,8 @@ const signInController = async (req, res, next) => {
       });
     }
 
-    
-   return res.status(202).json({
+    console.log('check cookie', res);
+    return res.status(202).json({
       message: 'Success',
       data,
     });
