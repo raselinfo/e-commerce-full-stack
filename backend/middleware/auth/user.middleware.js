@@ -3,8 +3,13 @@ const UserModel = require('../../model/User');
 const Error = require('../../utils/Error');
 const adminMiddleware = async (req, _res, next) => {
   try {
-    const { token } = req.headers;
-    const { _id, role, email } = JwtService.verify(token);
+    const { authorization } = req.headers;
+    const accessToken = authorization?.split('Bearer')[1]?.trim();
+    console.log(accessToken);
+    if (!accessToken) return next(Error.unauthorized('You Need Login Fast!'));
+
+    const { _id, role, email } = JwtService.verifyAccessToken(accessToken);
+    console.log(email,role);
     //   If role does not match with "USER", "email"
     if (role !== 'USER' || !email)
       return next(Error.unauthorized('You Need Login Fast!'));
@@ -17,9 +22,9 @@ const adminMiddleware = async (req, _res, next) => {
       return next(Error.unauthorized('You Need Login Fast!'));
 
     //   If All Pass
-    next();
+    return next();
   } catch (err) {
-    next(Error.severError(err.message));
+    next(Error.unauthorized(err.message));
   }
 };
 
