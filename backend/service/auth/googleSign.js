@@ -7,7 +7,6 @@ const createToken = (payload) => {
 };
 
 const googleSignIn = async ({ email, name, picture, verified, res }) => {
-  console.log('Rasel Cookie');
   let token;
   try {
     const existUser = await UserService.findByProperty('email', email);
