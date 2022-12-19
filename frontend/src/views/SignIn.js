@@ -46,7 +46,9 @@ const SignIn = () => {
     formData.append('password', password);
     (async () => {
       try {
-        const data = await axios.post('auth/signin', formData);
+        const data = await axios.post('auth/signin', formData, {
+          withCredentials: true,
+        });
         if (data.status === 202) {
           const userObject = jwt_decode(data?.data?.data?.token);
           // Save token inside session storage
