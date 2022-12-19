@@ -31,6 +31,7 @@ app.use(
       'https://developers.google.com/oauthplayground',
     ],
     optionsSuccessStatus: 200,
+    exposedHeaders: ['set-cookie'],
   })
 );
 
