@@ -63,7 +63,7 @@ const signInService = async ({ email, password, res }) => {
       // sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
       // secure: true,
-      signed: true,
+      // signed: true,
     });
     console.log("After Set cookie")
 
