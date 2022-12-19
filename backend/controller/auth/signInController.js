@@ -3,15 +3,17 @@ const Error = require("../../utils/Error");
 const signInController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const { data, error } = await signInService({ email, password });
+    const { data, error } = await signInService({ email, password,res });
 
     if (error) {
       return res.status(401).json({
         ...Error.unauthorized(error),
       });
     }
-    res.status(202).json({
-      message: "Success",
+
+    
+   return res.status(202).json({
+      message: 'Success',
       data,
     });
   } catch (err) {

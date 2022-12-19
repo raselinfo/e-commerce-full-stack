@@ -15,7 +15,11 @@ const forgotPasswordLinkService = async (email) => {
 
     // Todo: Generate Token
     const secret = JWT_SECRET + user.email;
-    const token = JWT.sign({ email: user.email, id: user._id }, "15m", secret);
+    const token = JWT.signAccessToken(
+      { email: user.email, id: user._id },
+      '15m',
+      secret
+    );
 
     const newDbToken = await new ForgotPassword({
       email: user.email,

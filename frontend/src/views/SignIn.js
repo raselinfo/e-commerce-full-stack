@@ -1,20 +1,20 @@
-import React, { useState, useContext, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import getQueryString from "../utils/getQueryString";
-import axios from "../utils/axios";
-import { BarLoader } from "react-spinners/";
-import { toast } from "react-toastify";
-import formatError from "../utils/formateError";
-import { Store } from "../Store/Store";
-import jwt_decode from "jwt-decode";
-import Google from "../components/Google";
-import CustomForm from "../components/Form/CustomForm";
-import InputField from "../components/Form/Field/InputField";
-import * as yup from "yup";
-import Button from "../components/Button/Button";
+import React, { useState, useContext, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import getQueryString from '../utils/getQueryString';
+import axios from '../utils/axios';
+import { BarLoader } from 'react-spinners/';
+import { toast } from 'react-toastify';
+import formatError from '../utils/formateError';
+import { Store } from '../Store/Store';
+import jwt_decode from 'jwt-decode';
+import Google from '../components/Google';
+import CustomForm from '../components/Form/CustomForm';
+import InputField from '../components/Form/Field/InputField';
+import * as yup from 'yup';
+import Button from '../components/Button/Button';
 const SignIn = () => {
-  const { redirect, step } = getQueryString(["redirect", "step"]);
-  const redirectUrl = `${redirect}${step && "?step=" + step}`.trim();
+  const { redirect, step } = getQueryString(['redirect', 'step']);
+  const redirectUrl = `${redirect}${step && '?step=' + step}`.trim();
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
   const { dispatch: ctxDispatch } = useContext(Store);
@@ -23,44 +23,45 @@ const SignIn = () => {
 
   //  Todo: Custom Form Configer
   const fields = {
-    email: "",
-    password: "",
-    showPass: "",
+    email: '',
+    password: '',
+    showPass: '',
   };
 
   const validationSchema = yup.object().shape({
     email: yup
       .string()
-      .email("⚠️ Please Enter Valid Email")
-      .required("⚠️ Email is Required"),
+      .email('⚠️ Please Enter Valid Email')
+      .required('⚠️ Email is Required'),
     password: yup
       .string()
-      .min(8, "⚠️ Password should be minimum 8 character")
-      .required("⚠️ Password is required"),
+      .min(8, '⚠️ Password should be minimum 8 character')
+      .required('⚠️ Password is required'),
   });
 
   const onSubmitHandler = ({ email, password }) => {
     setLoading(true);
     const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
+    formData.append('email', email);
+    formData.append('password', password);
     (async () => {
       try {
-        const data = await axios.post("auth/signin", formData);
+        const data = await axios.post('auth/signin', formData);
         if (data.status === 202) {
-          const userObject = jwt_decode(data.data.data.token);
+          const userObject = jwt_decode(data?.data?.data?.token);
+          // Save token inside session storage
+          sessionStorage.setItem('accessToken', data?.data?.data?.token);
           ctxDispatch({
-            type: "SAVE_USER",
+            type: 'SAVE_USER',
             payload: {
               email: userObject.email,
               name: userObject.name,
-              role: userObject.role,
-              id: userObject._id,
               image: userObject.image,
+              role: userObject.role,
             },
           });
-          toast.success("Sign In Successful", {
-            position: "bottom-right",
+          toast.success('Sign In Successful', {
+            position: 'bottom-right',
             autoClose: 10000,
             hideProgressBar: true,
             closeOnClick: true,
@@ -71,7 +72,7 @@ const SignIn = () => {
         }
       } catch (err) {
         toast.error(formatError(err), {
-          position: "bottom-right",
+          position: 'bottom-right',
           autoClose: 10000,
           hideProgressBar: true,
           closeOnClick: true,
@@ -89,15 +90,15 @@ const SignIn = () => {
   };
   return (
     // <div>
-    <div className="form__wrapper shadow-lg p-5 bg-white  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg">
+    <div className='form__wrapper shadow-lg p-5 bg-white  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg'>
       {/* Header Part */}
-      <h3 className="text-5xl font-bold my-10 text-center">
+      <h3 className='text-5xl font-bold my-10 text-center'>
         Sign
-        <span className="text-yellow-500"> In</span>
+        <span className='text-yellow-500'> In</span>
       </h3>
 
       {/* Custom Form */}
-      <div className="input__group">
+      <div className='input__group'>
         <CustomForm
           fields={fields}
           validation={validationSchema}
@@ -106,32 +107,32 @@ const SignIn = () => {
         >
           {/* Email Field */}
           <InputField
-            placeholder="Enter Your Email"
-            type="email"
-            name="email"
+            placeholder='Enter Your Email'
+            type='email'
+            name='email'
           />
           {/* Password Field */}
           <InputField
-            placeholder="Enter Your Password"
-            type={isShowPass ? "text" : "password"}
-            name="password"
+            placeholder='Enter Your Password'
+            type={isShowPass ? 'text' : 'password'}
+            name='password'
           />
           {/* Show Password */}
           <div>
-            <label className="select-none" htmlFor="showPass">
+            <label className='select-none' htmlFor='showPass'>
               Show Password
             </label>
             <InputField
-              type="checkbox"
-              name="showPass"
-              className=" w-auto inline ml-3"
+              type='checkbox'
+              name='showPass'
+              className=' w-auto inline ml-3'
             />
           </div>
-          <Button text={loading ? "Wait..." : "Sign In"} disabled={loading}>
+          <Button text={loading ? 'Wait...' : 'Sign In'} disabled={loading}>
             <BarLoader
-              color="#000"
+              color='#000'
               loading={loading}
-              id="spinner"
+              id='spinner'
               cssOverride={{
                 marginRight: 10,
               }}
@@ -144,15 +145,15 @@ const SignIn = () => {
 
         {/* Footer Part */}
         <div>
-          {" "}
+          {' '}
           <Link
-            to="/forgot/password"
-            className="text-blue-500 underline font-bold mt-2 block"
+            to='/forgot/password'
+            className='text-blue-500 underline font-bold mt-2 block'
           >
             Forgot Password?
           </Link>
         </div>
-        <div className="flex justify-center" ref={signUpRef}>
+        <div className='flex justify-center' ref={signUpRef}>
           <Google
             redirectUrl={redirectUrl}
             isOneTapOpen={false}
@@ -160,10 +161,10 @@ const SignIn = () => {
           />
         </div>
         <div>
-          <p className="font-bold text-lg mt-3">
-            New Customer?{" "}
+          <p className='font-bold text-lg mt-3'>
+            New Customer?{' '}
             <Link
-              className="text-blue-600 underline"
+              className='text-blue-600 underline'
               to={`/signup?redirect=${redirect}`}
             >
               Create an account
