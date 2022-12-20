@@ -59,8 +59,8 @@ const signInService = async ({ email, password, res }) => {
       image: user.image.url,
     });
     res.cookie('refreshToken', refreshToken, {
-      // path: '/',
-      // httpOnly: true,
+      path: '/',
+      httpOnly: true,
       sameSite: 'none',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
       // secure: true,
