@@ -12,14 +12,7 @@ const signInController = async (req, res, next) => {
     }
 
     console.log('check cookie', res);
-    return res.cookie('test-cookie', 'test sample', {
-        path: '/',
-        httpOnly: true,
-        sameSite: 'lax',
-        maxAge: 8760 * 60 * 60 * 1000, // 1 year,
-        secure: true,
-        // signed: true,
-      }).status(202)
+    return res.status(202)
       .json({
         message: 'Success',
         data,
