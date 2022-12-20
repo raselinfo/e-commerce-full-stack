@@ -60,7 +60,7 @@ const signInService = async ({ email, password, res }) => {
     });
     res.cookie('refreshToken', refreshToken, {
       // path: '/',
-      httpOnly: true,
+      // httpOnly: true,
       // sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
       // secure: true,
