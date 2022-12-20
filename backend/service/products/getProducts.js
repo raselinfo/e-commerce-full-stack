@@ -1,6 +1,6 @@
 const Product = require('../../model/Product');
 const getProducts = async () => {
-  console.log('Cookies', req.cookies);
+  
   const products = await Product.find({})
     .populate({
       path: 'category',
