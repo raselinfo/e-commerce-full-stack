@@ -8,10 +8,27 @@ const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
-const morgan = require('morgan');
-morgan('tiny');
+// const morgan = require('morgan');
+// morgan('tiny');
 
+// Middleware
+app.use(cookieParser());
+app.use(express.json({ limit: 10000000000 }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
+  );
+  res.header(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+  );
+  next();
+});
 // Todo: Cors Install
 app.use(
   cors({
@@ -25,19 +42,10 @@ app.use(
       'https://developers.google.com/oauthplayground',
     ],
     // optionsSuccessStatus: 200,
-
+    methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
     exposedHeaders: ['set-cookie'],
   })
 );
-
-// Middleware
-app.use(cookieParser());
-app.use(express.json({ limit: 10000000000 }));
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.static('public'));
-
-
 
 // Todo: Logger
 logger(app);

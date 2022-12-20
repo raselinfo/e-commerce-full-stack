@@ -6,9 +6,11 @@ const Token = require('../../model/Token');
 const { BASE_CLIENT_URL } = require('../../config');
 const signInService = async ({ email, password, res }) => {
   console.log('✅✅✅', 'inside signInservice');
+  console.log(email, password);
   try {
     // Todo: Check if user exist or not
     const user = await UserService.findByProperty('email', email);
+
     if (!user) {
       return { error: 'User Not Found!' };
     }
@@ -64,7 +66,8 @@ const signInService = async ({ email, password, res }) => {
       sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
       // secure: true,
-      domain: 'https://e-commerce-full-stack-one.vercel.app',
+      // domain: 'vercel.app',
+      // domain: 'localhost:3000',
       // signed: true,
     });
     console.log('After Set cookie');
