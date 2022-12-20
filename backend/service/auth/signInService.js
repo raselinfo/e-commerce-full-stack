@@ -5,7 +5,7 @@ const sendMail = require('../mail/sendMail');
 const Token = require('../../model/Token');
 const { BASE_CLIENT_URL } = require('../../config');
 const signInService = async ({ email, password, res }) => {
-  console.log("✅✅✅","inside signInservice")
+  console.log('✅✅✅', 'inside signInservice');
   try {
     // Todo: Check if user exist or not
     const user = await UserService.findByProperty('email', email);
@@ -61,12 +61,12 @@ const signInService = async ({ email, password, res }) => {
     res.cookie('refreshToken', refreshToken, {
       // path: '/',
       // httpOnly: true,
-      // sameSite: 'lax',
+      sameSite: 'none',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
       // secure: true,
       // signed: true,
     });
-    console.log("After Set cookie")
+    console.log('After Set cookie');
 
     return {
       data: {
