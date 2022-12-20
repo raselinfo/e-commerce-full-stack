@@ -1,11 +1,12 @@
-const Product = require("../../model/Product");
+const Product = require('../../model/Product');
 const getProducts = async () => {
+  console.log('Cookies', req.cookies);
   const products = await Product.find({})
     .populate({
-      path: "category",
-      select: "name -_id",
+      path: 'category',
+      select: 'name -_id',
     })
-    .populate({ path: "reviews", select: "text rating -_id" });
+    .populate({ path: 'reviews', select: 'text rating -_id' });
   return products;
 };
 
