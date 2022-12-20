@@ -15,6 +15,7 @@ morgan('tiny');
 // Todo: Cors Install
 app.use(
   cors({
+    credentials: true,
     origin: [
       'http://localhost:3000',
       'https://e-commerce-full-stack-one.vercel.app',
@@ -24,7 +25,7 @@ app.use(
       'https://developers.google.com/oauthplayground',
     ],
     // optionsSuccessStatus: 200,
-    credentials: true,
+
     exposedHeaders: ['refreshToken'],
   })
 );
