@@ -26,7 +26,7 @@ app.use(
     ],
     // optionsSuccessStatus: 200,
 
-    exposedHeaders: ['refreshToken'],
+    exposedHeaders: ['set-cookie'],
   })
 );
 
