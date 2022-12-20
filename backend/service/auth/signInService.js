@@ -63,7 +63,8 @@ const signInService = async ({ email, password, res }) => {
       httpOnly: true,
       sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
-      secure: true,
+      // secure: true,
+      domain: 'https://e-commerce-full-stack-one.vercel.app',
       // signed: true,
     });
     console.log('After Set cookie');
