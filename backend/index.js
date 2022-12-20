@@ -1,4 +1,3 @@
-// Passport
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -8,33 +7,32 @@ const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
-// const morgan = require('morgan');
-// morgan('tiny');
-
 // Middleware
 app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header(
-    'Access-Control-Allow-Methods',
-    'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
-  );
-  res.header(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
-  );
-  next();
-});
+// -------------------
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header(
+//     'Access-Control-Allow-Methods',
+//     'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
+//   );
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+//   );
+//   next();
+// });
 // Todo: Cors Install
 app.use(
   cors({
     credentials: true,
     origin: [
       'http://localhost:3000',
+      "https://e-commerce-client-u78t.onrender.com",
       'https://e-commerce-full-stack-one.vercel.app',
       'https://accounts.google.com',
       'https://accounts.google.com/gsi/log',
@@ -85,6 +83,8 @@ app.get('/api/v1/health', (req, res) => {
   console.log('Hello 🥰 i am rasel hossain');
   res.send('OK');
 });
+
+
 
 // Todo: Error Middleware
 app.use(errorMiddleware);
