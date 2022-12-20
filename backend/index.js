@@ -11,16 +11,11 @@ const app = express();
 const morgan = require('morgan');
 morgan('tiny');
 
-// Middleware
-app.use(cookieParser());
-app.use(express.json({ limit: 10000000000 }));
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.static('public'));
 
 // Todo: Cors Install
 app.use(
   cors({
+    credentials: true,
     origin: [
       'http://localhost:3000',
       'https://e-commerce-full-stack-one.vercel.app',
@@ -30,10 +25,19 @@ app.use(
       'https://developers.google.com/oauthplayground',
     ],
     // optionsSuccessStatus: 200,
-    credentials: true,
+
     exposedHeaders: ['refreshToken'],
   })
 );
+
+// Middleware
+app.use(cookieParser());
+app.use(express.json({ limit: 10000000000 }));
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
+
+
 
 // Todo: Logger
 logger(app);

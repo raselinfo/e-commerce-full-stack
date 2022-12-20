@@ -61,9 +61,9 @@ const signInService = async ({ email, password, res }) => {
     res.cookie('refreshToken', refreshToken, {
       path: '/',
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
-      // secure: true,
+      secure: true,
       // signed: true,
     });
     console.log('After Set cookie');
