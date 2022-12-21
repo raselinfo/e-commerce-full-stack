@@ -20,7 +20,7 @@ app.use(
     credentials: true,
     origin: [
       'http://localhost:3000',
-      'onrender.com',
+      '.onrender.com',
       'https://e-commerce-client-u78t.onrender.com',
       'https://e-commerce-full-stack-one.vercel.app',
       'https://accounts.google.com',
@@ -36,19 +36,6 @@ app.use(
 );
 
 
-// -------------------
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header(
-    'Access-Control-Allow-Methods',
-    'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
-  );
-  res.header(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
-  );
-  next();
-});
 
 
 // Todo: Logger
