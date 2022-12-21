@@ -20,7 +20,7 @@ app.use(
     credentials: true,
     origin: [
       'http://localhost:3000',
-      '.onrender.com',
+      'e-commerce-client-u78t.onrender.com',
       'https://e-commerce-client-u78t.onrender.com',
       'https://e-commerce-full-stack-one.vercel.app',
       'https://accounts.google.com',
