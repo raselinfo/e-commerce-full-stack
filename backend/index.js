@@ -32,7 +32,8 @@ app.use(
     credentials: true,
     origin: [
       'http://localhost:3000',
-      "https://e-commerce-client-u78t.onrender.com",
+      'onrender.com',
+      'https://e-commerce-client-u78t.onrender.com',
       'https://e-commerce-full-stack-one.vercel.app',
       'https://accounts.google.com',
       'https://accounts.google.com/gsi/log',
@@ -83,8 +84,6 @@ app.get('/api/v1/health', (req, res) => {
   console.log('Hello 🥰 i am rasel hossain');
   res.send('OK');
 });
-
-
 
 // Todo: Error Middleware
 app.use(errorMiddleware);
