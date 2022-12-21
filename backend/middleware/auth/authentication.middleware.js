@@ -3,7 +3,7 @@ const UserModel = require('../../model/User');
 const authenticationMiddleware = async (req, res, next) => {
   let { refreshToken } = req.cookies;
   refreshToken = refreshToken?.trim();
-
+  console.log("I am in AuthMiddleWare")
   //   if no refresh token
   if (!refreshToken)
     return res.status(403).json({ message: 'Please Login/Sign UP' });

@@ -2,6 +2,8 @@ const JwtService = require('../../service/jwt/JWT');
 const UserModel = require('../../model/User');
 const Error = require('../../utils/Error');
 const adminMiddleware = async (req, _res, next) => {
+  console.log('I am in UserMiddleWare');
+
   try {
     const { authorization } = req.headers;
     const accessToken = authorization?.split('Bearer')[1]?.trim();
