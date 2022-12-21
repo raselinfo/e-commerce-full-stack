@@ -60,21 +60,23 @@ const signInService = async ({ email, password, res }) => {
       role: user.role,
       image: user.image.url,
     });
-    // res.cookie('refreshToken', refreshToken, {
-    //   path: '/',
-    //   httpOnly: true,
-    //   sameSite: 'lax',
-    //   maxAge: 8760 * 60 * 60 * 1000, // 1 year,
-    //   domain: '.onrender.com',
-    //   // domain: '.localhost:3000',
-    // });
-
     res.cookie('refreshToken', refreshToken, {
-      domain: 'e-commerce-client-u78t.onrender.com',
       path: '/',
-      maxAge: 3600,
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: 8760 * 60 * 60 * 1000, // 1 year,
+      // domain: '.onrender.com',
+      // // domain: '.localhost:3000',
     });
-    console.log('After Set cookie');
+
+    // res.cookie('refreshToken', refreshToken, {
+    //   // domain: 'e-commerce-client-u78t.onrender.com',
+    //   // domain: '*',
+    //   secure: true,
+    //   path: '/',
+    //   maxAge: 3600,
+    // });
+    console.log('After Set cookie', res);
 
     return {
       data: {
