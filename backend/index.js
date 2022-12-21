@@ -1,7 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const path = require('path');
 const logger = require('./utils/logger');
 const connectDB = require('./db/db');
 const errorMiddleware = require('./middleware/error/errorMiddleware.js');
@@ -13,7 +12,6 @@ app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, 'build')));
 // /-------------------------
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -82,9 +80,7 @@ app.get('/api/v1/health', (req, res) => {
   res.send('OK');
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build'));
-});
+
 
 // Todo: Error Middleware
 app.use(errorMiddleware);
