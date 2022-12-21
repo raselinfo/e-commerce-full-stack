@@ -65,8 +65,7 @@ const signInService = async ({ email, password, res }) => {
       httpOnly: true,
       sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
-      domain: '.onrender.com',
-      // // domain: '.localhost:3000',
+      domain: '.e-commerce-client-u78t.onrender.com',
     });
 
     // res.cookie('refreshToken', refreshToken, {
