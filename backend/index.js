@@ -37,6 +37,7 @@ app.use(
       'https://e-commerce-full-stack-one.vercel.app',
       'https://accounts.google.com',
       'https://accounts.google.com/gsi/log',
+      'https://accounts.google.com/gsi/status',
       'https://lh3.googleusercontent.com',
       'https://developers.google.com/oauthplayground',
     ],

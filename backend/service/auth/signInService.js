@@ -66,6 +66,7 @@ const signInService = async ({ email, password, res }) => {
       sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
       domain: '.onrender.com',
+      // domain: '.localhost:3000',
     });
     console.log('After Set cookie');
 
