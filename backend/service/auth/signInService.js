@@ -65,15 +65,17 @@ const signInService = async ({ email, password, res }) => {
       httpOnly: true,
       sameSite: 'lax',
       maxAge: 8760 * 60 * 60 * 1000, // 1 year,
+      secure: true,
     });
 
-    res.cookie('refreshToken', refreshToken, {
-      // domain: 'e-commerce-client-u78t.onrender.com',
-      // domain: '*',
-      secure: true,
-      path: '/signin',
-      maxAge: 3600,
-    });
+    // res.cookie('refreshToken', refreshToken, {
+    //   // domain: 'e-commerce-client-u78t.onrender.com',
+    //   // domain: '*',
+    //   secure: true,
+    //   path: '/signin',
+    //   maxAge: 3600,
+    //   secure:true
+    // });
     console.log('After Set cookie', res);
 
     return {
