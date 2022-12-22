@@ -4,14 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { Store } from '../Store/Store';
 import { useContext } from 'react';
 import jwt_decode from 'jwt-decode';
-import https from 'https-browserify';
 
 const privateAxios = Axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   withCredentials: true,
-  httpsAgent: new https.Agent({
-    rejectUnauthorized: false,
-  }),
+
 });
 
 //  getAccessToken from session Storage

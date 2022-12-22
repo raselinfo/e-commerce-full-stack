@@ -21,16 +21,6 @@ app.use(express.static('public'));
 //   next();
 // });
 
-// Todo Create SSL Server
-const sslServer = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-  },
-  app
-);
-
-
 // Todo: Cors Install
 app.use(
   cors({
@@ -51,17 +41,7 @@ app.use(
   })
 );
 
-// app.use(
-//   cors({
-//     origin: [
-//       'http://localhost:3000',
-//       'https://raselofficial.me',
-//       'https://api.raselofficial.me',
-//       'https://e-commerce-client-u78t.onrender.com',
-//       'https://ecommerceserver.onrender.com',
-//     ],
-//   })
-// );
+
 
 // Todo: Logger
 logger(app);
@@ -112,13 +92,10 @@ app.use(errorMiddleware);
 connectDB(MONGODB_URI)
   .then(({ connection: { host, port, name } }) => {
     console.log(`✅ ${name} is connect at : ${host}:${port}`);
-    // app.listen(PORT || 4000, () => {
-    //   console.log(`http://localhost:${PORT}`);
-    // });
-
-    sslServer.listen(PORT || 4000, () => {
-      console.log(`✅ https://localhost:${PORT}`);
+    app.listen(PORT || 4000, () => {
+      console.log(`✅http://localhost:${PORT}`);
     });
+
   })
   .catch((err) => {
     console.log('Error: ', err);
