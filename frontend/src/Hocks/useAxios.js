@@ -1,10 +1,11 @@
 import Axios from 'axios';
-import https from 'https';
 import publicAxios from '../utils/axios';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../Store/Store';
 import { useContext } from 'react';
 import jwt_decode from 'jwt-decode';
+import https from 'https-browserify';
+
 const privateAxios = Axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   withCredentials: true,
