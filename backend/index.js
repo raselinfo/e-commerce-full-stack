@@ -2,6 +2,7 @@ const express = require('express');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
+var enforce = require('express-sslify');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('./utils/logger');
@@ -9,6 +10,8 @@ const connectDB = require('./db/db');
 const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
+
+app.use(enforce.HTTPS());
 
 // Middleware
 app.use(cookieParser());
@@ -102,17 +105,25 @@ app.use(errorMiddleware);
 //   app
 // );
 
+const sslServer = https.createServer(app);
+
 // Todo: Connect DB
 connectDB(MONGODB_URI)
   .then(({ connection: { host, port, name } }) => {
     console.log(`✅ ${name} is connect at : ${host}:${port}`);
-    app.listen(PORT || 4000, () => {
-      console.log(`http://localhost:${PORT}`);
-    });
+    // app.listen(PORT || 4000, () => {
+    //   console.log(`http://localhost:${PORT}`);
+    // });
 
     // sslServer.listen(PORT || 4000, () => {
     //   console.log(`✅ https://localhost:${PORT}`);
     // });
+
+    sslServer.listen(4000, () => {
+      {
+        console.log(`✅ https://localhost:${PORT}`);
+      }
+    });
   })
   .catch((err) => {
     console.log('Error: ', err);
