@@ -29,7 +29,6 @@ app.use(
       'https://raselofficial.me',
       'https://api.raselofficial.me',
       'https://developers.google.com/oauthplayground',
-      'https://accounts.google.com',
     ],
     optionsSuccessStatus: 200,
     credentials: true,
