@@ -8,14 +8,13 @@ const adminMiddleware = async (req, _res, next) => {
     const { authorization } = req.headers;
     const accessToken = authorization?.split('Bearer')[1]?.trim();
     console.log(accessToken);
-    if (!accessToken)
-      return next(Error.unauthorized('You Need Login Fast!', 403));
+    if (!accessToken) return next(Error.unauthorized('You Need Login Fast!'));
 
     const { _id, role, email } = JwtService.verifyAccessToken(accessToken);
     console.log(email, role);
     //   If role does not match with "USER", "email"
     if (role !== 'USER' || role !== 'ADMIN' || !email)
-      return next(Error.unauthorized('You Need Login Fast!', 403));
+      return next(Error.unauthorized('You Need Login Fast!'));
 
     // Find User
     const user = await UserModel.findById(_id).exec();
@@ -27,7 +26,7 @@ const adminMiddleware = async (req, _res, next) => {
       user.role !== 'ADMIN' ||
       user.email !== email
     )
-      return next(Error.unauthorized('You Need Login Fast!', 403));
+      return next(Error.unauthorized('You Need Login Fast!'));
 
     //   If All Pass
     return next();

@@ -1,4 +1,7 @@
 const express = require('express');
+const https = require('https');
+const path = require('path');
+const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('./utils/logger');
@@ -13,10 +16,10 @@ app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 // /-------------------------
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
 
 // Todo: Cors Install
 app.use(
@@ -24,7 +27,7 @@ app.use(
     credentials: true,
     origin: [
       'http://localhost:3000',
-      'http://localhost:4000',
+      'https://localhost:4000',
       'https://ecommerceserver.onrender.com',
       'https://e-commerce-client-u78t.onrender.com',
       'https://e-commerce-full-stack-one.vercel.app',
@@ -80,17 +83,28 @@ app.get('/api/v1/health', (req, res) => {
   res.send('OK');
 });
 
-
-
 // Todo: Error Middleware
 app.use(errorMiddleware);
+
+// Todo Create SSL Server
+const sslServer = https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+  },
+  app
+);
 
 // Todo: Connect DB
 connectDB(MONGODB_URI)
   .then(({ connection: { host, port, name } }) => {
-    console.log(`${name} is connect at : ${host}:${port}`);
-    app.listen(PORT || 4000, () => {
-      console.log(`http://localhost:${PORT}`);
+    console.log(`✅ ${name} is connect at : ${host}:${port}`);
+    // app.listen(PORT || 4000, () => {
+    //   console.log(`http://localhost:${PORT}`);
+    // });
+
+    sslServer.listen(PORT || 4000, () => {
+      console.log(`✅ http://localhost:${PORT}`);
     });
   })
   .catch((err) => {

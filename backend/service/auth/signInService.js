@@ -73,6 +73,7 @@ const signInService = async ({ email, password, res }) => {
     return {
       data: {
         token: token,
+        refreshToken,
       },
     };
   } catch (err) {
