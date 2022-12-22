@@ -48,7 +48,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://e-commerce-client-u78t.onrender.com',
+      'https://raselofficial.me',
       'https://ecommerceserver.onrender.com',
     ],
   })
@@ -105,25 +105,21 @@ app.use(errorMiddleware);
 //   app
 // );
 
-const sslServer = https.createServer(app);
+// const sslServer = https.createServer(app);
 
 // Todo: Connect DB
 connectDB(MONGODB_URI)
   .then(({ connection: { host, port, name } }) => {
     console.log(`✅ ${name} is connect at : ${host}:${port}`);
-    // app.listen(PORT || 4000, () => {
-    //   console.log(`http://localhost:${PORT}`);
-    // });
+    app.listen(PORT || 4000, () => {
+      console.log(`http://localhost:${PORT}`);
+    });
 
     // sslServer.listen(PORT || 4000, () => {
     //   console.log(`✅ https://localhost:${PORT}`);
     // });
 
-    sslServer.listen(4000, () => {
-      {
-        console.log(`✅ https://localhost:${PORT}`);
-      }
-    });
+    
   })
   .catch((err) => {
     console.log('Error: ', err);
