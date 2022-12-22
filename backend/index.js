@@ -16,45 +16,56 @@ app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 // /-------------------------
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
+
+// Todo Create SSL Server
+const sslServer = https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+  },
+  app
+);
+
 
 // Todo: Cors Install
+app.use(
+  cors({
+    origin: [
+     'http://localhost:3000',
+      'https://raselofficial.me',
+      'https://api.raselofficial.me',
+      'https://accounts.google.com',
+      'https://accounts.google.com/gsi/log',
+      'https://accounts.google.com/gsi/status',
+      'https://lh3.googleusercontent.com',
+      'https://developers.google.com/oauthplayground',
+    ],
+    optionsSuccessStatus: 200,
+    credentials: true,
+    methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
+    exposedHeaders: ['set-cookie'],
+  })
+);
+
 // app.use(
 //   cors({
 //     origin: [
 //       'http://localhost:3000',
+//       'https://raselofficial.me',
+//       'https://api.raselofficial.me',
 //       'https://e-commerce-client-u78t.onrender.com',
-//       'https://e-commerce-full-stack-one.vercel.app',
-//       // 'https://accounts.google.com',
-//       // 'https://accounts.google.com/gsi/log',
-//       // 'https://accounts.google.com/gsi/status',
-//       // 'https://lh3.googleusercontent.com',
-//       // 'https://developers.google.com/oauthplayground',
+//       'https://ecommerceserver.onrender.com',
 //     ],
-//     optionsSuccessStatus: 200,
-//     credentials: true,
-//     methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
-//     exposedHeaders: ['set-cookie'],
 //   })
 // );
 
-app.use(
-  cors({
-    origin: [
-      'http://localhost:3000',
-      'https://raselofficial.me',
-      'https://api.raselofficial.me',
-      'https://e-commerce-client-u78t.onrender.com',
-      'https://ecommerceserver.onrender.com',
-    ],
-  })
-);
-
 // Todo: Logger
 logger(app);
+
 
 /**
   // Todo: Routes:
@@ -95,14 +106,7 @@ app.get('/api/v1/health', (req, res) => {
 // Todo: Error Middleware
 app.use(errorMiddleware);
 
-// Todo Create SSL Server
-const sslServer = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-  },
-  app
-);
+
 
 // Todo: Connect DB
 connectDB(MONGODB_URI)
