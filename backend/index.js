@@ -28,14 +28,9 @@ app.use(
       'http://localhost:3000',
       'https://raselofficial.me',
       'https://api.raselofficial.me',
-      'https://accounts.google.com',
-      'https://accounts.google.com/gsi/log',
-      'https://accounts.google.com/gsi/status',
-      'https://lh3.googleusercontent.com',
-      'https://developers.google.com/oauthplayground',
-      'https://accounts.google.com/gsi/status?client_id=642165220764-2khvsfgpm17br7fokbgr64rvltgr72r5.apps.googleusercontent.com',
+      'https://developers.google.com/oauthplayground',    
     ],
-    // optionsSuccessStatus: 200,
+    optionsSuccessStatus: 200,
     credentials: true,
     methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
     exposedHeaders: ['set-cookie'],
@@ -63,6 +58,7 @@ app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 app.use('/api/v1', require('./routes/Charge/shippingChargeRoutes'));
 app.use('/api/v1', require('./routes/auth/refreshTokenRoute'));
 app.use('/api/v1', require('./routes/auth/logoutRoutes'));
+
 
 // Protected Route
 app.post(
