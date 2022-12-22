@@ -11,8 +11,6 @@ const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
-app.use(enforce.HTTPS());
-
 // Middleware
 app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
@@ -49,6 +47,7 @@ app.use(
     origin: [
       'http://localhost:3000',
       'https://raselofficial.me',
+      'https://api.raselofficial.me',
       'https://e-commerce-client-u78t.onrender.com',
       'https://ecommerceserver.onrender.com',
     ],
@@ -105,8 +104,6 @@ app.use(errorMiddleware);
 //   },
 //   app
 // );
-
-// const sslServer = https.createServer(app);
 
 // Todo: Connect DB
 connectDB(MONGODB_URI)
