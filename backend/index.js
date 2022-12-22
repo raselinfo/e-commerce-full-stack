@@ -16,19 +16,16 @@ app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 // /-------------------------
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
 
 // Todo: Cors Install
 app.use(
   cors({
-    credentials: true,
     origin: [
       'http://localhost:3000',
-      'https://localhost:4000',
-      'https://ecommerceserver.onrender.com',
       'https://e-commerce-client-u78t.onrender.com',
       'https://e-commerce-full-stack-one.vercel.app',
       'https://accounts.google.com',
@@ -36,9 +33,9 @@ app.use(
       'https://accounts.google.com/gsi/status',
       'https://lh3.googleusercontent.com',
       'https://developers.google.com/oauthplayground',
-      'https://accounts.google.com/gsi/status?client_id=642165220764-2khvsfgpm17br7fokbgr64rvltgr72r5.apps.googleusercontent.com&as=qm%2FHta4GRaCb6bjzdHmkKQ',
     ],
-    // optionsSuccessStatus: 200,
+    optionsSuccessStatus: 200,
+    credentials: true,
     methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
     exposedHeaders: ['set-cookie'],
   })
