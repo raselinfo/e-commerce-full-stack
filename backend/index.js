@@ -28,7 +28,8 @@ app.use(
       'http://localhost:3000',
       'https://raselofficial.me',
       'https://api.raselofficial.me',
-      'https://developers.google.com/oauthplayground',    
+      'https://developers.google.com/oauthplayground',
+      'https://accounts.google.com',
     ],
     optionsSuccessStatus: 200,
     credentials: true,
@@ -58,7 +59,6 @@ app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 app.use('/api/v1', require('./routes/Charge/shippingChargeRoutes'));
 app.use('/api/v1', require('./routes/auth/refreshTokenRoute'));
 app.use('/api/v1', require('./routes/auth/logoutRoutes'));
-
 
 // Protected Route
 app.post(
