@@ -22,22 +22,31 @@ app.use((req, res, next) => {
 });
 
 // Todo: Cors Install
+// app.use(
+//   cors({
+//     origin: [
+//       'http://localhost:3000',
+//       'https://e-commerce-client-u78t.onrender.com',
+//       'https://e-commerce-full-stack-one.vercel.app',
+//       // 'https://accounts.google.com',
+//       // 'https://accounts.google.com/gsi/log',
+//       // 'https://accounts.google.com/gsi/status',
+//       // 'https://lh3.googleusercontent.com',
+//       // 'https://developers.google.com/oauthplayground',
+//     ],
+//     optionsSuccessStatus: 200,
+//     credentials: true,
+//     methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
+//     exposedHeaders: ['set-cookie'],
+//   })
+// );
+
 app.use(
   cors({
     origin: [
       'http://localhost:3000',
       'https://e-commerce-client-u78t.onrender.com',
-      'https://e-commerce-full-stack-one.vercel.app',
-      // 'https://accounts.google.com',
-      // 'https://accounts.google.com/gsi/log',
-      // 'https://accounts.google.com/gsi/status',
-      // 'https://lh3.googleusercontent.com',
-      // 'https://developers.google.com/oauthplayground',
     ],
-    optionsSuccessStatus: 200,
-    credentials: true,
-    methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
-    exposedHeaders: ['set-cookie'],
   })
 );
 
@@ -101,7 +110,7 @@ connectDB(MONGODB_URI)
     // });
 
     sslServer.listen(PORT || 4000, () => {
-      console.log(`✅ http://localhost:${PORT}`);
+      console.log(`✅ https://localhost:${PORT}`);
     });
   })
   .catch((err) => {
