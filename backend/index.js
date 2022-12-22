@@ -49,6 +49,7 @@ app.use(
     origin: [
       'http://localhost:3000',
       'https://raselofficial.me',
+      'https://e-commerce-client-u78t.onrender.com',
       'https://ecommerceserver.onrender.com',
     ],
   })
@@ -118,8 +119,6 @@ connectDB(MONGODB_URI)
     // sslServer.listen(PORT || 4000, () => {
     //   console.log(`✅ https://localhost:${PORT}`);
     // });
-
-    
   })
   .catch((err) => {
     console.log('Error: ', err);
