@@ -96,25 +96,25 @@ app.get('/api/v1/health', (req, res) => {
 app.use(errorMiddleware);
 
 // Todo Create SSL Server
-// const sslServer = https.createServer(
-//   {
-//     key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-//     cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-//   },
-//   app
-// );
+const sslServer = https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+  },
+  app
+);
 
 // Todo: Connect DB
 connectDB(MONGODB_URI)
   .then(({ connection: { host, port, name } }) => {
     console.log(`✅ ${name} is connect at : ${host}:${port}`);
-    app.listen(PORT || 4000, () => {
-      console.log(`http://localhost:${PORT}`);
-    });
-
-    // sslServer.listen(PORT || 4000, () => {
-    //   console.log(`✅ https://localhost:${PORT}`);
+    // app.listen(PORT || 4000, () => {
+    //   console.log(`http://localhost:${PORT}`);
     // });
+
+    sslServer.listen(PORT || 4000, () => {
+      console.log(`✅ https://localhost:${PORT}`);
+    });
   })
   .catch((err) => {
     console.log('Error: ', err);
