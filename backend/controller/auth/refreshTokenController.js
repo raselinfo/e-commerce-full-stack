@@ -44,7 +44,9 @@ const refreshTokenController = async (req, res, next) => {
       maxAge: 8760 * 60 * 60 * 1000, // 1 year
     });
 
-    return res.status(200).json({ message: 'Ok', data: { accessToken } });
+    return res
+      .status(200)
+      .json({ message: 'Ok', data: { accessToken, refreshToken } });
   } catch (err) {
     return res.status(403).json({ message: err.message });
   }
