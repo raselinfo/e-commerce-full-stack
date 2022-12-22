@@ -46,6 +46,7 @@ app.use(
     origin: [
       'http://localhost:3000',
       'https://e-commerce-client-u78t.onrender.com',
+      'https://ecommerceserver.onrender.com',
     ],
   })
 );
