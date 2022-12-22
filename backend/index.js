@@ -33,6 +33,7 @@ app.use(
       'https://accounts.google.com/gsi/status',
       'https://lh3.googleusercontent.com',
       'https://developers.google.com/oauthplayground',
+      'https://accounts.google.com/gsi/status?client_id=642165220764-2khvsfgpm17br7fokbgr64rvltgr72r5.apps.googleusercontent.com',
     ],
     // optionsSuccessStatus: 200,
     credentials: true,
