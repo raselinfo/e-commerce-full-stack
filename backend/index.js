@@ -2,7 +2,6 @@ const express = require('express');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
-var enforce = require('express-sslify');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('./utils/logger');
