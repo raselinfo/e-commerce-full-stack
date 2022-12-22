@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import https from 'https';
 import publicAxios from '../utils/axios';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../Store/Store';
@@ -7,6 +8,9 @@ import jwt_decode from 'jwt-decode';
 const privateAxios = Axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   withCredentials: true,
+  httpsAgent: new https.Agent({
+    rejectUnauthorized: false,
+  }),
 });
 
 //  getAccessToken from session Storage
