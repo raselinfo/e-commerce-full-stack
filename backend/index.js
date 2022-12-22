@@ -16,10 +16,10 @@ app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 // /-------------------------
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
 
 // Todo: Cors Install
 app.use(
@@ -63,7 +63,7 @@ app.use('/api/v1', require('./routes/auth/logoutRoutes'));
 // Protected Route
 app.post(
   '/api/v1/test',
-  require('./middleware/auth/user.middleware'),
+  // require('./middleware/auth/user.middleware'),
   require('./middleware/auth/authentication.middleware'),
   (req, res) => {
     console.log('hello test');
