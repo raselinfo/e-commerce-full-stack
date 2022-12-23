@@ -15,39 +15,20 @@ app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-// /-------------------------
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
 
 // Todo: Cors Install
-// app.use(
-//   cors({
-//     origin: [
-//       'http://localhost:3000',
-//       'https://e-commerce-client-u78t.onrender.com',
-//       'https://e-commerce-full-stack-one.vercel.app',
-//       // 'https://accounts.google.com',
-//       // 'https://accounts.google.com/gsi/log',
-//       // 'https://accounts.google.com/gsi/status',
-//       // 'https://lh3.googleusercontent.com',
-//       // 'https://developers.google.com/oauthplayground',
-//     ],
-//     optionsSuccessStatus: 200,
-//     credentials: true,
-//     methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
-//     exposedHeaders: ['set-cookie'],
-//   })
-// );
-
 app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://e-commerce-client-u78t.onrender.com',
-      'https://ecommerceserver.onrender.com',
+      'https://raselofficial.me',
+      'https://api.raselofficial.me',
+      'https://developers.google.com/oauthplayground',
     ],
+    optionsSuccessStatus: 200,
+    credentials: true,
+    methods: ['GET,PUT,POST,DELETE,UPDATE,OPTIONS'],
+    exposedHeaders: ['set-cookie'],
   })
 );
 
@@ -76,7 +57,7 @@ app.use('/api/v1', require('./routes/auth/logoutRoutes'));
 // Protected Route
 app.post(
   '/api/v1/test',
-  require('./middleware/auth/user.middleware'),
+  // require('./middleware/auth/user.middleware'),
   require('./middleware/auth/authentication.middleware'),
   (req, res) => {
     console.log('hello test');
@@ -93,25 +74,12 @@ app.get('/api/v1/health', (req, res) => {
 // Todo: Error Middleware
 app.use(errorMiddleware);
 
-// Todo Create SSL Server
-const sslServer = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-  },
-  app
-);
-
 // Todo: Connect DB
 connectDB(MONGODB_URI)
   .then(({ connection: { host, port, name } }) => {
     console.log(`✅ ${name} is connect at : ${host}:${port}`);
-    // app.listen(PORT || 4000, () => {
-    //   console.log(`http://localhost:${PORT}`);
-    // });
-
-    sslServer.listen(PORT || 4000, () => {
-      console.log(`✅ https://localhost:${PORT}`);
+    app.listen(PORT || 4000, () => {
+      console.log(`✅http://localhost:${PORT}`);
     });
   })
   .catch((err) => {

@@ -79,6 +79,11 @@ const Google = ({
         window?.google?.accounts?.id.prompt();
       }
     }
+    // After login google one tep login should be hide
+    if (userInfo.email) {
+      console.log(userInfo.email);
+      window?.google?.accounts?.id.cancel();
+    }
   }, [
     isOneTapOpen,
     isOpenLoginButton,
