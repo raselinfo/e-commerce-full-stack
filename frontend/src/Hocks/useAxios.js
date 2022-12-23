@@ -8,7 +8,6 @@ import jwt_decode from 'jwt-decode';
 const privateAxios = Axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   withCredentials: true,
-
 });
 
 //  getAccessToken from session Storage
@@ -57,7 +56,6 @@ const useAxios = () => {
             sessionStorage.setItem('accessToken', accessToken);
             config.headers.authorization = `Bearer ${accessToken}`;
           }
-          config.sent = false;
 
           // Decode Access Token
           const user = jwt_decode(accessToken);
@@ -72,6 +70,8 @@ const useAxios = () => {
               role: user.role,
             },
           });
+          config.sent = false;
+
           return privateAxios(config);
         } catch (error) {
           if (error?.response?.status === 403) {
