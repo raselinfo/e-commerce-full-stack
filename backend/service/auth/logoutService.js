@@ -5,5 +5,4 @@ const logoutService = ({ res }) => {
     : res.clearCookie('refreshToken', { domain: '.raselofficial.me' });
   return Promise.resolve(true);
 };
-
 module.exports = logoutService;
