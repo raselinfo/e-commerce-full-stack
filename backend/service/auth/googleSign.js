@@ -1,7 +1,7 @@
 const UserService = require('../User/UserService');
 const User = require('../../model/User');
 const JWT = require('../jwt/JWT');
-
+const setCookie = require('../../utils/setCookie');
 const createToken = (payload) => {
   return JWT.signAccessToken(payload);
 };
@@ -62,13 +62,10 @@ const googleSignIn = async ({ email, name, picture, verified, res }) => {
       role: newUser.role,
       _id: newUser._id,
     });
-    res.cookie('refreshToken', refreshToken, {
-      path: '/',
-      httpOnly: true,
-      sameSite: 'lax',
-      maxAge: 8760 * 60 * 60 * 1000, // 1 year
-    });
-    console.log('Set Token');
+
+    // Set Cookie
+    setCookie({ value: refreshToken, res: res });
+
     return { data: token };
   } catch (err) {
     return { error: err };

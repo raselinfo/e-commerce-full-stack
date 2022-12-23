@@ -4,9 +4,9 @@ const JWT = require('../jwt/JWT');
 const sendMail = require('../mail/sendMail');
 const Token = require('../../model/Token');
 const { BASE_CLIENT_URL } = require('../../config');
+const { setCookie } = require('../../utils/setCookie');
+
 const signInService = async ({ email, password, res }) => {
-  console.log('✅✅✅', 'inside signInservice');
-  console.log(email, password);
   try {
     // Todo: Check if user exist or not
     const user = await UserService.findByProperty('email', email);
@@ -60,21 +60,14 @@ const signInService = async ({ email, password, res }) => {
       role: user.role,
       image: user.image.url,
     });
-    res.cookie('refreshToken', refreshToken, {
-      path: '/',
-      httpOnly: true,
-      sameSite: 'lax',
-      maxAge: 8760 * 60 * 60 * 1000, // 1 year,
-      secure: true,
-      domain:".raselofficial.me"
-    });
+    // Ste cookie
+    setCookie({ value: refreshToken, res: res });
 
     console.log('After Set cookie', res);
 
     return {
       data: {
         token: token,
-        refreshToken,
       },
     };
   } catch (err) {
