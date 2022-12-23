@@ -79,6 +79,9 @@ const Google = ({
         window?.google?.accounts?.id.prompt();
       }
     }
+    if (userInfo.email) {
+      window?.google?.accounts?.id.close();
+    }
   }, [
     isOneTapOpen,
     isOpenLoginButton,

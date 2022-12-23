@@ -15,11 +15,6 @@ app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-// /-------------------------
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
 
 // Todo: Cors Install
 app.use(
