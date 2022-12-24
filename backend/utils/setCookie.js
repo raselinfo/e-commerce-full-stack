@@ -3,6 +3,9 @@ const { MODE } = require('../config');
 /**
  * @params {name,value,options}
  */
+// Documentation
+// This setCookie function basically set the cookie with given data=> name,value:token,options
+
 const setCookie = ({
   name = 'refreshToken',
   value,
@@ -17,7 +20,8 @@ const setCookie = ({
   res,
 }) => {
   res.cookie(name.trim(), value, options);
-  return Promise.resolve(true);
+  console.log('Set Cookie 🥰');
+  return true;
 };
 
 module.exports = {
