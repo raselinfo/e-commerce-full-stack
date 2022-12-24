@@ -40,7 +40,7 @@ const useAxios = () => {
     }
   );
 
-  // Interceptor Response
+  // // Interceptor Response
   privateAxios.interceptors.response.use(
     (res) => res,
     async (err) => {
