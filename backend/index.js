@@ -53,17 +53,12 @@ app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 app.use('/api/v1', require('./routes/Charge/shippingChargeRoutes'));
 app.use('/api/v1', require('./routes/auth/refreshTokenRoute'));
 app.use('/api/v1', require('./routes/auth/logoutRoutes'));
-
+const authenticationMiddleware = require('./middleware/auth/authentication.middleware');
 // Protected Route
-app.post(
-  '/api/v1/test',
-  // require('./middleware/auth/user.middleware'),
-  require('./middleware/auth/authentication.middleware'),
-  (req, res) => {
-    console.log('hello test');
-    res.send('Test is ok');
-  }
-);
+app.post('/api/v1/test', authenticationMiddleware, (req, res) => {
+  console.log('hello test');
+  res.send('Test is ok');
+});
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
