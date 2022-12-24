@@ -4,8 +4,7 @@ const JWT = require('../jwt/JWT');
 const sendMail = require('../mail/sendMail');
 const Token = require('../../model/Token');
 const { BASE_CLIENT_URL } = require('../../config');
-const { setCookie } = require('../../utils/setCookie');
-
+const generateTokenAndCookie = require('../../utils/generateTokenAndCookie');
 const signInService = async ({ email, password, res }) => {
   try {
     // Todo: Check if user exist or not
@@ -43,31 +42,12 @@ const signInService = async ({ email, password, res }) => {
     if (!match) {
       return { error: 'Password Not Match' };
     }
-    //  Todo: Access Token
-    const token = await JWT.signAccessToken({
-      name: user.name,
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      image: user.image.url,
-    });
-
-    // Refresh Token
-    const refreshToken = await JWT.signRefreshToken({
-      name: user.name,
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      image: user.image.url,
-    });
-    // Ste cookie
-    setCookie({ value: refreshToken, res: res });
-
-    console.log('After Set cookie', res);
+    
+    const { accessToken } = await generateTokenAndCookie({ res, user });
 
     return {
       data: {
-        token: token,
+        token: accessToken,
       },
     };
   } catch (err) {
