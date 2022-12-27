@@ -9,6 +9,7 @@ const addShippingChargeController = async (req, res, next) => {
     amount: JOI.number().required(),
     discountCharge: JOI.number().required(),
     charge: JOI.number().required(),
+    on:JOI.boolean().required()
   });
 
   const { error, value } = shippingChargeSchema.validate(req.body);
