@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-vitest.initialize(app);
+// vitest.initialize(app);
 // Todo: Cors Install
 app.use(
   cors({
