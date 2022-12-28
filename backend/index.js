@@ -1,4 +1,5 @@
 const express = require('express');
+const vitest=require("vitest")
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
@@ -15,7 +16,7 @@ app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-
+// vitest.initialize(app);
 // Todo: Cors Install
 app.use(
   cors({
@@ -53,12 +54,8 @@ app.use('/api/v1', require('./routes/resetPassword/resetPassRoutes'));
 app.use('/api/v1', require('./routes/Charge/shippingChargeRoutes'));
 app.use('/api/v1', require('./routes/auth/refreshTokenRoute'));
 app.use('/api/v1', require('./routes/auth/logoutRoutes'));
-const authenticationMiddleware = require('./middleware/auth/authentication.middleware');
-// Protected Route
-app.post('/api/v1/test', authenticationMiddleware, (req, res) => {
-  console.log('hello test');
-  res.send('Test is ok');
-});
+app.use('/api/v1', require('./routes/storeUtils/storeUtilsRoutes'));
+app.use('/api/v1', require('./routes/coupon/couponRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {

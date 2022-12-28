@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from '../Store/Store';
 import { useNavigate } from 'react-router-dom';
@@ -6,8 +6,9 @@ import axios from '../utils/axios';
 import formateError from '../utils/formateError';
 import pAxios from '../Hocks/useAxios';
 const PlaceOrder = () => {
+  const [shippingCharge, setShippingCharge] = useState(0);
+  const [tax, setTax] = useState(0);
   const navigate = useNavigate();
-  const privateAxios = pAxios();
   const {
     state: {
       cart: { cartItems, payment_method, shipping_address },
@@ -20,44 +21,47 @@ const PlaceOrder = () => {
   const itemPrice = decimal(
     cartItems.reduce((acc, item) => (acc += item.quantity * item.price), 0)
   );
-  console.log(shipping_address);
-  const city = 'Dhak';
-  // if client buy mode then 100$ ,then he don't need to pay shipping price.
-  // const shippingPrice = itemPrice > 100 ? decimal(0) : (
-
-  // );
 
   // Fetch Shipping Details
   const shippingHandler = useCallback(async () => {
+    console.log('i am shippingHandler');
     try {
-      const result = await axios.get(
-        // `getShippingCharge?city=${shipping_address.city}`
-        `getShippingCharge?city=${city}`
+      const { data } = await axios.get(
+        `getShippingCharge?city=${shipping_address.city.trim()}&itemPrice=${itemPrice}`
+        // 'getShippingCharge?city=chandpur&itemPrice=500'
       );
-      console.log(result);
+
+      // setShippingCharge;
+      setShippingCharge(data.data);
+
+      return data.data;
     } catch (err) {
       formateError(err);
-      console.log(err);
+      console.log(formateError(err));
     }
-  }, []);
-  
+  }, [shipping_address, itemPrice]);
+  // Const Tax Handler
+  const taxHandler = async () => {
+    const { data } = await axios.get(`/getStoreUtils?tax=true`);
+    const tax = data?.data?.tax;
+    console.log('tax', tax);
+
+    return tax;
+  };
+
   // Redirect Payment screen if payment method not exist
   useEffect(() => {
+    const callAPI = async () => {
+      // Call shipping handler
+      setShippingCharge(await shippingHandler());
+      setTax(await taxHandler());
+    };
+    callAPI();
     // redirect payment step if payment method not present
     if (!payment_method || !shipping_address || cartItems.length === 0) {
       navigate('/checkout?step=payment', { replace: true });
     }
-  }, [payment_method, navigate, shipping_address, cartItems]);
-
-  // CALL API
-  const callAPI = async () => {
-    try {
-      const result = await privateAxios.post('/test');
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [payment_method, navigate, shipping_address, cartItems, shippingHandler]);
 
   return (
     <div className='md:w-5/6  mx-auto  md:my-28'>
@@ -119,9 +123,6 @@ const PlaceOrder = () => {
         <div className='bg-white p-5 rounded-xl order-2 w-full md:w-1/2'>
           <h3 className='text-3xl font-bold'>
             Order <span className='text-yellow-500'>Summary</span>
-            <button className='border-8' onClick={callAPI}>
-              Protect API
-            </button>
           </h3>
         </div>
       </div>
