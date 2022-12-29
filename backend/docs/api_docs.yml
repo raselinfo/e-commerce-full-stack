@@ -1,23 +1,24 @@
 swagger: '2.0'
 info:
-  title: RaselFashion
-  description: This is an E-Commerce Application
+  title: RaselOfficial APP
+  description: This is the company documentations
   version: 1.0
   contact:
-    email: raselinfo52@gmail.com
-    phone: 01940146975
+    email: test.example.com
+
   license:
-    name: MIT
+    name: Apache 2.0
+    url: http://apache.org
   servers:
-    - url: http:// localhost:4000
-      description: This is development server
-    - url: api.raselofficial.me
-      description: This is production server
+    - url: http://localhost:4000
+      description: This is my local server
+    - url: https://production.com
+      description: This is my production server
 
 basePath: /api/v1
-# host: http://localhost:4000
+hots: http://localhost:4000
 
-# JWT Token
+# For Token
 securityDefinitions:
   api_key:
     type: apiKey
@@ -26,31 +27,118 @@ securityDefinitions:
 security:
   - api_key: []
 
-tags:
-  - name: Shipping Charge
-    description: These are shipping Charge routes
+# # For tags/tile
+# tags:
+#   - name: users routes
+#     description: This is user routes
+#   - name: test
+#     description: This is test routes
+
+schemes: [http, https]
 
 paths:
-  /getShippingCharge:
+  # String
+  /string:
     get:
       tags:
-        - name: Shipping Charge
-      summary: Get shipping charge
-      description: This route return shipping charge
-
-      response:
+        - users description
+      summary: Return a string
+      description: it is just returning a simple string
+      responses:
         200:
           description: OK
           schema:
             type: object
-            example: { message: 'OK', data: {} }
+            properties:
+              message:
+                type: string
+            example: { message: ok }
         404:
-          description: Not Found
+          description: NOt found
           schema:
             type: object
-            example: { error: Not Found }
+            properties:
+              error:
+                type: string
+            example: { error: Data not found }
         500:
           description: Internal Server Error
           schema:
             type: object
-            example: { error: Internal server error }
+            properties:
+              error:
+                type: string
+            example: { error: 'Internal Server Error!' }
+  # User
+  /user/{userName}:
+    get:
+      tags:
+        - test
+      summary: it's return an user
+      description: it's return an user
+      parameters:
+        - name: userName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#components/schemas/User'
+        404:
+          description: User not found!
+          schema:
+            type: object
+            example: { error: 'User not found!' }
+        500:
+          description: Internal Server Error!
+          schema:
+            type: object
+            example: { error: 'Internal Server Error' }
+
+  /users:
+    get:
+      tags:
+        - users
+      summary: Return a Users Array
+      description: it is just returning a users Array
+      responses:
+        200:
+          description: ok
+          schema:
+            type: array
+            items:
+              $ref: '#components/schemas/User'
+            # example: { message: OK, data: [{ name: rasel, age: 20 }] }
+
+        404:
+          description: NO found!
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+            # example: { error: 'User not found!' }
+        500:
+          description: Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+            # example: { error: 'Server Error!' }
+
+# Components
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        age:
+          type: integer
+          required: true
