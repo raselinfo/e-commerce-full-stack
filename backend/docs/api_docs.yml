@@ -1,0 +1,56 @@
+swagger: '2.0'
+info:
+  title: RaselFashion
+  description: This is an E-Commerce Application
+  version: 1.0
+  contact:
+    email: raselinfo52@gmail.com
+    phone: 01940146975
+  license:
+    name: MIT
+  servers:
+    - url: http:// localhost:4000
+      description: This is development server
+    - url: api.raselofficial.me
+      description: This is production server
+
+basePath: /api/v1
+# host: http://localhost:4000
+
+# JWT Token
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: APIKey # this name actually sent inside heder
+    in: header
+security:
+  - api_key: []
+
+tags:
+  - name: Shipping Charge
+    description: These are shipping Charge routes
+
+paths:
+  /getShippingCharge:
+    get:
+      tags:
+        - name: Shipping Charge
+      summary: Get shipping charge
+      description: This route return shipping charge
+
+      response:
+        200:
+          description: OK
+          schema:
+            type: object
+            example: { message: 'OK', data: {} }
+        404:
+          description: Not Found
+          schema:
+            type: object
+            example: { error: Not Found }
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            example: { error: Internal server error }

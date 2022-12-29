@@ -5,10 +5,19 @@ describe('Fist Describe', () => {
   it('Fist Test', () => {
     const result = addNumber(5, 5);
     console.log(result);
-    console.log(result);
-    console.log(result);
-    console.log('hello world');
     expect(result).toBe(10);
   });
   
 });
+
+
+describe('Fist Describe', () => {
+  it('Fist Test', () => {
+    const result = addNumber(5, 5);
+    console.log(result);
+    expect(result).toBe(10);
+  });
+  
+});
+
+

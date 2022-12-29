@@ -1,12 +1,11 @@
 const express = require('express');
-const vitest=require("vitest")
-const https = require('https');
-const path = require('path');
-const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('./utils/logger');
+const path = require('path');
 const connectDB = require('./db/db');
+const swaggerUI = require('swagger-ui-express');
+const YML = require('yamljs');
 const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
@@ -16,7 +15,6 @@ app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-// vitest.initialize(app);
 // Todo: Cors Install
 app.use(
   cors({
@@ -36,6 +34,9 @@ app.use(
 // Todo: Logger
 logger(app);
 
+// Swagger UI
+const swaggerJsDocs = YML.load(path.join(__dirname, 'docs', 'api_docs.yml'));
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
 /**
   // Todo: Routes:
  * Seed Products and Users Routes
