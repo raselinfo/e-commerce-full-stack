@@ -37,108 +37,112 @@ security:
 schemes: [http, https]
 
 paths:
-  # String
-  /string:
+  # Get Coupon
+  /get_coupon:
     get:
       tags:
-        - users description
-      summary: Return a string
-      description: it is just returning a simple string
+        - Coupon 💥
+      summary: Get Coupon details  by query 😀
+      description: This route return coupon.
+      parameters:
+        - name: code
+          in: query
+          schema:
+            type: string
+          require: true
+          enum: ['rasel360']
       responses:
         200:
-          description: OK
+          description: Coupon Apply
           schema:
             type: object
             properties:
               message:
                 type: string
-            example: { message: ok }
+              data:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  code:
+                    type: string
+                  discount:
+                    type: integer
+                  owner:
+                    type: string
+
         404:
-          description: NOt found
+          description: No coupon found!
           schema:
             type: object
             properties:
-              error:
+              message:
                 type: string
-            example: { error: Data not found }
+            example: { message: 'No coupon found!' }
         500:
           description: Internal Server Error
           schema:
             type: object
             properties:
-              error:
+              message:
                 type: string
-            example: { error: 'Internal Server Error!' }
-  # User
-  /user/{userName}:
-    get:
+            example: { message: 'Internal Server Error' }
+
+  # Get Coupon
+  /set_coupon:
+    post:
       tags:
-        - test
-      summary: it's return an user
-      description: it's return an user
+        - Coupon 💥
+      summary: Set Coupon IN Database 😀
+      description: This route save coupon in the database.
       parameters:
-        - name: userName
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: ok
-          schema:
-            $ref: '#components/schemas/User'
-        404:
-          description: User not found!
-          schema:
-            type: object
-            example: { error: 'User not found!' }
-        500:
-          description: Internal Server Error!
-          schema:
-            type: object
-            example: { error: 'Internal Server Error' }
-
-  /users:
-    get:
-      tags:
-        - users
-      summary: Return a Users Array
-      description: it is just returning a users Array
-      responses:
-        200:
-          description: ok
-          schema:
-            type: array
-            items:
-              $ref: '#components/schemas/User'
-            # example: { message: OK, data: [{ name: rasel, age: 20 }] }
-
-        404:
-          description: NO found!
+        - name: code
+          in: body
           schema:
             type: object
             properties:
-              error:
+              code:
                 type: string
-            # example: { error: 'User not found!' }
-        500:
-          description: Server Error
+              discount:
+                type: integer
+              owner:
+                type: string
+          require: true
+          example:
+            { code: 'santo56', discount: 5, owner: '63a5451821eda0b21da6781a' }
+      responses:
+        200:
+          description: Coupon Apply
           schema:
             type: object
             properties:
-              error:
+              message:
                 type: string
-            # example: { error: 'Server Error!' }
+              data:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  code:
+                    type: string
+                  discount:
+                    type: integer
+                  owner:
+                    type: string
 
-# Components
-components:
-  schemas:
-    User:
-      type: object
-      properties:
-        name:
-          type: string
-          required: true
-        age:
-          type: integer
-          required: true
+        404:
+          description: No coupon found!
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'No coupon found!' }
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
