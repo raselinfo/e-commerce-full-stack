@@ -64,11 +64,9 @@ const PlaceOrder = () => {
         `getShippingCharge?city=${shipping_address.city.trim()}&itemPrice=${itemPrice}`
         // 'getShippingCharge?city=chandpur&itemPrice=500'
       );
-      console.log('Shipping Price', data.data);
       return data.data;
     } catch (err) {
-      formateError(err);
-      console.log('shipping error', formateError(err));
+      throw new Error(err.message);
     }
   }, [shipping_address, itemPrice]);
   // Const Tax Handler
@@ -76,12 +74,10 @@ const PlaceOrder = () => {
     try {
       const { data } = await axios.get(`/getStoreUtils?tax=true`);
       const tax = data?.data?.tax;
-      console.log('tax', tax);
 
       return tax;
     } catch (err) {
-      console.log('tax', err);
-      throw new Error(err.mssage);
+      throw new Error(err.message);
     }
   };
 
@@ -96,7 +92,7 @@ const PlaceOrder = () => {
           ...prev,
           taxPrice: tax,
           shippingPrice: shipping,
-          totalPrice: Math.ceil(decimal(total)),
+          totalPrice: decimal(total),
         };
       });
     },
@@ -109,10 +105,8 @@ const PlaceOrder = () => {
       const { data } = await axios.get(`/get_coupon?code=${code}`);
       if (!data?.data?.discount) throw new Error('Invalid Coupon');
       const discount = data?.data?.discount;
-      console.log('Coupon', discount);
       return discount;
     } catch (err) {
-      console.log('Coupon', err);
       throw new Error(err.message);
     }
   };
@@ -123,7 +117,7 @@ const PlaceOrder = () => {
         const coupon = await couponHandler(e.target.value);
         const newTotal = orderSummary.totalPrice - coupon;
         setOrderSummary((prev) => {
-          return { ...prev, totalPrice: Math.ceil(newTotal) };
+          return { ...prev, totalPrice: newTotal };
         });
         setIsCouponApply(true);
         dispatch({ type: 'COUPON', payload: '✅ Coupon Applied.' });
@@ -152,7 +146,7 @@ const PlaceOrder = () => {
         calCulate({ shipping, tax });
         dispatch({ type: 'SUCCESS' });
       } catch (err) {
-        dispatch({ type: 'FAIL', payload: err.message });
+        dispatch({ type: 'FAIL', payload: formateError(err) });
       }
     };
     callAPI();
@@ -168,7 +162,6 @@ const PlaceOrder = () => {
     shippingHandler,
     calCulate,
   ]);
-
   return (
     <div className='md:w-5/6  mx-auto  md:my-28'>
       <h2 className='text-5xl mb-5 text-white font-bold '>
@@ -233,6 +226,8 @@ const PlaceOrder = () => {
           </h3>
           {loading ? (
             <h1>Loading....</h1>
+          ) : error ? (
+            <p className='text-red-500'>{error}</p>
           ) : (
             <div className='items text-2xl font-bold'>
               <div className='item flex justify-between'>

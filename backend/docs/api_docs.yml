@@ -10,13 +10,13 @@ info:
     name: Apache 2.0
     url: http://apache.org
   servers:
-    - url: http://localhost:4000
-      description: This is my local server
-    - url: https://production.com
+    # - url: http://localhost:4000
+    #   description: This is my local server
+    - url: https://api.raselofficial.com
       description: This is my production server
 
 basePath: /api/v1
-hots: http://localhost:4000
+hots: https://api.raselofficial.com
 
 # For Token
 securityDefinitions:
@@ -138,6 +138,74 @@ paths:
               message:
                 type: string
             example: { message: 'No coupon found!' }
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  /auth/signin:
+    post:
+      tags:
+        - Auth 💥
+      summary: Sign IN 😀
+      description: Sign In in the sotre.
+      parameters:
+        - name: user
+          in: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                default: raselinfo52@gmail.com
+              password:
+                type: string
+                default: rASEL012398@
+          example:
+            email: raselinfo52@gmail.com
+            password:
+      responses:
+        200:
+          description: Success
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  # Store Utils
+  /setStoreUtils:
+    post:
+      tags:
+        - Stor Utils 💥
+      summary: Save store utils 😀
+      description: This route save store utils.
+      parameters:
+        - name: utils
+          in: body
+          schema:
+            type: object
+            properties:
+              storeName:
+                type: string
+              tax:
+                type: integer
+          require: true
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          require: true
+      responses:
+        200:
+          description: Success
         500:
           description: Internal Server Error
           schema:
