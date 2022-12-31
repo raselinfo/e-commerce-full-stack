@@ -10,13 +10,13 @@ info:
     name: Apache 2.0
     url: http://apache.org
   servers:
-    # - url: http://localhost:4000
-    #   description: This is my local server
+    - url: http://localhost:4000
+      description: This is my local server
     - url: https://api.raselofficial.me
       description: This is my production server
 
 basePath: /api/v1
-hots: https://api.raselofficial.me
+hots: http://localhost:4000
 
 # For Token
 securityDefinitions:
