@@ -10,10 +10,12 @@ const getCouponService = async (code) => {
     if (!getCoupon) {
       throw new Error('Invalid Coupon!');
     }
+    console.log(getCoupon);
     return { result: getCoupon };
   } catch (err) {
     throw new Error(err.message);
   }
 };
+
 
 module.exports = getCouponService;

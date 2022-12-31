@@ -1,23 +1,24 @@
 swagger: '2.0'
 info:
-  title: RaselFashion
-  description: This is an E-Commerce Application
+  title: RaselOfficial APP
+  description: This is the company documentations
   version: 1.0
   contact:
-    email: raselinfo52@gmail.com
-    phone: 01940146975
+    email: test.example.com
+
   license:
-    name: MIT
+    name: Apache 2.0
+    url: http://apache.org
   servers:
-    - url: http:// localhost:4000
-      description: This is development server
-    - url: api.raselofficial.me
-      description: This is production server
+    - url: http://localhost:4000
+      description: This is my local server
+    - url: https://api.raselofficial.me
+      description: This is my production server
 
 basePath: /api/v1
-# host: http://localhost:4000
+hots: http://localhost:4000
 
-# JWT Token
+# For Token
 securityDefinitions:
   api_key:
     type: apiKey
@@ -26,31 +27,190 @@ securityDefinitions:
 security:
   - api_key: []
 
-tags:
-  - name: Shipping Charge
-    description: These are shipping Charge routes
+# # For tags/tile
+# tags:
+#   - name: users routes
+#     description: This is user routes
+#   - name: test
+#     description: This is test routes
+
+schemes: [http, https]
 
 paths:
-  /getShippingCharge:
+  # Get Coupon
+  /get_coupon:
     get:
       tags:
-        - name: Shipping Charge
-      summary: Get shipping charge
-      description: This route return shipping charge
-
-      response:
+        - Coupon 💥
+      summary: Get Coupon details  by query 😀
+      description: This route return coupon.
+      parameters:
+        - name: code
+          in: query
+          schema:
+            type: string
+          require: true
+          enum: ['rasel360']
+      responses:
         200:
-          description: OK
+          description: Coupon Apply
           schema:
             type: object
-            example: { message: 'OK', data: {} }
+            properties:
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  code:
+                    type: string
+                  discount:
+                    type: integer
+                  owner:
+                    type: string
+
         404:
-          description: Not Found
+          description: No coupon found!
           schema:
             type: object
-            example: { error: Not Found }
+            properties:
+              message:
+                type: string
+            example: { message: 'No coupon found!' }
         500:
           description: Internal Server Error
           schema:
             type: object
-            example: { error: Internal server error }
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  # Get Coupon
+  /set_coupon:
+    post:
+      tags:
+        - Coupon 💥
+      summary: Set Coupon IN Database 😀
+      description: This route save coupon in the database.
+      parameters:
+        - name: code
+          in: body
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              discount:
+                type: integer
+              owner:
+                type: string
+          require: true
+          example:
+            { code: 'santo56', discount: 5, owner: '63a5451821eda0b21da6781a' }
+      responses:
+        200:
+          description: Coupon Apply
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  code:
+                    type: string
+                  discount:
+                    type: integer
+                  owner:
+                    type: string
+
+        404:
+          description: No coupon found!
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'No coupon found!' }
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  /auth/signin:
+    post:
+      tags:
+        - Auth 💥
+      summary: Sign IN 😀
+      description: Sign In in the sotre.
+      parameters:
+        - name: user
+          in: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                default: raselinfo52@gmail.com
+              password:
+                type: string
+                default: rASEL012398@
+          example:
+            email: raselinfo52@gmail.com
+            password:
+      responses:
+        200:
+          description: Success
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  # Store Utils
+  /setStoreUtils:
+    post:
+      tags:
+        - Stor Utils 💥
+      summary: Save store utils 😀
+      description: This route save store utils.
+      parameters:
+        - name: utils
+          in: body
+          schema:
+            type: object
+            properties:
+              storeName:
+                type: string
+              tax:
+                type: integer
+          require: true
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          require: true
+      responses:
+        200:
+          description: Success
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }

@@ -22,6 +22,7 @@ app.use(
       'http://localhost:3000',
       'https://raselofficial.me',
       'https://api.raselofficial.me',
+      'http://api.raselofficial.me',
       'https://developers.google.com/oauthplayground',
     ],
     optionsSuccessStatus: 200,
@@ -57,6 +58,7 @@ app.use('/api/v1', require('./routes/auth/refreshTokenRoute'));
 app.use('/api/v1', require('./routes/auth/logoutRoutes'));
 app.use('/api/v1', require('./routes/storeUtils/storeUtilsRoutes'));
 app.use('/api/v1', require('./routes/coupon/couponRoutes'));
+app.use('/api/v1', require('./routes/order/orderRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
