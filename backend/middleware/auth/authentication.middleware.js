@@ -10,7 +10,7 @@ const authenticationMiddleware = async (req, res, next) => {
   // check user exist or not in the database (not=> 403)
   // check access token role,email and database user role,email (not=>403)
   // if all the test pass then return next()
-  console.log('authenticationMiddleware');
+ 
 
   try {
     // Access token from header

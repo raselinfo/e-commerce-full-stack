@@ -4,8 +4,8 @@ const Error = require('../../utils/Error');
 const { ADMIN_EMAIL } = require('../../config');
 const adminMiddleware = async (req, _res, next) => {
   try {
-    let { token } = req.headers;
-    token = token?.split('Bearer')[1]?.trim();
+    let { authorization } = req.headers;
+    token = authorization?.split('Bearer')[1]?.trim();
     const { _id, role, email } = JwtService.verifyAccessToken(token);
     //   If role does not match with "ADMIN", "email"
     if (role !== 'ADMIN' || email !== ADMIN_EMAIL.trim())
