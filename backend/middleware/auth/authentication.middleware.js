@@ -10,7 +10,6 @@ const authenticationMiddleware = async (req, res, next) => {
   // check user exist or not in the database (not=> 403)
   // check access token role,email and database user role,email (not=>403)
   // if all the test pass then return next()
- 
 
   try {
     // Access token from header
@@ -40,7 +39,8 @@ const authenticationMiddleware = async (req, res, next) => {
     ) {
       return res.status(401).json({ message: 'UnAuthorize' });
     }
-
+    // Set user inside req object
+    req.user = findUser;
     return next();
   } catch (err) {
     return res.status(401).json({ message: err.message });
