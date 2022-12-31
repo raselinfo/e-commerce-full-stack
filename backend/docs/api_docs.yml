@@ -12,11 +12,11 @@ info:
   servers:
     # - url: http://localhost:4000
     #   description: This is my local server
-    - url: https://api.raselofficial.com
+    - url: https://api.raselofficial.me
       description: This is my production server
 
 basePath: /api/v1
-hots: https://api.raselofficial.com
+hots: https://api.raselofficial.me
 
 # For Token
 securityDefinitions:
