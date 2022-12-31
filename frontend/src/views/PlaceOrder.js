@@ -64,19 +64,25 @@ const PlaceOrder = () => {
         `getShippingCharge?city=${shipping_address.city.trim()}&itemPrice=${itemPrice}`
         // 'getShippingCharge?city=chandpur&itemPrice=500'
       );
-
+      console.log('Shipping Price', data.data);
       return data.data;
     } catch (err) {
       formateError(err);
-      console.log(formateError(err));
+      console.log('shipping error', formateError(err));
     }
   }, [shipping_address, itemPrice]);
   // Const Tax Handler
   const taxHandler = async () => {
-    const { data } = await axios.get(`/getStoreUtils?tax=true`);
-    const tax = data?.data?.tax;
+    try {
+      const { data } = await axios.get(`/getStoreUtils?tax=true`);
+      const tax = data?.data?.tax;
+      console.log('tax', tax);
 
-    return tax;
+      return tax;
+    } catch (err) {
+      console.log('tax', err);
+      throw new Error(err.mssage);
+    }
   };
 
   // Const Calculate
@@ -99,10 +105,16 @@ const PlaceOrder = () => {
 
   // Coupon Handler
   const couponHandler = async (code) => {
-    const { data } = await axios.get(`/get_coupon?code=${code}`);
-    if (!data?.data?.discount) throw new Error('Invalid Coupon');
-    const discount = data?.data?.discount;
-    return discount;
+    try {
+      const { data } = await axios.get(`/get_coupon?code=${code}`);
+      if (!data?.data?.discount) throw new Error('Invalid Coupon');
+      const discount = data?.data?.discount;
+      console.log('Coupon', discount);
+      return discount;
+    } catch (err) {
+      console.log('Coupon', err);
+      throw new Error(err.message);
+    }
   };
   const handleCouponInput = (e) => {
     clearTimeout(timer);

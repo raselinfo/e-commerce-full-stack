@@ -1,6 +1,9 @@
 {
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "server": "cd backend && yarn dev",
     "client": "cd frontend && yarn start",
