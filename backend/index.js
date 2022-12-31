@@ -22,6 +22,7 @@ app.use(
       'http://localhost:3000',
       'https://raselofficial.me',
       'https://api.raselofficial.me',
+      'http://api.raselofficial.me',
       'https://developers.google.com/oauthplayground',
     ],
     optionsSuccessStatus: 200,
@@ -30,7 +31,6 @@ app.use(
     exposedHeaders: ['set-cookie'],
   })
 );
-
 
 // Todo: Logger
 logger(app);
