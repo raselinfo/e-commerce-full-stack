@@ -6,7 +6,6 @@ const ShippingChargeModel = require('../../model/ShippingPrice');
  */
 // Documentation
 // this getShippingChargeService return shipping charge based on the city and itemPrice.
-
 const getShippingChargeService = async (city, itemPrice) => {
   itemPrice = Number(itemPrice);
   city = city.toLowerCase();
@@ -20,7 +19,9 @@ const getShippingChargeService = async (city, itemPrice) => {
         city: 'all',
       });
       if (!allShippingCharge || !allShippingCharge?.on) {
-        return { error: `No shipping details found by ${city}` };
+        return {
+          error: `No shipping details found by ${city}`,
+        };
       }
 
       if (allShippingCharge.amount === 0) {
@@ -34,7 +35,9 @@ const getShippingChargeService = async (city, itemPrice) => {
 
     // If city found
     if (!shippingCharge?.on) {
-      return { error: `No shipping details found by ${city}` };
+      return {
+        error: `No shipping details found by ${city}`,
+      };
     }
     if (
       shippingCharge.amount <= itemPrice &&
@@ -44,7 +47,7 @@ const getShippingChargeService = async (city, itemPrice) => {
     }
     return { result: shippingCharge.charge };
   } catch (err) {
-    return { error: err.message };
+    throw new Error(err.message);
   }
 };
 
