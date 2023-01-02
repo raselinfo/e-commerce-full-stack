@@ -6,8 +6,8 @@ const formateError = (err) => {
     : err.message
     ? err.message
     : err.response.status > 400
-    ? "Client Error! <p>Please give us sometime to fix this issue.OR mail us : example@gmail.com</p>"
-    : "Something went Wrong <p>Please give us sometime to fix this issue.OR mail us : example@gmail.com</p>";
+    ? "Client Error! Please give us sometime to fix this issue.OR mail us : example@gmail.com"
+    : "Something went Wrong! Please give us sometime to fix this issue.OR mail us : example@gmail.com";
 };
 
 export default formateError;
