@@ -14,7 +14,7 @@ import pAxios from '../Hocks/useAxios';
 import Button from '../components/Button/Button';
 import { BarLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
-import Helmet from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 // Reducer
 const reducer = (state, { type, payload }) => {
   switch (type) {

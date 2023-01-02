@@ -7,7 +7,7 @@ import Skeleton from 'react-loading-skeleton';
 import MessageBox from '../components/MessageBox';
 import formateError from '../utils/formateError';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import Helmet from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case 'REQUEST':
