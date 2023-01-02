@@ -87,6 +87,12 @@ const reducer = (state, { type, payload = {} }) => {
         ...state,
         cart: { ...state.cart, payment_method: payload },
       };
+    case 'REMOVE_CART':
+      localStorage.removeItem('cartItems');
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: [] },
+      };
 
     default:
       return state;
