@@ -14,6 +14,7 @@ import pAxios from '../Hocks/useAxios';
 import Button from '../components/Button/Button';
 import { BarLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
+import { Helmet } from "react-helmet-async";
 // Reducer
 const reducer = (state, { type, payload }) => {
   switch (type) {
@@ -23,6 +24,9 @@ const reducer = (state, { type, payload }) => {
       return { ...state, error: '', loading: false };
     case 'FAIL':
       return { ...state, error: payload, loading: false };
+    case 'PLACE_REQUEST':
+      return { ...state, error: '', place_loading: true };
+
     case 'ORDER':
       return {
         ...state,
@@ -39,11 +43,11 @@ const reducer = (state, { type, payload }) => {
 
 const PlaceOrder = () => {
   const privateAxios = pAxios();
-  const [{ error, loading, message, orderSummary }, dispatch] = useReducer(
-    reducer,
-    {
+  const [{ error, loading, message, orderSummary, place_loading }, dispatch] =
+    useReducer(reducer, {
       error: '',
-      loading: '',
+      loading: false,
+      place_loading: false,
       orderSummary: {
         taxPrice: 0,
         shippingPrice: 0,
@@ -53,8 +57,7 @@ const PlaceOrder = () => {
         },
         totalPrice: 0,
       },
-    }
-  );
+    });
 
   const [timer, setTimer] = useState(null);
   const [isCouponApply, setIsCouponApply] = useState(false);
@@ -63,6 +66,7 @@ const PlaceOrder = () => {
     state: {
       cart: { cartItems, payment_method, shipping_address },
     },
+    dispatch: ctxDispatch,
   } = useContext(Store);
 
   // Make Decimal number
@@ -188,6 +192,7 @@ const PlaceOrder = () => {
   // Place Order Handler
   const placeOrderHandler = async () => {
     try {
+      dispatch({ type: 'PLACE_REQUEST' });
       const { data } = await privateAxios.post('/order', {
         orderItems: cartItems,
         shippingAddress: shipping_address,
@@ -195,9 +200,12 @@ const PlaceOrder = () => {
         itemPrice: itemPrice,
         shippingPrice: orderSummary.shippingPrice,
         taxPrice: orderSummary.taxPrice,
-        totalPrice: orderSummary.totalPrice,
+        totalPrice: Math.ceil(orderSummary.totalPrice),
         coupon: orderSummary.coupon,
       });
+      // Remove cart item form localStorage
+      ctxDispatch({ type: 'REMOVE_CART' });
+      dispatch({ type: 'SUCCESS' });
       if (data?.data) {
         const orderID = data?.data?._id;
         navigate(`/order/${orderID}`);
@@ -211,131 +219,140 @@ const PlaceOrder = () => {
         closeOnClick: true,
         pauseOnHover: true,
       });
+      dispatch({ type: 'FAIL' });
       return;
     }
   };
 
   return (
-    <div className='md:w-5/6  mx-auto  md:my-28'>
-      <h2 className='text-5xl mb-5 text-white font-bold '>
-        Preview <span className='text-yellow-500'>Order</span>
-      </h2>
-      <div className='flex  gap-y-5 lg:gap-x-5 flex-col lg:flex-row justify-center'>
-        <div className='left order-1 w-full'>
-          {/* Shipping Details */}
-          <div className='bg-white rounded-xl relative p-5 mb-5'>
-            <h3 className='text-3xl font-bold mb-2'>Shipping</h3>
-            <p className='text-2xl'>
-              <span className=' font-bold'>Name:</span> {shipping_address.name}
-            </p>
-            <p className='text-2xl'>
-              <span className=' font-bold'>Address:</span>{' '}
-              {`${shipping_address.address}, ${shipping_address.city}, ${shipping_address.postal}, ${shipping_address.country}`}
-            </p>
-            <Link to='/checkout?step=shipping'>
-              <span className='order_edit cursor-pointer flex items-center justify-center w-10 h-10 bg-yellow-500 p-3 hover:bg-yellow-600 text-2xl rounded-xl'>
-                <i className='fa-solid fa-pen-to-square'></i>
-              </span>
-            </Link>
-          </div>
-          {/* Payment Details */}
-          <div className='bg-white rounded-xl relative p-5 mb-5'>
-            <h3 className='text-3xl font-bold mb-2'>Payment</h3>
-            <p className='text-2xl'>
-              <span className=' font-bold'>Method:</span> {payment_method}
-            </p>
-
-            <Link to='/checkout?step=payment'>
-              <span className='order_edit cursor-pointer flex items-center justify-center w-10 h-10 bg-yellow-500 p-3 hover:bg-yellow-600 text-2xl rounded-xl'>
-                <i className='fa-solid fa-pen-to-square'></i>
-              </span>
-            </Link>
-          </div>
-          {/* Items Details */}
-          <div className='bg-white rounded-xl relative p-5'>
-            <h3 className='text-3xl font-bold mb-2'>Items</h3>
-
-            {cartItems.map(({ image, name, quantity, price, slug, _id }) => (
-              <div className='shadow-lg p-3 rounded-lg' key={_id}>
-                <div className='flex justify-between items-center'>
-                  <img className='w-20' src={image} alt={name} />
-                  <span className='text-2xl font-bold'>{quantity}</span>
-                  <span className='text-2xl font-bold'>{price}</span>
-                  <Link to={`/product/${slug}`}>
-                    <span className='cursor-pointer flex items-center justify-center w-10 h-10 bg-yellow-500 p-3 hover:bg-yellow-600 text-2xl rounded-xl'>
-                      <i className='fa-solid fa-pen-to-square'></i>
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Right */}
-
-        <div className='bg-white p-5 rounded-xl order-2 w-full md:w-1/2'>
-          <h3 className='text-3xl font-bold mb-5'>
-            ORDER <span className='text-yellow-500'>SUMMERY</span>
-          </h3>
-          {loading ? (
-            <h1>Loading....</h1>
-          ) : error ? (
-            <p className='text-red-500'>{error}</p>
-          ) : (
-            <div className='items text-2xl font-bold'>
-              <div className='item flex justify-between'>
-                <span>Items</span>
-                <span className='mr-20'>${itemPrice}</span>
-              </div>
-              <hr />
-              <div className='item flex justify-between '>
-                <span>Shipping</span>
-                <span className='mr-20'>${orderSummary.shippingPrice}</span>
-              </div>
-              <hr />
-              <div className='item flex justify-between '>
-                <span>Tax</span>
-                <span className='mr-20'>{orderSummary.taxPrice}%</span>
-              </div>
-              <hr />
-              <div className='total flex justify-between my-5'>
-                <span>Total</span>
-                <span className='mr-20'>${orderSummary.totalPrice}</span>
-              </div>
-              <hr />
-              <div className='flex justify-between'>
-                <span>Coupon</span>
-                <div>
-                  <input
-                    className='text-1xl border-2 focus:border-amber-500 rounded-md  text-xl p-2 border-amber-300'
-                    type='text'
-                    placeholder='rasel360'
-                    onChange={handleCouponInput}
-                  />
-                  <p className='text-xl'>{message && message}</p>
-                </div>
-              </div>
-              <div className='d-flex items-center'>
-                <Button text='Place Order' onClick={placeOrderHandler}>
-                  <BarLoader
-                    color='#000'
-                    loading={true}
-                    id='spinner'
-                    cssOverride={{
-                      marginRight: 10,
-                    }}
-                    width={170}
-                    margin={50}
-                    size={10}
-                    disabled={false}
-                  />
-                </Button>
-              </div>
+    <>
+      <Helmet>
+        <title>Place Order</title>
+      </Helmet>
+      <div className='md:w-5/6  mx-auto  md:my-28'>
+        <h2 className='text-5xl mb-5 text-white font-bold '>
+          Preview <span className='text-yellow-500'>Order</span>
+        </h2>
+        <div className='flex  gap-y-5 lg:gap-x-5 flex-col lg:flex-row justify-center'>
+          <div className='left order-1 w-full'>
+            {/* Shipping Details */}
+            <div className='bg-white rounded-xl relative p-5 mb-5'>
+              <h3 className='text-3xl font-bold mb-2'>Shipping</h3>
+              <p className='text-2xl'>
+                <span className=' font-bold'>Name:</span>{' '}
+                {shipping_address.name}
+              </p>
+              <p className='text-2xl'>
+                <span className=' font-bold'>Address:</span>{' '}
+                {`${shipping_address.address}, ${shipping_address.city}, ${shipping_address.postal}, ${shipping_address.country}`}
+              </p>
+              <Link to='/checkout?step=shipping'>
+                <span className='order_edit cursor-pointer flex items-center justify-center w-10 h-10 bg-yellow-500 p-3 hover:bg-yellow-600 text-2xl rounded-xl'>
+                  <i className='fa-solid fa-pen-to-square'></i>
+                </span>
+              </Link>
             </div>
-          )}
+            {/* Payment Details */}
+            <div className='bg-white rounded-xl relative p-5 mb-5'>
+              <h3 className='text-3xl font-bold mb-2'>Payment</h3>
+              <p className='text-2xl'>
+                <span className=' font-bold'>Method:</span> {payment_method}
+              </p>
+
+              <Link to='/checkout?step=payment'>
+                <span className='order_edit cursor-pointer flex items-center justify-center w-10 h-10 bg-yellow-500 p-3 hover:bg-yellow-600 text-2xl rounded-xl'>
+                  <i className='fa-solid fa-pen-to-square'></i>
+                </span>
+              </Link>
+            </div>
+            {/* Items Details */}
+            <div className='bg-white rounded-xl relative p-5'>
+              <h3 className='text-3xl font-bold mb-2'>Items</h3>
+
+              {cartItems.map(({ image, name, quantity, price, slug, _id }) => (
+                <div className='shadow-lg p-3 rounded-lg' key={_id}>
+                  <div className='flex justify-between items-center'>
+                    <img className='w-20' src={image} alt={name} />
+                    <span className='text-2xl font-bold'>{quantity}</span>
+                    <span className='text-2xl font-bold'>{price}</span>
+                    <Link to={`/product/${slug}`}>
+                      <span className='cursor-pointer flex items-center justify-center w-10 h-10 bg-yellow-500 p-3 hover:bg-yellow-600 text-2xl rounded-xl'>
+                        <i className='fa-solid fa-pen-to-square'></i>
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Right */}
+
+          <div className='bg-white p-5 rounded-xl order-2 w-full md:w-1/2'>
+            <h3 className='text-3xl font-bold mb-5'>
+              ORDER <span className='text-yellow-500'>SUMMERY</span>
+            </h3>
+            {loading ? (
+              <h1>Loading....</h1>
+            ) : error ? (
+              <p className='text-red-500'>{error}</p>
+            ) : (
+              <div className='items text-2xl font-bold'>
+                <div className='item flex justify-between'>
+                  <span>Items</span>
+                  <span className='mr-20'>${itemPrice}</span>
+                </div>
+                <hr className='mb-3' />
+                <div className='item flex justify-between '>
+                  <span>Shipping</span>
+                  <span className='mr-20'>${orderSummary.shippingPrice}</span>
+                </div>
+                <hr className='mb-3' />
+                <div className='item flex justify-between '>
+                  <span>Tax</span>
+                  <span className='mr-20'>{orderSummary.taxPrice}%</span>
+                </div>
+                <hr className='mb-3' />
+                <div className='total flex justify-between my-5'>
+                  <span>Total</span>
+                  <span className='mr-20'>
+                    ${Math.ceil(orderSummary.totalPrice)}
+                  </span>
+                </div>
+                <hr className='mb-3' />
+                <div className='flex justify-between'>
+                  <span>Coupon</span>
+                  <div>
+                    <input
+                      className='text-1xl border-2 focus:border-amber-500 rounded-md  text-xl p-2 border-amber-300'
+                      type='text'
+                      placeholder='rasel360'
+                      onChange={handleCouponInput}
+                    />
+                    <p className='text-xl'>{message && message}</p>
+                  </div>
+                </div>
+                <div className='d-flex items-center mt-3'>
+                  <Button text='Place Order' onClick={placeOrderHandler}>
+                    <BarLoader
+                      color='#000'
+                      loading={place_loading}
+                      id='spinner'
+                      cssOverride={{
+                        marginRight: 10,
+                      }}
+                      width={170}
+                      margin={50}
+                      size={10}
+                      disabled={false}
+                    />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
