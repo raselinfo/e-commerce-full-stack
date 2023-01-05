@@ -10,6 +10,7 @@ const errorMiddleware = require('./middleware/error/errorMiddleware.js');
 const { PORT, MONGODB_URI } = require('./config');
 const app = express();
 
+console.log('URL', MONGODB_URI);
 // Middleware
 app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
@@ -59,6 +60,7 @@ app.use('/api/v1', require('./routes/auth/logoutRoutes'));
 app.use('/api/v1', require('./routes/storeUtils/storeUtilsRoutes'));
 app.use('/api/v1', require('./routes/coupon/couponRoutes'));
 app.use('/api/v1', require('./routes/order/orderRoutes'));
+app.use('/api/v1', require('./routes/paypal/paypalRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
@@ -80,3 +82,5 @@ connectDB(MONGODB_URI)
   .catch((err) => {
     console.log('Error: ', err);
   });
+
+

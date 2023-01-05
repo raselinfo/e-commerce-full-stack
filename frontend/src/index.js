@@ -8,7 +8,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import App from './App';
 import StoreProvider from './Store/Store';
 import { HelmetProvider } from 'react-helmet-async';
-
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 const preventInspect = () => {
   document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
@@ -39,9 +39,11 @@ root.render(
   // <React.StrictMode>
   <HelmetProvider>
     <StoreProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <PayPalScriptProvider deferLoading={true}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PayPalScriptProvider>
     </StoreProvider>
   </HelmetProvider>
   // </React.StrictMode>
