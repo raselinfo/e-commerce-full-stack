@@ -8,6 +8,8 @@ import MessageBox from '../components/MessageBox';
 import formateError from '../utils/formateError';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Helmet } from 'react-helmet-async';
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import flashMessage from '../utils/flashMessage';
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case 'REQUEST':
@@ -16,6 +18,13 @@ const reducer = (state, { type, payload }) => {
       return { ...state, error: '', loading: false, orderDetails: payload };
     case 'FAIL':
       return { ...state, error: payload, loading: false };
+    case 'PAY_REQUEST':
+      return { ...state, loadingPay: true };
+    case 'PAY_SUCCESS':
+      return { ...state, loadingPay: false, orderDetails: payload };
+    case 'PAY_FAIL':
+      return { ...state, loadingPay: false };
+
     default:
       return state;
   }
@@ -24,16 +33,18 @@ const initialState = {
   error: '',
   loading: true,
   orderDetails: null,
+  loadingPay: false,
 };
 
 const Order = () => {
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const { orderID } = useParams();
   const privateAxios = pAxios();
-  const [{ error, loading, orderDetails }, dispatch] = useReducer(
+  const [{ error, loading, orderDetails, loadingPay }, dispatch] = useReducer(
     reducer,
     initialState
   );
-
+  // Call Order Details
   useEffect(() => {
     const getOrderDetails = async () => {
       try {
@@ -51,7 +62,64 @@ const Order = () => {
     if (orderID) {
       getOrderDetails();
     }
-  }, [privateAxios, orderID]);
+  }, [privateAxios, orderID, paypalDispatch]);
+
+  // Load Papal SDK
+  useEffect(() => {
+    const loadPaypalScript = async () => {
+      const { data } = await privateAxios.get('/paypal/key');
+      paypalDispatch({
+        type: 'resetOptions',
+        value: {
+          'client-id': data?.data?.key,
+          currency: 'USD',
+        },
+      });
+      paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+    };
+
+    if (orderDetails?.isPaid === false) {
+      console.log('inside', orderDetails.isPaid);
+      loadPaypalScript();
+    }
+  }, [paypalDispatch, privateAxios, orderDetails?.isPaid]);
+
+  // Create Order
+  const createOrder = async (data, action) => {
+    try {
+      const orderID = await action.order.create({
+        purchase_units: [{ amount: { value: orderDetails.totalPrice } }],
+      });
+      return orderID;
+    } catch (err) {
+      flashMessage({ type: 'error', text: formateError(err) });
+      console.log(err.message);
+    }
+  };
+  // ON Approve
+  const onApprove = async (data, action) => {
+    try {
+      dispatch({ type: 'PAY_REQUEST' });
+      const details = await action.order.capture();
+      const { data } = await privateAxios.put(
+        `/order/pay/${orderDetails._id}`,
+        details
+      );
+
+      dispatch({ type: 'PAY_SUCCESS', payload: data.data });
+      flashMessage({ text: 'Order Success' });
+    } catch (err) {
+      dispatch({ type: 'PAY_SUCCESS' });
+      console.log(err.message);
+      flashMessage({ type: 'error', text: formateError(err) });
+    }
+  };
+  // ON Error
+  const onError = (err) => {
+    console.log(err);
+    flashMessage({ type: 'error', text: formateError(err) });
+  };
+
   return (
     <>
       <Helmet>
@@ -189,6 +257,34 @@ const Order = () => {
                     <span>Total</span>
                     <span className='mr-20'>${orderDetails?.totalPrice}</span>
                   </div>
+                  <hr className='mb-3' />
+                  {!orderDetails?.isPaid ? (
+                    isPending ? (
+                      <h5>Loading..</h5>
+                    ) : (
+                      <div>
+                        <PayPalButtons
+                          createOrder={createOrder}
+                          onApprove={onApprove}
+                          onError={onError}
+                        />
+                        <hr className='mb-3' />
+                        <div>
+                          <h3>Paypal Demo/Sandbox Account</h3>
+                          <p className='text-xl'>
+                            <span className='font-bold '>Email: </span>
+                            sb-lxy8n16861020@personal.example.com
+                          </p>
+                          <p className='text-xl'>
+                            <span className='font-bold '>Password: </span>
+                            uUffPv*4
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  ) : (
+                    <h3 className='text-green-400'>Already Paid</h3>
+                  )}
                 </div>
               )}
             </div>
