@@ -33,7 +33,7 @@ const resetPassService = async ({
     const userToken = JWT.verify(token, secret);
 
     // Todo: Check if the user exist or not
-    const existUser = await UserService.findByProperty("id", userToken.id);
+    const existUser = await UserService.findByProperty({key:"_id",value: userToken.id});
     if (!existUser) return { error: "User Not Found" };
     // Todo: Save new Password
     existUser.local.password = await Password.hash(password);
