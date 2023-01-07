@@ -1,7 +1,7 @@
 const UserService = require('../User/UserService');
 const User = require('../../model/User');
 const JWT = require('../jwt/JWT');
-const {setCookie} = require('../../utils/setCookie');
+const { setCookie } = require('../../utils/setCookie');
 const createToken = (payload) => {
   return JWT.signAccessToken(payload);
 };
@@ -10,7 +10,10 @@ const googleSignIn = async ({ email, name, picture, verified, res }) => {
   let token;
   let refreshToken;
   try {
-    const existUser = await UserService.findByProperty('email', email);
+    const existUser = await UserService.findByProperty({
+      key: 'email',
+      value: email,
+    });
     if (existUser) {
       existUser.image.public_id = undefined;
       // Create access Token
