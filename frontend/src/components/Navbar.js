@@ -90,7 +90,7 @@ const Navbar = () => {
                   {userInfo?.name}
                 </li>
                 <li className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'>
-                  Order History
+                  <Link to="/order_history">Order History</Link>
                 </li>
                 <li
                   onClick={handleSignOut}

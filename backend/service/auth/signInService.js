@@ -8,7 +8,10 @@ const generateTokenAndCookie = require('../../utils/generateTokenAndCookie');
 const signInService = async ({ email, password, res }) => {
   try {
     // Todo: Check if user exist or not
-    const user = await UserService.findByProperty('email', email);
+    const user = await UserService.findByProperty({
+      key: 'email',
+      value: email,
+    });
 
     if (!user) {
       return { error: 'User Not Found!' };
@@ -42,7 +45,7 @@ const signInService = async ({ email, password, res }) => {
     if (!match) {
       return { error: 'Password Not Match' };
     }
-    
+
     const { accessToken } = await generateTokenAndCookie({ res, user });
 
     return {

@@ -1,16 +1,19 @@
-const UserService = require("../User/UserService");
-const Error = require("../../utils/Error");
-const JWT = require("../jwt/JWT");
-const { JWT_SECRET, STORE_NAME, BASE_CLIENT_URL } = require("../../config");
-const ForgotPassword = require("../../model/ForgotPassword");
-const sendMail = require("../mail/sendMail");
+const UserService = require('../User/UserService');
+const Error = require('../../utils/Error');
+const JWT = require('../jwt/JWT');
+const { JWT_SECRET, STORE_NAME, BASE_CLIENT_URL } = require('../../config');
+const ForgotPassword = require('../../model/ForgotPassword');
+const sendMail = require('../mail/sendMail');
 const forgotPasswordLinkService = async (email) => {
   try {
-    const user = await UserService.findByProperty("email", email);
+    const user = await UserService.findByProperty({
+      key: 'email',
+      value: email,
+    });
 
     // Todo: Check if user exist and verified or not
     if (!user || !user?.verified) {
-      return { error: Error.notFound("User Not Found Or User Not Verified") };
+      return { error: Error.notFound('User Not Found Or User Not Verified') };
     }
 
     // Todo: Generate Token
@@ -36,7 +39,7 @@ const forgotPasswordLinkService = async (email) => {
     });
     // Todo: Send Success Message
     if (result.accepted.length) {
-      return { message: "Please Check Your Email" };
+      return { message: 'Please Check Your Email' };
     }
   } catch (err) {
     return { error: Error.severError(err) };

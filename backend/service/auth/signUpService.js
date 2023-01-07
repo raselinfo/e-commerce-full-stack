@@ -13,7 +13,10 @@ const Password = require('../Password/Password.js');
  */
 const signUp = async (user) => {
   try {
-    const existUser = await UserService.findByProperty('email', user.email);
+    const existUser = await UserService.findByProperty({
+      key: 'email',
+      value: user.email,
+    });
     if (existUser) {
       return { existUser: true };
     }
