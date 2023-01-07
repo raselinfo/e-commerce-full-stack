@@ -32,7 +32,6 @@ const useAxios = () => {
     (req) => {
       const accessToken = getAccessToken();
       req.headers.authorization = `Bearer ${accessToken}`;
-
       return req;
     },
     (err) => {
