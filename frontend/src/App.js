@@ -15,6 +15,7 @@ import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
 import CheckOut from './views/Checkout';
 import Order from './views/Order';
+import OrderHistory from './views/OrderHistory';
 const rootPath = window.location.pathname;
 function App() {
   return (
@@ -65,6 +66,14 @@ function App() {
           element={
             <Protected>
               <Order />
+            </Protected>
+          }
+        />
+        <Route
+          path='/order_history'
+          element={
+            <Protected>
+              <OrderHistory />
             </Protected>
           }
         />
