@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFetch from '../Hocks/useFetch';
 import MessageBox from '../components/MessageBox';
 import OrderHistorySkeleton from '../Skeleton/order/OrderHistorySkeleton';
+import getQuery from '../utils/getQueryString';
 const OrderHistory = () => {
+  const navigate = useNavigate();
+  const { page } = getQuery(['page']);
   const { data, loading, error } = useFetch({
-    url: '/order_history',
+    url: `/order_history?page=${page}&limit=10`,
     options: {
       method: 'get',
       body: null,
       private: true,
     },
   });
-  console.log(data);
+
+  const changeStepQuery = (index) => {
+    console.log(index);
+    navigate(`/order_history?page=${index}`);
+  };
   return loading ? (
     <OrderHistorySkeleton />
   ) : error ? (
@@ -78,6 +85,26 @@ const OrderHistory = () => {
               })}
             </tbody>
           </table>
+          {!(Array(data?.pagination?.pages).length === 1) && (
+            <ul className='flex justify-start '>
+              {Array(data?.pagination?.pages)
+                .fill(data?.pagination?.pages)
+                .map((_item, index) => {
+                  index = index + 1;
+                  return (
+                    <li
+                      className={`${
+                        Number(page) === index ? 'bg-green-500' : 'bg-green-100'
+                      } m-2 py-2 font-bold px-4 rounded-lg cursor-pointer`}
+                      key={index}
+                      onClick={() => changeStepQuery(index)}
+                    >
+                      {index}
+                    </li>
+                  );
+                })}
+            </ul>
+          )}
         </div>
       )}
     </div>
