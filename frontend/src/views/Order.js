@@ -264,6 +264,14 @@ const Order = () => {
                     ) : (
                       <div>
                         <PayPalButtons
+                          style={{
+                            // color: 'blue',
+                            shape: 'pill',
+                            label: 'checkout',
+                            tagline: false,
+                            layout: 'vertical',
+                          }}
+                          experience={{ allowNote: false }}
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
