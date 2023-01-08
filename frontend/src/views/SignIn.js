@@ -13,8 +13,12 @@ import InputField from '../components/Form/Field/InputField';
 import * as yup from 'yup';
 import Button from '../components/Button/Button';
 const SignIn = () => {
-  const { redirect, step } = getQueryString(['redirect', 'step']);
-  const redirectUrl = `${redirect}${step && '?step=' + step}`.trim();
+  const { redirect, step, page } = getQueryString(['redirect', 'step', 'page']);
+  console.log(step);
+  const redirectUrl = `${redirect}${step && '?step=' + step}${
+    page !== '/' ? '&page=' + page : ''
+  }`.trim();
+
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
   const { dispatch: ctxDispatch } = useContext(Store);
