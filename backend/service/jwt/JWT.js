@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } = require('../../config');
-console.log('JWT_REFRESh_SECRET', JWT_REFRESH_SECRET);
 
 
 class JwtService {

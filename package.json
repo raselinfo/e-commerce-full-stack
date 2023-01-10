@@ -2,7 +2,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "server": "cd backend && yarn dev",
@@ -12,7 +12,5 @@
   "dependencies": {
     "concurrently": "^7.6.0"
   },
-  "devDependencies": {
-    "vitest": "^0.27.0"
-  }
+  "devDependencies": {}
 }
