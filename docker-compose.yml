@@ -6,6 +6,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    restart: always
     ports:
       - '3000:3000'
     env_file:
@@ -24,6 +25,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    restart: always
     ports:
       - '4000:4000'
     env_file:
@@ -32,7 +34,7 @@ services:
       - emazona-mearn
     depends_on:
       - mongo
-  
+
     volumes:
       - ./backend:/user/src/app
       - /user/src/app/node_modules
