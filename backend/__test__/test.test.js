@@ -5,3 +5,7 @@ it('test one', async () => {
   console.log(response);
   expect(response.status).toBe(200);
 });
+
+it('should be print hello world', () => {
+  console.log('hello world');
+});
