@@ -24,23 +24,3 @@ jobs:
           cd backend
           yarn test
           node -v
-
-  # backend:
-  #   name: Backend Task
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Codes
-  #       uses: actions/checkout@v2.5.0
-  #     - name: Install Node Version
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18
-  #     - name: Install Backend Dependance
-  #       run: |
-  #         cd backend
-  #         yarn install --frozen-lockfile
-  #         ls
-  #     - name: Run Test
-  #       run: |
-  #         cd backend && yarn test
-          
