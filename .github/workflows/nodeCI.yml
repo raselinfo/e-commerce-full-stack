@@ -24,3 +24,8 @@ jobs:
           cd backend
           yarn test
           node -v
+
+  sample:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls
