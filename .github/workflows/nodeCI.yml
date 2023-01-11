@@ -39,7 +39,7 @@ jobs:
         run: |
           cd backend
           yarn install --frozen-lockfile
-      - name: Run Test
+      - name: Run Backend Test
         run: |
           cd backend
           yarn test
