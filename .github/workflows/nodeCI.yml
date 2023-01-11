@@ -42,6 +42,7 @@ jobs:
           ls
       - name: Run Test
         run: |
-          cd backend
-          ls
+          cd backend &&
+          ls &&
+          npm run test
           
