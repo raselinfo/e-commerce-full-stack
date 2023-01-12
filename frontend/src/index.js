@@ -9,6 +9,7 @@ import App from './App';
 import StoreProvider from './Store/Store';
 import { HelmetProvider } from 'react-helmet-async';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+
 const preventInspect = () => {
   document.addEventListener('contextmenu', function (e) {
     e.preventDefault();

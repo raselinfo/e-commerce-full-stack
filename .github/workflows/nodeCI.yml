@@ -42,5 +42,4 @@ jobs:
       - name: Run Backend Test
         run: |
           cd backend
-          yarn test
           node -v

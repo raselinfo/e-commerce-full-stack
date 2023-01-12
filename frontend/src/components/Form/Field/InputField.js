@@ -1,24 +1,24 @@
-import React, { forwardRef } from "react";
-import { Field, ErrorMessage } from "formik";
+import React, { forwardRef } from 'react';
+import { Field, ErrorMessage } from 'formik';
 
 /**
  *  InputField
- * @param {{type,fieldName,placeholder,className}} {type,fieldName}
+ * @param {{type,fieldName,placeholder,className,value}} {type,fieldName}
  * @returns A input Field
  */
 const InputField = (
   {
-    type = "text",
-    name: fieldName = "text",
-    placeholder = "",
-    className: classes = "",
+    type = 'text',
+    name: fieldName = 'text',
+    placeholder = '',
+    className: classes = '',
     children,
   },
   ref
 ) => {
   return (
     <>
-      {children} 
+      {children}
       <Field
         type={type}
         name={fieldName || type}
@@ -28,9 +28,10 @@ const InputField = (
       />
 
       <ErrorMessage
+        data-testid={fieldName || type}
         name={fieldName || type}
-        component="p"
-        className="text-yellow-600 font-bold"
+        component='p'
+        className='text-yellow-600 font-bold'
       />
     </>
   );

@@ -10,10 +10,11 @@ const initialState = {
   loading: true,
 };
 // Actions
-const { REQUEST, SUCCESS, FAIL } = {
+const { REQUEST, SUCCESS, FAIL, RESET } = {
   REQUEST: 'REQUEST',
   SUCCESS: 'SUCCESS',
   FAIL: 'FAIL',
+  RESET: 'RESET,',
 };
 // Reducer
 const reducer = (state, { type, payload }) => {
@@ -24,6 +25,8 @@ const reducer = (state, { type, payload }) => {
       return { ...state, data: payload, loading: false };
     case FAIL:
       return { ...state, loading: false, error: payload };
+    case RESET:
+      return { ...state, loading: false, error: null };
     default:
       return state;
   }
@@ -62,9 +65,10 @@ const useFetch = ({
     const fetchData = async () => {
       try {
         dispatch({ type: REQUEST });
+
         const response = await axios(url, {
           method: options.method,
-          ...(options.body & { data: options.body }),
+          ...(options.body && { data: options.body }),
         });
         dispatch({ type: SUCCESS, payload: response.data });
       } catch (err) {
@@ -74,11 +78,11 @@ const useFetch = ({
     if (options.method) {
       fetchData();
     } else {
-      dispatch({ type: FAIL, payload: 'Server Error' });
+      dispatch({ type: RESET });
     }
   }, [axios, options.body, options.method, url]);
-
-  return { data, error, loading };
+ 
+  return { data, error, loading, dispatch };
 };
 
 export default useFetch;

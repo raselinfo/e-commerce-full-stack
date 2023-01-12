@@ -58,6 +58,7 @@ app.use('/api/v1', require('../routes/storeUtils/storeUtilsRoutes'));
 app.use('/api/v1', require('../routes/coupon/couponRoutes'));
 app.use('/api/v1', require('../routes/order/orderRoutes'));
 app.use('/api/v1', require('../routes/paypal/paypalRoutes'));
+app.use('/api/v1', require('../routes/profile/profileRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
@@ -67,6 +68,5 @@ app.get('/api/v1/health', (req, res) => {
 
 // Todo: Error Middleware
 app.use(errorMiddleware);
-
 
 module.exports = app;
