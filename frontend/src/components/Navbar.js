@@ -39,7 +39,7 @@ const Navbar = () => {
       const result = await publicAxios.post('/logout');
       if (result.status === 200) {
         ctxDispatch({ type: 'SIGN_OUT' });
-        return toast.success('Login Fail', {
+        return toast.warn('Your are logged out', {
           position: 'bottom-right',
           autoClose: 10000,
           hideProgressBar: true,
@@ -86,8 +86,8 @@ const Navbar = () => {
               className='dropdown absolute rounded-lg bg-white  w-40 overflow-hidden'
             >
               <ul className='text-center'>
-                <li className='drop_item text-gray-500 mb-3 py-1 px-5 '>
-                  {userInfo?.name}
+                <li className='drop_item   py-1 px-5 hover:bg-gray-200 cursor-pointer'>
+                  <Link to='/profile'>{userInfo.name}</Link>
                 </li>
                 <li className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'>
                   <Link to='/order_history?page=1'>Order History</Link>
