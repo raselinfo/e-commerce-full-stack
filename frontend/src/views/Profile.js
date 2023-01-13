@@ -1,12 +1,21 @@
-import React, { useState, useReducer, useContext, useEffect } from 'react';
-import { BarLoader } from 'react-spinners';
-import Button from '../components/Button/Button';
-import CustomForm from '../components/Form/CustomForm';
-import * as yup from 'yup';
-import Field from '../components/Form/Field/InputField';
-import flashMessage from '../utils/flashMessage';
+import React, {
+  useState,
+  useReducer,
+  useContext,
+  useEffect,
+  lazy,
+  useCallback,
+  useMemo,
+} from 'react';
 import { Store } from '../Store/Store';
+import { BarLoader } from 'react-spinners';
+import flashMessage from '../utils/flashMessage';
 import useFetch from '../Hocks/useFetch';
+import * as yup from 'yup';
+const Button = lazy(() => import('../components/Button/Button'));
+const CustomForm = lazy(() => import('../components/Form/CustomForm'));
+const Field = lazy(() => import('../components/Form/Field/InputField'));
+
 const initialState = {
   loading: false,
   image: '',
@@ -25,20 +34,17 @@ const reducer = (state, { type, payload }) => {
 };
 const Profile = () => {
   const [isShowPass, setIsShowPass] = useState(false);
+  const [isMount, setIsMount] = useState(false);
   const {
     state: { userInfo },
+    dispatch: ctxDispatch,
   } = useContext(Store);
   const [options, setOptions] = useState({
     method: null,
     body: null,
     private: true,
   });
-  const {
-    data,
-    error,
-    loading,
-    dispatch: fetchDispatch,
-  } = useFetch({
+  const { data, error, loading } = useFetch({
     url: '/profile',
     options: options,
   });
@@ -48,48 +54,64 @@ const Profile = () => {
   });
 
   //   Change Information
-  const handleOnSubmit = ({ name, email, password, confirm_password }) => {
+  const handleOnSubmit = (
+    { name, email, password, confirm_password },
+    { resetForm }
+  ) => {
     if (
-      (name.length ||
-        email.length ||
-        password.length ||
-        confirm_password.length) &&
-      image
+      name.length ||
+      email.length ||
+      password.length ||
+      confirm_password.length ||
+      image.trim().substring(0, 4) !== 'http'
     ) {
       setOptions({
-        method: 'put',
+        method: 'PUT',
         body: {
           name,
           email,
-          image,
+          ...(image.trim().substring(0, 4) !== 'http' && { image: image }),
           password,
           confirm_password,
         },
         private: true,
       });
-      if (error) {
-        flashMessage({ type: 'error', text: error });
-      }
-      console.log(data);
-      if (data) {
-        console.log(data);
-        flashMessage({ type: 'success', text: 'Update Successful' });
-      }
+      resetForm();
     }
   };
+  // Display success and error message and save the updated data
   useEffect(() => {
     if (data) {
-      console.log(data);
       flashMessage({ type: 'success', text: 'Update Successful' });
+      // SAve new user in localStorage
+      ctxDispatch({
+        type: 'SAVE_USER',
+        payload: {
+          name: data.data.name,
+          image: {
+            url: data.data.image,
+          },
+          email: data.data.email,
+          role: data.data.role,
+        },
+      });
     }
-    console.log(data)
-  }, [data]);
+    if (error) {
+      flashMessage({ type: 'error', text: error });
+    }
+    setIsMount(true);
+  }, [data, error, ctxDispatch]);
 
   // Handle Image Upload
   const reader = new FileReader();
   const handleImageOnclick = (e) => {
     dispatch({ type: 'IMAGE_UPLOAD_REQUEST' });
-    const file = e.target.files[0];
+    const file = e.target?.files[0];
+    if(!file){
+       flashMessage({ type: 'error', text: '❌Cancle!' });
+       dispatch({ type: 'IMAGE_UPLOAD_FAIL' });
+      return 
+    }
     const fileType = file.type;
     const validImageType = ['image/jpeg', 'image/png', 'image/gif'];
     if (validImageType.includes(fileType)) {
@@ -102,12 +124,16 @@ const Profile = () => {
       dispatch({ type: 'IMAGE_UPLOAD_FAIL' });
     }
   };
+
   //   Get value for show or hide password box
   const getValues = (values) => {
-    setTimeout(() => {
-      setIsShowPass(values);
-    }, 0);
+    if (isMount) {
+      setTimeout(() => {
+        setIsShowPass(values);
+      }, 0);
+    }
   };
+
   //   Validate Input Field
   const validationSchema = yup.object().shape({
     name: yup.string(),
