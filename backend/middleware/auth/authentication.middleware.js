@@ -31,17 +31,14 @@ const authenticationMiddleware = async (req, res, next) => {
       key: '_id',
       value: _id.trim(),
     });
-    console.log('user', findUser, _id, email);
+    console.log('Found user', findUser, name, role, _id, email);
     // if no found user
     if (!findUser) {
+      console.log('❌Not Found User');
       return res.status(401).json({ message: 'UnAuthorize' });
     }
     // if user details not match
-    if (
-      findUser.email !== email ||
-      findUser.role !== role ||
-      findUser.name !== name
-    ) {
+    if (findUser.email !== email || findUser.role !== role) {
       return res.status(401).json({ message: 'UnAuthorize' });
     }
     // Set user inside req object

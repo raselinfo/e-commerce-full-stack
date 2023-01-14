@@ -5,7 +5,8 @@ const updateProfileController = async (req, res, next) => {
       value: req.body,
       user_id: req.user._id,
     });
-    return res.status(200).json({ message: 'OK', data: result });
+    res.status(200).json({ message: 'Update Successful', data: result });
+    // res.send({ message: 'Rasel success' });
   } catch (err) {
     next(err);
   }
