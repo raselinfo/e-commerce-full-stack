@@ -107,10 +107,10 @@ const Profile = () => {
   const handleImageOnclick = (e) => {
     dispatch({ type: 'IMAGE_UPLOAD_REQUEST' });
     const file = e.target?.files[0];
-    if(!file){
-       flashMessage({ type: 'error', text: '❌Cancle!' });
-       dispatch({ type: 'IMAGE_UPLOAD_FAIL' });
-      return 
+    if (!file) {
+      flashMessage({ type: 'error', text: '❌Cancel!' });
+      dispatch({ type: 'IMAGE_UPLOAD_FAIL' });
+      return;
     }
     const fileType = file.type;
     const validImageType = ['image/jpeg', 'image/png', 'image/gif'];
@@ -228,7 +228,7 @@ const Profile = () => {
           </label>
         </Field>
         <Button
-          role='Button'
+          role='button'
           text={loading ? 'Wait...' : 'Change'}
           disabled={loading}
         >

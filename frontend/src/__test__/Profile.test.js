@@ -18,9 +18,14 @@ describe('Profile', () => {
     );
   });
 
-  it('Button Should Be In The Document ✅', () => {
-    const button = screen.getByRole('Button');
+  it('Button Should Be In The Document ✅', async () => {
+    // const button = screen.getByRole('button', { hidden: true });
+    // const button = screen.getByText('Change');
+    await waitFor(() => {
+    const button = screen.getByRole('button');
+    console.log(button);
     expect(button).toBeInTheDocument();
+    });
   });
 
   it('Form fields should be in the document ✅', () => {
