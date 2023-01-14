@@ -35,10 +35,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Start MongoDb
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: 6.0
       - name: Install Backend Dependance
         run: |
-          cd backend
-          yarn install --frozen-lockfile
+          cd backend &&
+          yarn install --frozen-lockfile &&
+          yarn dev
           ls
       - name: Run Backend Test
         run: |
