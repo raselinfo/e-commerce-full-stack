@@ -46,7 +46,6 @@ jobs:
           ls
       - name: Run Backend Test
         run: |
-          cd backend &&
-          yarn dev &&
+          cd backend 
           yarn test
           node -v
