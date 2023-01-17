@@ -59,6 +59,7 @@ app.use('/api/v1', require('../routes/coupon/couponRoutes'));
 app.use('/api/v1', require('../routes/order/orderRoutes'));
 app.use('/api/v1', require('../routes/paypal/paypalRoutes'));
 app.use('/api/v1', require('../routes/profile/profileRoutes'));
+app.use('/api/v1', require('../routes/categories/categoriesRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {

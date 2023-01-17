@@ -6,14 +6,22 @@ const mongoose = require('mongoose');
  * @param {*} param0
  * @returns
  */
-exports.authApiHandler = ({ endPoint }) => {
-  // Connect MongoDB
-  mongoose.connect('mongodb://127.0.0.1:27017/testdb', {
+const mongoDbconnection = async () => {
+  await mongoose.connect('mongodb://127.0.0.1:27017/testdb', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
+};
+exports.noAuthApiHandler = ({ endPoint, method }) => {
+  // Connect MongoDB
+  mongoDbconnection();
+  return request(app)[method](`/api/v1/${endPoint}`);
+};
+exports.authApiHandler = ({ endPoint, method }) => {
+  // Connect MongoDB
+  mongoDbconnection();
   return request(app)
-    .put(`/api/v1/${endPoint}`)
+    [method](`/api/v1/${endPoint}`)
     .set(
       'Cookie',
       'refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGdtYWlsLmNvbSIsImltYWdlIjp7InVybCI6Imh0dHA6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZGcyazlybjBxL2ltYWdlL3VwbG9hZC92MTY3MzYzMTY2OS91c2Vyc1BpYy9kZW1vJTQwZ21haWwuY29tL3poMHFjaHNiamVkZjRwM2YwdWN6LnBuZyIsInB1YmxpY19pZCI6InVzZXJzUGljL2RlbW9AZ21haWwuY29tL3poMHFjaHNiamVkZjRwM2YwdWN6In0sInJvbGUiOiJVU0VSIiwiX2lkIjoiNjNiZGE5NzQwZGJjYzBjNGIzNTJkMTk4IiwiaWF0IjoxNjczNjg0NjkxLCJleHAiOjE3MDUyMjA2OTF9.vWkJGLFWizMwK8QgAFkLN7wPETAT_-0TdLg4GIF8iI4'
