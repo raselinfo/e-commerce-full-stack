@@ -4,7 +4,8 @@ import { Store } from '../Store/Store';
 import Button from './Button/Button';
 import publicAxios from '../utils/axios';
 import { toast } from 'react-toastify';
-const Navbar = () => {
+import SearchBar from './SearchBar/SearchBar';
+const Navbar = ({ isOpenHandler, isOpen }) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const {
     state: {
@@ -17,21 +18,24 @@ const Navbar = () => {
     return (acc += item.quantity);
   }, 0);
   useEffect(() => {
-    const handleDropdown = () => {
-      if (isShowDropdown) {
-        const body = window.document.getElementById('htmlBody');
-        body.addEventListener('click', function (e) {
-          if (
-            e.target.id !== 'dropdown' &&
-            e.target.className !== 'drop_item' &&
-            e.target.id !== 'avatar'
-          ) {
-            setIsShowDropdown(false);
-          }
-        });
+    const handleClickEvent = function (e) {
+      if (
+        e.target.id !== 'dropdown' &&
+        e.target.className !== 'drop_item' &&
+        e.target.id !== 'avatar'
+      ) {
+        setIsShowDropdown(false);
       }
     };
-    handleDropdown();
+
+    if (isShowDropdown) {
+      document.addEventListener('click', handleClickEvent);
+    }
+
+    // Remove click event
+    return () => {
+      document.removeEventListener('click', handleClickEvent);
+    };
   }, [isShowDropdown]);
 
   const handleSignOut = async () => {
@@ -59,54 +63,73 @@ const Navbar = () => {
   };
 
   return (
-    <div className='bg-gray-700  font-bold flex items-center'>
-      <h1 className='text-3xl text-white p-5'>
+    <div
+      style={{ marginLeft: isOpen ? '240px' : '0px' }}
+      className={`bg-gray-700  font-bold ${
+        isOpen ? 'hidden' : 'flex'
+      } sm:flex items-center sticky top-0 z-50 ease-linear duration-300`}
+    >
+      <h1 className={`text-3xl text-white p-5 ${isOpen && 'hidden lg:block'} `}>
         <Link to='/'>RaselFashion.</Link>
       </h1>
-      <Link to='/cart' className='p-5 text-2xl flex  text-white'>
-        Cart
-        <span className='bg-red-700 inline-block w-10 h-10 text-center rounded-full leading-10 ml-2'>
-          {countTotalProduct}
-        </span>
-      </Link>
-      {userInfo?.email ? (
-        <div className='relative'>
-          {/* Avatar */}
-          <img
-            id='avatar'
-            onClick={() => setIsShowDropdown(!isShowDropdown)}
-            className='w-14 h-14 rounded-full cursor-pointer'
-            src={userInfo.image.url || userInfo.image}
-            alt={userInfo?.name}
-          />
-          {isShowDropdown && (
-            <div
-              id='dropdown'
-              onClick={() => setIsShowDropdown(true)}
-              className='dropdown absolute rounded-lg bg-white  w-40 overflow-hidden'
-            >
-              <ul className='text-center'>
-                <li className='drop_item   py-1 px-5 hover:bg-gray-200 cursor-pointer'>
-                  <Link to='/profile'>{userInfo.name}</Link>
-                </li>
-                <li className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'>
-                  <Link to='/order_history?page=1'>Order History</Link>
-                </li>
-                <li
-                  onClick={handleSignOut}
-                  className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'
-                >
-                  Sign Out
-                </li>
-              </ul>
-            </div>
-          )}
+      <div className=' w-full flex items-center justify-between'>
+        <div className='flex items-center gap-3 w-full justify-end sm:w-auto sm:justify-self-auto'>
+          <span
+            onClick={isOpenHandler}
+            className='text-white sm:ml-5 mr-3 sm:mr-0 inline-block  text-xl border border-1 py-2 px-3 rounded-lg cursor-pointer humbugger'
+            id='humbugger'
+          >
+            <i id='humbugger' className='fa-solid fa-bars'></i>
+          </span>
+          <SearchBar className='hidden lg:flex' />
         </div>
-      ) : (
-        <Link to='/signin'>
-          <Button text='Sign In' />
-        </Link>
-      )}
+        <div className='flex items-center justify-end'>
+          {userInfo?.email ? (
+            <div className='relative hidden md:block'>
+              {/* Avatar */}
+              <img
+                id='avatar'
+                onClick={() => setIsShowDropdown(!isShowDropdown)}
+                className='w-14 h-14 rounded-full cursor-pointer'
+                src={userInfo.image.url || userInfo.image}
+                alt={userInfo?.name}
+              />
+              {isShowDropdown && (
+                <div
+                  id='dropdown'
+                  onClick={() => setIsShowDropdown(true)}
+                  className='dropdown absolute rounded-lg bg-white  w-40 overflow-hidden'
+                >
+                  <ul className='text-center'>
+                    <li className='drop_item   py-1 px-5 hover:bg-gray-200 cursor-pointer'>
+                      <Link to='/profile'>{userInfo.name}</Link>
+                    </li>
+                    <li className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'>
+                      <Link to='/order_history?page=1'>Order History</Link>
+                    </li>
+                    <li
+                      onClick={handleSignOut}
+                      className='drop_item py-1 px-5 hover:bg-gray-200 cursor-pointer'
+                    >
+                      Sign Out
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link className='hidden md:block' to='/signin'>
+              <Button text='Sign In' />
+            </Link>
+          )}
+          <Link to='/cart' className='p-5 text-2xl   text-white hidden sm:flex'>
+            Cart
+            <span className='bg-red-700 inline-block w-10 h-10 text-center rounded-full leading-10 ml-2'>
+              {countTotalProduct}
+            </span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
