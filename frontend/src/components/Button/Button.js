@@ -27,8 +27,8 @@ const Button = ({
 }) => {
   return (
     <button
-      className={` p-1 mt-1 md:px-3 md:py-2 rounded-lg font-bold overflow-hidden relative ${classes}`}
       style={colorSchema[variant]}
+      className={` p-1 mt-1 md:px-3 md:py-2 rounded-lg font-bold overflow-hidden relative ${classes}`}
       onClick={onClick}
       disabled={disabled}
       type={type}

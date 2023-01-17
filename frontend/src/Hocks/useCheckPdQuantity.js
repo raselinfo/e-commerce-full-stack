@@ -1,8 +1,8 @@
-import { useContext} from "react";
-import axios from "../utils/axios";
-import formateError from "../utils/formateError";
-import { Store } from "../Store/Store";
-import { toast } from "react-toastify";
+import { useContext } from 'react';
+import axios from '../utils/axios';
+import formateError from '../utils/formateError';
+import { Store } from '../Store/Store';
+import { toast } from 'react-toastify';
 const useCheckPdQuantity = () => {
   const {
     state: { cart },
@@ -26,12 +26,12 @@ const useCheckPdQuantity = () => {
           data: { data },
         } = await axios.get(`/products/_id/${product._id}`);
         if (data.stock < quantity) {
-          const err = new Error("Product Out Of Stock!");
+          const err = new Error('Product Out Of Stock!');
           err.state = 404;
           return { err };
         }
         dispatch({
-          type: "ADD_TO_CART",
+          type: 'ADD_TO_CART',
           payload: { ...product, quantity },
         });
         return { success: true };
@@ -43,10 +43,10 @@ const useCheckPdQuantity = () => {
 
   const handelAddToCart = async (pd, { increase = false, toastMsg = true }) => {
     try {
-      const { success } = (await fetchProduct(pd, { increase })) || "";
+      const { success } = (await fetchProduct(pd, { increase })) || '';
       if (toastMsg && success) {
-        toast.success("😃 Product Added To Cart", {
-          position: "top-right",
+        toast.success('😃 Product Added To Cart', {
+          position: 'bottom-right',
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
@@ -55,9 +55,9 @@ const useCheckPdQuantity = () => {
       }
 
       if (toastMsg && !success) {
-        toast.error("😥 Product Out Of Stock!", {
-          toastId: "product_out_of_stock",
-          position: "top-right",
+        toast.error('😥 Product Out Of Stock!', {
+          toastId: 'product_out_of_stock',
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
@@ -65,7 +65,14 @@ const useCheckPdQuantity = () => {
         });
       }
     } catch (err) {
-      console.log("product err", err);
+      toast.error(err.message, {
+        toastId: 'product_out_of_stock',
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
     }
   };
 

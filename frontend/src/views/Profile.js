@@ -4,9 +4,8 @@ import React, {
   useContext,
   useEffect,
   lazy,
-  useCallback,
-  useMemo,
 } from 'react';
+import {Helmet} from "react-helmet-async"
 import { Store } from '../Store/Store';
 import { BarLoader } from 'react-spinners';
 import flashMessage from '../utils/flashMessage';
@@ -154,98 +153,106 @@ const Profile = () => {
     }),
   });
   return (
-    <div className='form__wrapper shadow-lg p-5 bg-white  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg'>
-      <div className='image__wrapper py-3'>
-        <img
-          className='h-32 mt-3 avater__profile'
-          src={image}
-          alt='profile_pic'
-        />
-        <span className='pen'>
-          <input
-            data-testid='imageUploadField'
-            onChange={handleImageOnclick}
-            className='hidden'
-            type='file'
-            name='file'
-            id='file'
+    <>
+      <Helmet>
+        <title>Profile</title>
+      </Helmet>
+      <div className='form__wrapper shadow-lg p-5 bg-white  lg:w-2/6 md:w-3/6 w-5/6 rounded-lg'>
+        <div className='image__wrapper py-3'>
+          <img
+            className='h-32 mt-3 avater__profile'
+            src={image}
+            alt='profile_pic'
           />
-          <label htmlFor='file'>
-            <i className='fa-solid fa-pen'></i>
-          </label>
-        </span>
-        {imageLoading && (
-          <span className='spinner'>
-            <i className='fa-solid fa-spinner'></i>
+          <span className='pen'>
+            <input
+              data-testid='imageUploadField'
+              onChange={handleImageOnclick}
+              className='hidden'
+              type='file'
+              name='file'
+              id='file'
+            />
+            <label htmlFor='file'>
+              <i className='fa-solid fa-pen'></i>
+            </label>
           </span>
-        )}
-      </div>
-      <CustomForm
-        onSubmit={handleOnSubmit}
-        fields={{ name: '', email: '', password: '', confirm_password: '' }}
-        getValues={(values) => getValues(values.showPass)}
-        validation={validationSchema}
-      >
-        <Field type='text' name='name' placeholder={userInfo.name}>
-          <label
-            htmlFor='name'
-            className='text-2xl e font-bold mb-3 inline-block'
-          >
-            Name
-          </label>
-        </Field>
-        <Field type='email' name='email' placeholder={userInfo.email}>
-          <label
-            htmlFor='email'
-            className='text-2xl  font-bold mb-3 inline-block'
-          >
-            Email
-          </label>
-        </Field>
-        <Field type={isShowPass ? 'text' : 'password'} name='password'>
-          <label
-            htmlFor='password'
-            className='text-2xl font-bold mb-3 inline-block'
-          >
-            Password
-          </label>
-        </Field>
-        <div className=' font-bold select-none'>
-          <Field
-            type='checkbox'
-            name='showPass'
-            className=' w-auto inline mr-3'
-          />
-          <label htmlFor='showPass'>Show Password</label>
+          {imageLoading && (
+            <span className='spinner'>
+              <i className='fa-solid fa-spinner'></i>
+            </span>
+          )}
         </div>
-
-        <Field type={isShowPass ? 'text' : 'password'} name='confirm_password'>
-          <label
-            htmlFor='confirm_password'
-            className='text-2xl font-bold mb-3 inline-block'
-          >
-            Confirm Password
-          </label>
-        </Field>
-        <Button
-          role='button'
-          text={loading ? 'Wait...' : 'Change'}
-          disabled={loading}
+        <CustomForm
+          onSubmit={handleOnSubmit}
+          fields={{ name: '', email: '', password: '', confirm_password: '' }}
+          getValues={(values) => getValues(values.showPass)}
+          validation={validationSchema}
         >
-          <BarLoader
-            color='#000'
-            loading={loading}
-            id='spinner'
-            cssOverride={{
-              marginRight: 10,
-            }}
-            margin={5}
-            size={10}
+          <Field type='text' name='name' placeholder={userInfo.name}>
+            <label
+              htmlFor='name'
+              className='text-2xl e font-bold mb-3 inline-block'
+            >
+              Name
+            </label>
+          </Field>
+          <Field type='email' name='email' placeholder={userInfo.email}>
+            <label
+              htmlFor='email'
+              className='text-2xl  font-bold mb-3 inline-block'
+            >
+              Email
+            </label>
+          </Field>
+          <Field type={isShowPass ? 'text' : 'password'} name='password'>
+            <label
+              htmlFor='password'
+              className='text-2xl font-bold mb-3 inline-block'
+            >
+              Password
+            </label>
+          </Field>
+          <div className=' font-bold select-none'>
+            <Field
+              type='checkbox'
+              name='showPass'
+              className=' w-auto inline mr-3'
+            />
+            <label htmlFor='showPass'>Show Password</label>
+          </div>
+
+          <Field
+            type={isShowPass ? 'text' : 'password'}
+            name='confirm_password'
+          >
+            <label
+              htmlFor='confirm_password'
+              className='text-2xl font-bold mb-3 inline-block'
+            >
+              Confirm Password
+            </label>
+          </Field>
+          <Button
+            role='button'
+            text={loading ? 'Wait...' : 'Change'}
             disabled={loading}
-          />
-        </Button>
-      </CustomForm>
-    </div>
+          >
+            <BarLoader
+              color='#000'
+              loading={loading}
+              id='spinner'
+              cssOverride={{
+                marginRight: 10,
+              }}
+              margin={5}
+              size={10}
+              disabled={loading}
+            />
+          </Button>
+        </CustomForm>
+      </div>
+    </>
   );
 };
 
