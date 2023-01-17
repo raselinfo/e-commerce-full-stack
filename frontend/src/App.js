@@ -2,6 +2,8 @@ import './App.css';
 import { lazy, Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Routes, Route } from 'react-router-dom';
+
+const Search = lazy(() => import('./views/Search'));
 const Home = lazy(() => import('./views/Home'));
 const Layout = lazy(() => import('./components/Layout'));
 const ProductDetails = lazy(() => import('./views/ProductDetails'));
@@ -34,6 +36,7 @@ function App() {
           <Route path='/admin' element={<h1>Hello Admin</h1>} />
           <Route path='/product/:slug' element={<ProductDetails />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/search' element={<Search />} />
           <Route
             path='/checkout'
             element={
