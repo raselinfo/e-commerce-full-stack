@@ -4,7 +4,7 @@ let api;
 describe('Profile => PUT : /api/v1/profile✅', () => {
   beforeAll(async () => {
     // Set Cookie and Authorization header
-    api = authApiHandler({ endPoint: '/profile' });
+    api = authApiHandler({ endPoint: '/profile', method: 'put' });
   });
   afterAll(() => {
     mongoose.disconnect();
