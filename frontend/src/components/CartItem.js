@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import useCheckPdQuantity from '../Hocks/useCheckPdQuantity';
+import useCheckPdQuantity from '../Hooks/useCheckPdQuantity';
 import { Store } from '../Store/Store';
 import flashMessage from '../utils/flashMessage';
 const CartItem = ({ product }) => {

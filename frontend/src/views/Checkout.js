@@ -12,16 +12,6 @@ const CheckOut = () => {
   const location = useLocation();
 
   const setStep = (step) => {
-    // ❌
-    // if (step === 'shipping') {
-    //   setCurrentStep('shipping');
-    // } else if (step === 'payment') {
-    //   setCurrentStep('payment');
-    // } else {
-    //   setCurrentStep('order');
-    // }
-    // ❌
-
     if (step) return setCurrentStep(step);
     return setCurrentStep('order');
   };
