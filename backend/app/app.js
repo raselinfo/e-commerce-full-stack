@@ -60,6 +60,8 @@ app.use('/api/v1', require('../routes/order/orderRoutes'));
 app.use('/api/v1', require('../routes/paypal/paypalRoutes'));
 app.use('/api/v1', require('../routes/profile/profileRoutes'));
 app.use('/api/v1', require('../routes/categories/categoriesRoutes'));
+app.use('/api/v1', require('../routes/search/searchRoutes'));
+app.use('/api/v1', require('../routes/review/reviewRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
