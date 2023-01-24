@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import useCheckPdQuantity from '../Hocks/useCheckPdQuantity';
+import useCheckPdQuantity from '../Hooks/useCheckPdQuantity';
 import Button from './Button/Button';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -11,10 +11,9 @@ const Product = ({ product }) => {
       navigate(`/product/${product.slug}`);
     }
   };
-
   return (
     <div
-      className=' p-5 shadow-lg bg-white rounded-lg'
+      className=' p-5 shadow-lg bg-white rounded-lg w-full'
       onClick={seeDetailsPageHandler}
     >
       {/* <img

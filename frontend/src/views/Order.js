@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import pAxios from '../Hocks/useAxios';
+import pAxios from '../Hooks/useAxios';
 import OrderSkeleton from '../Skeleton/order/OrderSkeleton';
 import ItemsSkeleton from '../Skeleton/order/ItemsSkeletor';
 import Skeleton from 'react-loading-skeleton';
@@ -79,7 +79,6 @@ const Order = () => {
     };
 
     if (orderDetails?.isPaid === false) {
-      console.log('inside', orderDetails.isPaid);
       loadPaypalScript();
     }
   }, [paypalDispatch, privateAxios, orderDetails?.isPaid]);
@@ -93,7 +92,6 @@ const Order = () => {
       return orderID;
     } catch (err) {
       flashMessage({ type: 'error', text: formateError(err) });
-      console.log(err.message);
     }
   };
   // ON Approve
@@ -110,13 +108,11 @@ const Order = () => {
       flashMessage({ text: 'Order Success' });
     } catch (err) {
       dispatch({ type: 'PAY_SUCCESS' });
-      console.log(err.message);
       flashMessage({ type: 'error', text: formateError(err) });
     }
   };
   // ON Error
   const onError = (err) => {
-    console.log(err);
     flashMessage({ type: 'error', text: formateError(err) });
   };
 
@@ -264,6 +260,14 @@ const Order = () => {
                     ) : (
                       <div>
                         <PayPalButtons
+                          style={{
+                            // color: 'blue',
+                            shape: 'pill',
+                            label: 'checkout',
+                            tagline: false,
+                            layout: 'vertical',
+                          }}
+                          experience={{ allowNote: false }}
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}

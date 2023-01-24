@@ -10,11 +10,11 @@ import { Store } from '../Store/Store';
 import { useNavigate } from 'react-router-dom';
 import axios from '../utils/axios';
 import formateError from '../utils/formateError';
-import pAxios from '../Hocks/useAxios';
+import pAxios from '../Hooks/useAxios';
 import Button from '../components/Button/Button';
 import { BarLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet-async';
 // Reducer
 const reducer = (state, { type, payload }) => {
   switch (type) {

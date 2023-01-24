@@ -1,63 +1,71 @@
-import React from "react";
+import React from 'react';
 
-const Rating = ({ reviews }) => {
+const Rating = ({
+  reviews, // [{rating:4.5}]
+  isShowLength = true, // Boolean
+  caption, // String
+  className = '',
+  style,
+}) => {
   // Todo: if not reviews
   if (!reviews) {
-    return "";
+    return '';
   }
   // Todo: if reviews
-  let rating = reviews.reduce((acc, item) => {
-    if (acc > !item.rating) return acc;
-    return (acc = item.rating);
-  }, 0);
+  let totalReviews = reviews?.numberOfReviews;
   return (
-    <div className="ratting_wrapper">
+    <div className={`ratting_wrapper ${className}`} style={style && style}>
       <i
         className={
-          rating >= 1
-            ? "fa-solid fa-star"
-            : rating >= 0.5
-            ? "fa-solid fa-star-half-stroke"
-            : "fa-regular fa-star"
+          reviews.rating >= 1
+            ? 'fa-solid fa-star'
+            : reviews.rating >= 0.5
+            ? 'fa-solid fa-star-half-stroke'
+            : 'fa-regular fa-star'
         }
       ></i>
       <i
         className={
-          rating >= 2
-            ? "fa-solid fa-star"
-            : rating >= 1.5
-            ? "fa-solid fa-star-half-stroke"
-            : "fa-regular fa-star"
+          reviews.rating >= 2
+            ? 'fa-solid fa-star'
+            : reviews.rating >= 1.5
+            ? 'fa-solid fa-star-half-stroke'
+            : 'fa-regular fa-star'
         }
       ></i>
       <i
         className={
-          rating >= 3
-            ? "fa-solid fa-star"
-            : rating >= 2.5
-            ? "fa-solid fa-star-half-stroke"
-            : "fa-regular fa-star"
+          reviews.rating >= 3
+            ? 'fa-solid fa-star'
+            : reviews.rating >= 2.5
+            ? 'fa-solid fa-star-half-stroke'
+            : 'fa-regular fa-star'
         }
       ></i>
       <i
         className={
-          rating >= 4
-            ? "fa-solid fa-star"
-            : rating >= 3.5
-            ? "fa-solid fa-star-half-stroke"
-            : "fa-regular fa-star"
+          reviews.rating >= 4
+            ? 'fa-solid fa-star'
+            : reviews.rating >= 3.5
+            ? 'fa-solid fa-star-half-stroke'
+            : 'fa-regular fa-star'
         }
       ></i>
       <i
         className={
-          rating >= 5
-            ? "fa-solid fa-star"
-            : rating >= 4.5
-            ? "fa-solid fa-star-half-stroke"
-            : "fa-regular fa-star"
+          reviews.rating >= 5
+            ? 'fa-solid fa-star'
+            : reviews.rating >= 4.5
+            ? 'fa-solid fa-star-half-stroke'
+            : 'fa-regular fa-star'
         }
-      ></i>{" "}
-      <span className="text-yellow-500 font-bold">{reviews.length} Reviews</span>
+      ></i>{' '}
+      {isShowLength && (
+        <span className='text-yellow-500 font-bold'>
+          {totalReviews} Reviews
+        </span>
+      )}
+      {caption && <span className='text-yellow-500 font-bold'>{caption}</span>}
     </div>
   );
 };

@@ -96,3 +96,48 @@
     display: none;
   }
 }
+
+.search__button:hover {
+  background: rgb(199, 160, 4) !important;
+}
+
+#credential_picker_container {
+  top    : 64px !important;
+  z-index: 99999 !important;
+}
+
+.sidebar {
+  background: #374151;
+  box-shadow: 2px 2px 2px whitesmoke;
+
+}
+
+.sidebar .searchBox input {
+  margin: 5px;
+}
+
+.sidebar .searchBox input,
+.sidebar .searchBox button {
+  border-radius: 5px !important;
+}
+
+.form-input:hover {
+  border-color: yellow;
+}
+
+.form-input:focus {}
+
+.form-input {
+  box-shadow : 2px 2px 2px 2px #f7e571;
+  background : #374151;
+  color      : white;
+  font-weight: bold;
+  cursor     : pointer;
+}
+
+option {
+  background   : #374151;
+  color        : #fff;
+  font-weight  : bold;
+  margin-bottom: 5px;
+}

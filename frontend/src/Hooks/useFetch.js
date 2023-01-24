@@ -10,10 +10,11 @@ const initialState = {
   loading: true,
 };
 // Actions
-const { REQUEST, SUCCESS, FAIL } = {
+const { REQUEST, SUCCESS, FAIL, RESET } = {
   REQUEST: 'REQUEST',
   SUCCESS: 'SUCCESS',
   FAIL: 'FAIL',
+  RESET: 'RESET,',
 };
 // Reducer
 const reducer = (state, { type, payload }) => {
@@ -24,6 +25,8 @@ const reducer = (state, { type, payload }) => {
       return { ...state, data: payload, loading: false };
     case FAIL:
       return { ...state, loading: false, error: payload };
+    case RESET:
+      return { ...state, loading: false };
     default:
       return state;
   }
@@ -49,34 +52,34 @@ const useFetch = ({
     initialState
   );
   const privateAxios = pAxios();
-
   let axios;
   if (options.private) {
     axios = privateAxios;
   } else {
     axios = publicAxios;
   }
-
   //   Hit api
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch({ type: REQUEST });
+
         const response = await axios(url, {
           method: options.method,
-          ...(options.body & { data: options.body }),
+          ...(options.body && { data: options.body }),
         });
         dispatch({ type: SUCCESS, payload: response.data });
       } catch (err) {
         dispatch({ type: FAIL, payload: formateError(err) });
+        // dispatch({ type: RESET });
       }
     };
     if (options.method) {
       fetchData();
     } else {
-      dispatch({ type: FAIL, payload: 'Server Error' });
+      dispatch({ type: RESET });
     }
-  }, [axios, options.body, options.method, url]);
+  }, [options.body, options.method, url, options.private, axios]);
 
   return { data, error, loading };
 };

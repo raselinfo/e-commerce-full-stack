@@ -4,7 +4,7 @@ const sendMail = require('../mail/sendMail');
 const { BASE_CLIENT_URL } = require('../../config');
 const Token = require('../../model/Token');
 const JwtService = require('../jwt/JWT');
-const uploadImage = require('../../utils/imageHandler');
+const {uploadImage} = require('../../utils/imageHandler');
 const Password = require('../Password/Password.js');
 /**
  *

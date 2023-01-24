@@ -10,7 +10,6 @@ const authenticationMiddleware = async (req, res, next) => {
   // check user exist or not in the database (not=> 403)
   // check access token role,email and database user role,email (not=>403)
   // if all the test pass then return next()
-  // console.log(req.headers);
   try {
     // Access token from header
     const { authorization } = req.headers;
@@ -18,7 +17,6 @@ const authenticationMiddleware = async (req, res, next) => {
     //  Refresh Token from req.cookies
     let { refreshToken } = req.cookies;
     refreshToken = refreshToken?.trim();
-    // console.log('accessToken ', accessToken, 'refreshToken ', refreshToken);
 
     // if not access token
     if (!refreshToken) {
@@ -31,17 +29,13 @@ const authenticationMiddleware = async (req, res, next) => {
       key: '_id',
       value: _id.trim(),
     });
-    console.log('user', findUser, _id, email);
     // if no found user
     if (!findUser) {
+      console.log('❌Not Found User');
       return res.status(401).json({ message: 'UnAuthorize' });
     }
     // if user details not match
-    if (
-      findUser.email !== email ||
-      findUser.role !== role ||
-      findUser.name !== name
-    ) {
+    if (findUser.email !== email || findUser.role !== role) {
       return res.status(401).json({ message: 'UnAuthorize' });
     }
     // Set user inside req object
