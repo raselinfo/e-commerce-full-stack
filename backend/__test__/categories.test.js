@@ -2,7 +2,7 @@ const { noAuthApiHandler, mongoose } = require('./index.js');
 describe('Categories => PUT: /categories', () => {
   let api;
   beforeAll(() => {
-    api = noAuthApiHandler({ endPoint: '/categories', method: 'get' });
+    api = noAuthApiHandler({ endPoint: 'categories', method: 'get' });
   });
   afterAll(() => {
     mongoose.disconnect();

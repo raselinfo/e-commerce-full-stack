@@ -6,6 +6,9 @@ const Product = require('../../model/Product');
 
 const saveReviewsService = async ({ user, data }) => {
   try {
+    if (!data?.product) {
+      throw new Error('Please the product id first');
+    }
     const isReviewGiven = await Review.findOne({
       user: user._id,
       product: data.product,
@@ -32,8 +35,12 @@ const saveReviewsService = async ({ user, data }) => {
         },
         { ids: [], avgRating: 0 }
       );
+
       if (Array.isArray(result.ids) && result.avgRating) {
         const product = await Product.findById(data?.product);
+        if (!product) {
+          throw new Error('No product found!');
+        }
         product.reviews = result.ids;
         product.avgRating = result.avgRating / result.ids.length;
         const updatedProduct = await product.save();

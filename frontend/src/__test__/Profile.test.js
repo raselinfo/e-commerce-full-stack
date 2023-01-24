@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-render-in-setup */
 /* eslint-disable testing-library/no-unnecessary-act */
 /* eslint-disable testing-library/prefer-screen-queries */
 import '@testing-library/jest-dom';
@@ -5,10 +6,8 @@ import Profile from '../views/Profile';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import StoreProvider from '../Store/Store';
 import { BrowserRouter } from 'react-router-dom';
-
 describe('Profile', () => {
   beforeEach(() => {
-    // eslint-disable-next-line testing-library/no-render-in-setup
     render(
       <StoreProvider>
         <BrowserRouter>
@@ -22,9 +21,8 @@ describe('Profile', () => {
     // const button = screen.getByRole('button', { hidden: true });
     // const button = screen.getByText('Change');
     await waitFor(() => {
-    const button = screen.getByRole('button');
-    console.log(button);
-    expect(button).toBeInTheDocument();
+      const button = screen.getByRole('button');
+      expect(button).toBeInTheDocument();
     });
   });
 
