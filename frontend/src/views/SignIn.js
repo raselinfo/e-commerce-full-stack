@@ -55,12 +55,10 @@ const SignIn = () => {
         });
         if (data.status === 202) {
           const accessToken = data?.data?.data?.token;
-          const refreshToken = data?.data?.data?.refreshToken;
 
           const userObject = jwt_decode(accessToken);
           // Save token inside session storage
           sessionStorage.setItem('accessToken', accessToken);
-          console.log(refreshToken);
           ctxDispatch({
             type: 'SAVE_USER',
             payload: {
