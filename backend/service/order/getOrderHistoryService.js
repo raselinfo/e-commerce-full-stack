@@ -4,7 +4,6 @@ const getOrderHistoryService = async ({
   page: p,
   limit: limitItem,
 }) => {
-  console.log(limitItem);
   try {
     const page = Number(p) || 1;
     const limit = Number(limitItem) || 1;
