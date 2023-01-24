@@ -1,18 +1,28 @@
-import React, { lazy } from 'react';
+import React, { lazy, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../../Hocks/useFetch';
 
 const SearchBar = lazy(() => import('../SearchBar/SearchBar'));
 
 const SideBar = ({ isOpen, isOpenHandler }) => {
+  const [options, setOptions] = useState({
+    method: null,
+    private: false,
+  });
   const { data } = useFetch({
     url: '/categories',
-    options: {
-      method: 'get',
-      body: null,
-      private: false,
-    },
+    options: options,
   });
+  useEffect(() => {
+    if (isOpen) {
+      setOptions({
+        method: 'get',
+        body: null,
+        private: false,
+      });
+    }
+  }, [isOpen]);
   return (
     <div
       //   style={{ marginLeft: `${isOPen ? '260px' : '-260px'}` }}
