@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { lazy, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MessageBox from '../components/MessageBox';
-import useFetch from '../Hocks/useFetch';
+import useFetch from '../Hooks/useFetch';
 const Skeleton = lazy(() => import('react-loading-skeleton'));
 const Product = lazy(() => import('../components/Product'));
 const Rating = lazy(() => import('../components/Rating'));

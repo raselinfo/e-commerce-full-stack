@@ -5,11 +5,11 @@ import React, {
   useEffect,
   lazy,
 } from 'react';
-import {Helmet} from "react-helmet-async"
+import { Helmet } from 'react-helmet-async';
 import { Store } from '../Store/Store';
 import { BarLoader } from 'react-spinners';
 import flashMessage from '../utils/flashMessage';
-import useFetch from '../Hocks/useFetch';
+import useFetch from '../Hooks/useFetch';
 import * as yup from 'yup';
 const Button = lazy(() => import('../components/Button/Button'));
 const CustomForm = lazy(() => import('../components/Form/CustomForm'));

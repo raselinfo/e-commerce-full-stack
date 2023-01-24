@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useFetch from '../Hocks/useFetch';
+import useFetch from '../Hooks/useFetch';
 import MessageBox from '../components/MessageBox';
 import OrderHistorySkeleton from '../Skeleton/order/OrderHistorySkeleton';
 import getQuery from '../utils/getQueryString';

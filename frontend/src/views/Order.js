@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import pAxios from '../Hocks/useAxios';
+import pAxios from '../Hooks/useAxios';
 import OrderSkeleton from '../Skeleton/order/OrderSkeleton';
 import ItemsSkeleton from '../Skeleton/order/ItemsSkeletor';
 import Skeleton from 'react-loading-skeleton';

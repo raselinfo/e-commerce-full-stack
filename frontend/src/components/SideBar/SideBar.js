@@ -1,7 +1,7 @@
 import React, { lazy, useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import useFetch from '../../Hocks/useFetch';
+import useFetch from '../../Hooks/useFetch';
 
 const SearchBar = lazy(() => import('../SearchBar/SearchBar'));
 
