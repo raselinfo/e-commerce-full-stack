@@ -79,7 +79,6 @@ const Order = () => {
     };
 
     if (orderDetails?.isPaid === false) {
-      console.log('inside', orderDetails.isPaid);
       loadPaypalScript();
     }
   }, [paypalDispatch, privateAxios, orderDetails?.isPaid]);
@@ -93,7 +92,6 @@ const Order = () => {
       return orderID;
     } catch (err) {
       flashMessage({ type: 'error', text: formateError(err) });
-      console.log(err.message);
     }
   };
   // ON Approve
@@ -110,13 +108,11 @@ const Order = () => {
       flashMessage({ text: 'Order Success' });
     } catch (err) {
       dispatch({ type: 'PAY_SUCCESS' });
-      console.log(err.message);
       flashMessage({ type: 'error', text: formateError(err) });
     }
   };
   // ON Error
   const onError = (err) => {
-    console.log(err);
     flashMessage({ type: 'error', text: formateError(err) });
   };
 

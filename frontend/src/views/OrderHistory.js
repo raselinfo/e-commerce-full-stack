@@ -18,7 +18,6 @@ const OrderHistory = () => {
   });
 
   const changeStepQuery = (index) => {
-    console.log(index);
     navigate(`/order_history?page=${index}`);
   };
   return (
