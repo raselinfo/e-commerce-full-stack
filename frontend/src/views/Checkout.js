@@ -21,7 +21,7 @@ const CheckOut = () => {
     //   setCurrentStep('order');
     // }
     // ❌
-    
+
     if (step) return setCurrentStep(step);
     return setCurrentStep('order');
   };
@@ -39,18 +39,6 @@ const CheckOut = () => {
   } else {
     return <Navigate to='/' replace />;
   }
-
-  // ❌
-  // const renderElement = (currentStep) => {
-  //   console.log("I am RenderElement")
-  //   if (currentStep === 'order') return (RenderElement = PlaceOrder);
-  //   if (!currentStep) return <Navigate to='/' replace />;
-  //   RenderElement = currentStep.charAt(0).toUpperCase() + currentStep.slice(1);
-  //   console.log(currentStep,typeof RenderElement)
-  // };
-  // renderElement(currentStep);
-  // ❌
-
 
   return (
     <>
