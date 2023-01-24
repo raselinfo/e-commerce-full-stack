@@ -11,15 +11,20 @@ exports.seedProductController = async (req, res, next) => {
 
     const products = data.products.map(async (product) => {
       const reviews = await Review.find({ product: product._id });
+      const avgRating = reviews.reduce((acc, item) => {
+        return (acc += item.rating);
+      }, 0);
 
       const index = Math.floor(Math.random() * categories.length);
       const randomCategory = categories[index];
       return {
         ...product,
-        category: randomCategory._id,
+        category: randomCategory.name,
         reviews: reviews,
+        avgRating: avgRating / reviews.length,
       };
     });
+
     const seedProducts = await Product.insertMany(await Promise.all(products));
     res.status(201).json({ message: 'Success', data: seedProducts });
   } catch (err) {
@@ -87,5 +92,3 @@ exports.seedCoupon = async (req, res, next) => {
     next(err);
   }
 };
-
-
