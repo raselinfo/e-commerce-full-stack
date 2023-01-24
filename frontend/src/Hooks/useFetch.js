@@ -26,7 +26,7 @@ const reducer = (state, { type, payload }) => {
     case FAIL:
       return { ...state, loading: false, error: payload };
     case RESET:
-      return { ...state, loading: false, error: null };
+      return { ...state, loading: false };
     default:
       return state;
   }
@@ -52,15 +52,14 @@ const useFetch = ({
     initialState
   );
   const privateAxios = pAxios();
-
+  let axios;
+  if (options.private) {
+    axios = privateAxios;
+  } else {
+    axios = publicAxios;
+  }
   //   Hit api
   useEffect(() => {
-    let axios;
-    if (options.private) {
-      axios = privateAxios;
-    } else {
-      axios = publicAxios;
-    }
     const fetchData = async () => {
       try {
         dispatch({ type: REQUEST });
@@ -72,7 +71,7 @@ const useFetch = ({
         dispatch({ type: SUCCESS, payload: response.data });
       } catch (err) {
         dispatch({ type: FAIL, payload: formateError(err) });
-        dispatch({ type: RESET });
+        // dispatch({ type: RESET });
       }
     };
     if (options.method) {
@@ -80,7 +79,7 @@ const useFetch = ({
     } else {
       dispatch({ type: RESET });
     }
-  }, [options.body, options.method, url, options.private, privateAxios]);
+  }, [options.body, options.method, url, options.private, axios]);
 
   return { data, error, loading };
 };
