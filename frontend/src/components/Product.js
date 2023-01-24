@@ -11,7 +11,6 @@ const Product = ({ product }) => {
       navigate(`/product/${product.slug}`);
     }
   };
-  console.log(product);
   return (
     <div
       className=' p-5 shadow-lg bg-white rounded-lg w-full'
