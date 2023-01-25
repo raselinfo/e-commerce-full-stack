@@ -19,15 +19,16 @@ const payOrderService = async ({ details, orderID }) => {
     const updatedOrder = await getOrder.save();
 
     // Reduce Product Quantity
-    getOrder.orderItems.forEach(async (item) => {
-      const pd = await Product.findById(item._id);
-      if (+pd.stock < item.quantity) {
-        throw new Error(`We have only ${pd.stock} ${item.name} in our stock!`);
-      }
-      pd.stock = Number(pd.stock) - Number(item.quantity);
-      await pd.save();
+    const updatePayOrder = [];
+    getOrder.orderItems.forEach((item) => {
+      updatePayOrder.push(
+        Product.updateOne(
+          { _id: item._id },
+          { $inc: { stock: -item.quantity } }
+        )
+      );
     });
-
+    Promise.all(updatePayOrder);
     return { result: updatedOrder };
   } catch (err) {
     throw new Error(err.message);

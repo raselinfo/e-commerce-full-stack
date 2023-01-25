@@ -6,8 +6,9 @@ describe('Profile => post : /api/v1/reviews', () => {
     // Set Cookie and Authorization header
     api = authApiHandler({ endPoint: 'reviews', method: 'post' });
   });
-  afterAll(() => {
-    mongoose.disconnect();
+  afterAll(async () => {
+    await Review.deleteMany();
+    await mongoose.disconnect();
   });
 
   it('Should return 204 status code', async () => {
