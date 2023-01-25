@@ -28,5 +28,6 @@ module.exports = {
     'no-process-exit': 'off',
     'object-shorthand': 'off',
     'class-methods-use-this': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
   },
 };
