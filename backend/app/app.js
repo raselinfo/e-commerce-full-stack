@@ -7,17 +7,19 @@ const swaggerUI = require('swagger-ui-express');
 const YML = require('yamljs');
 const errorMiddleware = require('../middleware/error/errorMiddleware.js');
 const app = express();
-
+const helmet = require('helmet');
 // Middleware
 app.use(cookieParser());
 app.use(express.json({ limit: 10000000000 }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 // Todo: Cors Install
 app.use(
   cors({
     origin: [
       'http://localhost:3000',
+      'http://localhost:5173',
       'https://raselofficial.me',
       'https://api.raselofficial.me',
       'http://api.raselofficial.me',
@@ -62,11 +64,13 @@ app.use('/api/v1', require('../routes/profile/profileRoutes'));
 app.use('/api/v1', require('../routes/categories/categoriesRoutes'));
 app.use('/api/v1', require('../routes/search/searchRoutes'));
 app.use('/api/v1', require('../routes/review/reviewRoutes'));
+// Admin Route
+app.use('/api/v1', require('../routes/admin/auth/adminSignInRoutes'));
 
 // Todo: Health Route
 app.get('/api/v1/health', (req, res) => {
   console.log('Hello 🥰 i am rasel hossain');
-  res.send('OK');
+  res.send({ message: 'Ok' });
 });
 
 // Todo: Error Middleware

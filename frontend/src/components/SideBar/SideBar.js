@@ -1,11 +1,12 @@
 import React, { lazy, useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFetch from '../../Hooks/useFetch';
 
 const SearchBar = lazy(() => import('../SearchBar/SearchBar'));
 
 const SideBar = ({ isOpen, isOpenHandler }) => {
+  const navigate = useNavigate();
   const [options, setOptions] = useState({
     method: null,
     private: false,
@@ -52,12 +53,21 @@ const SideBar = ({ isOpen, isOpenHandler }) => {
               {data?.data?.map((category) => {
                 return (
                   <li key={category._id}>
-                    <Link
+                    {/* <Link
                       className='text-xl block text-gray-50 font-bold bg-yellow-500 py-2 px-5 rounded  m-3 text-center'
                       to={`/search?category=${category.name}`}
                     >
                       {category.name}
-                    </Link>
+                    </Link> */}
+                    <button
+                      onClick={() => {
+                        navigate(`/search?category=${category.name}`);
+                        isOpenHandler();
+                      }}
+                      className='text-xl block text-gray-50 font-bold bg-yellow-500 py-2 px-5 w-24 rounded  m-3 text-center'
+                    >
+                      {category.name}
+                    </button>
                   </li>
                 );
               })}

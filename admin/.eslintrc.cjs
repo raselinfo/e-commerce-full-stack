@@ -29,5 +29,9 @@ module.exports = {
     'object-shorthand': 'off',
     'class-methods-use-this': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
+    'no-param-reassign': 'off',
+    'max-len': 'off',
+    '@typescript-eslint/indent': 'off',
+    'object-curly-newline': 'off',
   },
 };
