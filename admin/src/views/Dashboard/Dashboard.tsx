@@ -1,7 +1,13 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
 function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <Box margin="100px" component="h1">
+      ⚠ This Project is underdevelopment. please give us some times to complete
+      it.
+    </Box>
+  );
 }
 
 export default Dashboard;
