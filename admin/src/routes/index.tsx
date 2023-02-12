@@ -7,10 +7,6 @@ const NotFound = lazy(() => import('../views/NotFound/NotFound'));
 const Dashboard = lazy(() => import('../views/Dashboard/Dashboard'));
 export const routesConfig = [
   {
-    path: '/',
-    element: <Login />,
-  },
-  {
     path: '/dashboard',
     element: <Layout />,
     children: [
@@ -23,6 +19,10 @@ export const routesConfig = [
         element: <h1>Hello App</h1>,
       },
     ],
+  },
+  {
+    path: '/',
+    element: <Login />,
   },
 
   {

@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {
   Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme, Color,
 } from '@mui/material';
-
 import {
   SettingsOutlined,
   ChevronLeft,
   ChevronRightOutlined,
 } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import FlexBetween from '../mui-component/FlexBetween/FlexBetween';
 import Items from './Items';
 
@@ -32,8 +31,7 @@ function Sidebar({
 
   return (
     <Box position="relative">
-      {
-        isSidebarOpen && (
+      {isSidebarOpen && (
         <Drawer
           open={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
@@ -42,7 +40,7 @@ function Sidebar({
           sx={{
             width: drawerWidth,
             '& .MuiDrawer-paper': {
-              color: ((theme.palette.secondary as unknown) as Color)[200],
+              color: (theme.palette.secondary as unknown as Color)[200],
               backgroundColor: 'background.alt',
               width: drawerWidth,
               borderWidth: isNonMobile ? 0 : '2px',
@@ -54,7 +52,16 @@ function Sidebar({
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
                   <Typography variant="h4" fontWeight="bold">
-                    RaselFashion.
+                    <Link
+                      style={{
+                      color: '#fff',
+                      textDecoration: 'none',
+                    }}
+                      to="/"
+                    >
+                      FashionStore.
+
+                    </Link>
                   </Typography>
                 </Box>
                 {!isNonMobile && (
@@ -85,12 +92,14 @@ function Sidebar({
                       sx={{
                         backgroundColor:
                           active === lcText
-                            ? ((theme.palette.secondary as unknown) as Color)[300]
+                            ? (theme.palette.secondary as unknown as Color)[300]
                             : 'transparent',
                         color:
                           active === lcText
-                            ? ((theme.palette.primary as unknown) as Color)[600]
-                            : ((theme.palette.secondary as unknown) as Color)[100],
+                            ? (theme.palette.primary as unknown as Color)[600]
+                            : (
+                                theme.palette.secondary as unknown as Color
+                              )[100],
                       }}
                     >
                       <ListItemIcon
@@ -98,15 +107,17 @@ function Sidebar({
                           ml: '2rem',
                           color:
                             active === lcText
-                              ? ((theme.palette.primary as unknown) as Color)[600]
-                              : ((theme.palette.secondary as unknown) as Color)[200],
+                              ? (theme.palette.primary as unknown as Color)[600]
+                              : (
+                                  theme.palette.secondary as unknown as Color
+                                )[200],
                         }}
                       >
                         {icon}
                       </ListItemIcon>
                       <ListItemText primary={text} />
                       {active === lcText && (
-                      <ChevronRightOutlined sx={{ ml: 'auto' }} />
+                        <ChevronRightOutlined sx={{ ml: 'auto' }} />
                       )}
                     </ListItemButton>
                   </ListItem>
@@ -114,17 +125,34 @@ function Sidebar({
               })}
             </List>
           </Box>
-          <Box mt="5px" sx={{ position: 'absolute', bottom: '30px', width: '100%' }}>
+          <Box
+            mt="5px"
+            sx={{ position: 'absolute', bottom: '30px', width: '100%' }}
+          >
             <Divider />
-            <Box display="flex" justifyContent="center" gap="20px" alignItems="center" mt="10px">
-              <Box component="img" alt="profile" src="" height="40px" width="40px" borderRadius="50%" sx={{ backgroundColor: 'primary.main', objectFit: 'cover' }} />
+            <Box
+              display="flex"
+              justifyContent="center"
+              gap="20px"
+              alignItems="center"
+              mt="10px"
+            >
+              <Box
+                component="img"
+                alt="profile"
+                src=""
+                height="40px"
+                width="40px"
+                borderRadius="50%"
+                sx={{ backgroundColor: 'primary.main', objectFit: 'cover' }}
+              />
               <Box display="flex" gap="5px">
                 {/* <Typography fontWeight="bold" fontSize="20px" sx={{ color: ((theme.palette.secondary as unknown) as Color)[200] }}>
                   Rasel
                 </Typography> */}
                 <SettingsOutlined
                   sx={{
-                    color: ((theme.palette.secondary as unknown) as Color)[300],
+                    color: (theme.palette.secondary as unknown as Color)[300],
                     fontSize: '25px ',
                   }}
                 />
@@ -132,8 +160,7 @@ function Sidebar({
             </Box>
           </Box>
         </Drawer>
-        )
-     }
+      )}
     </Box>
   );
 }

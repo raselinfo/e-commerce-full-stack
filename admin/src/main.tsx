@@ -1,5 +1,5 @@
 import { RouterProvider } from 'react-router-dom';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import routes from './routes';
@@ -13,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Provider store={store}>
       <ThemeProvider>
         {/* Theme Provider 🔽 */}
-        <RouterProvider router={routes} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <RouterProvider router={routes} />
+        </Suspense>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,
