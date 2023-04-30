@@ -4,7 +4,7 @@
 
 ### Frontend
 
-<a href="https://e-commerce-full-stack-one.vercel.app/" target="_blank">Preview</a>
+<a href="https://raselofficial.me/" target="_blank">Preview</a>
 
 ### Backend
 
