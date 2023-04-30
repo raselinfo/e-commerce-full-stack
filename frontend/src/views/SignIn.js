@@ -1,20 +1,24 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, lazy, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import getQueryString from '../utils/getQueryString';
-import axios from '../utils/axios';
-import { BarLoader } from 'react-spinners/';
-import { toast } from 'react-toastify';
-import formatError from '../utils/formateError';
-import { Store } from '../Store/Store';
 import jwt_decode from 'jwt-decode';
-import Google from '../components/Google';
-import CustomForm from '../components/Form/CustomForm';
-import InputField from '../components/Form/Field/InputField';
 import * as yup from 'yup';
-import Button from '../components/Button/Button';
+import { BarLoader } from 'react-spinners';
+import { Store } from '../Store/Store';
+import axios from '../utils/axios';
+import { toast } from 'react-toastify';
+import getQueryString from '../utils/getQueryString';
+import formateError from '../utils/formateError';
+
+const Google = lazy(() => import('../components/Google'));
+const CustomForm = lazy(() => import('../components/Form/CustomForm'));
+const InputField = lazy(() => import('../components/Form/Field/InputField'));
+const Button = lazy(() => import('../components/Button/Button'));
 const SignIn = () => {
-  const { redirect, step } = getQueryString(['redirect', 'step']);
-  const redirectUrl = `${redirect}${step && '?step=' + step}`.trim();
+  const { redirect, step, page } = getQueryString(['redirect', 'step', 'page']);
+  const redirectUrl = `${redirect}${step && '?step=' + step}${
+    page !== '/' ? '&page=' + page : ''
+  }`.trim();
+  const [isMount, setIsMount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
   const { dispatch: ctxDispatch } = useContext(Store);
@@ -23,8 +27,8 @@ const SignIn = () => {
 
   //  Todo: Custom Form Configer
   const fields = {
-    email: '',
-    password: '',
+    email: 'demo@gmail.com',
+    password: 'demoPass@45',
     showPass: '',
   };
 
@@ -46,17 +50,21 @@ const SignIn = () => {
     formData.append('password', password);
     (async () => {
       try {
-        const data = await axios.post('auth/signin', formData);
+        const data = await axios.post('auth/signin', formData, {
+          withCredentials: true,
+        });
         if (data.status === 202) {
-          const userObject = jwt_decode(data?.data?.data?.token);
+          const accessToken = data?.data?.data?.token;
+
+          const userObject = jwt_decode(accessToken);
           // Save token inside session storage
-          sessionStorage.setItem('accessToken', data?.data?.data?.token);
+          sessionStorage.setItem('accessToken', accessToken);
           ctxDispatch({
             type: 'SAVE_USER',
             payload: {
               email: userObject.email,
               name: userObject.name,
-              image: userObject.image,
+              image: { url: userObject.image.url },
               role: userObject.role,
             },
           });
@@ -71,7 +79,7 @@ const SignIn = () => {
           navigate(redirectUrl);
         }
       } catch (err) {
-        toast.error(formatError(err), {
+        toast.error(formateError(err), {
           position: 'bottom-right',
           autoClose: 10000,
           hideProgressBar: true,
@@ -82,11 +90,18 @@ const SignIn = () => {
       }
     })();
   };
+  // know is the component mount or not
+  useEffect(() => {
+    setIsMount(true);
+    return () => setIsMount(false);
+  }, []);
   // Get Custom Form Values
   const getValues = (values) => {
-    setTimeout(() => {
-      setIsShowPass(values);
-    }, 0);
+    if (isMount) {
+      setTimeout(() => {
+        setIsShowPass(values);
+      }, 0);
+    }
   };
   return (
     // <div>

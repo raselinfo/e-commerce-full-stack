@@ -1,0 +1,216 @@
+swagger: '2.0'
+info:
+  title: RaselOfficial APP
+  description: This is the company documentations
+  version: 1.0
+  contact:
+    email: test.example.com
+
+  license:
+    name: Apache 2.0
+    url: http://apache.org
+  servers:
+    - url: http://localhost:4000
+      description: This is my local server
+    - url: https://api.raselofficial.me
+      description: This is my production server
+
+basePath: /api/v1
+hots: http://localhost:4000
+
+# For Token
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: APIKey # this name actually sent inside heder
+    in: header
+security:
+  - api_key: []
+
+# # For tags/tile
+# tags:
+#   - name: users routes
+#     description: This is user routes
+#   - name: test
+#     description: This is test routes
+
+schemes: [http, https]
+
+paths:
+  # Get Coupon
+  /get_coupon:
+    get:
+      tags:
+        - Coupon 💥
+      summary: Get Coupon details  by query 😀
+      description: This route return coupon.
+      parameters:
+        - name: code
+          in: query
+          schema:
+            type: string
+          require: true
+          enum: ['rasel360']
+      responses:
+        200:
+          description: Coupon Apply
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  code:
+                    type: string
+                  discount:
+                    type: integer
+                  owner:
+                    type: string
+
+        404:
+          description: No coupon found!
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'No coupon found!' }
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  # Get Coupon
+  /set_coupon:
+    post:
+      tags:
+        - Coupon 💥
+      summary: Set Coupon IN Database 😀
+      description: This route save coupon in the database.
+      parameters:
+        - name: code
+          in: body
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              discount:
+                type: integer
+              owner:
+                type: string
+          require: true
+          example:
+            { code: 'santo56', discount: 5, owner: '63a5451821eda0b21da6781a' }
+      responses:
+        200:
+          description: Coupon Apply
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  code:
+                    type: string
+                  discount:
+                    type: integer
+                  owner:
+                    type: string
+
+        404:
+          description: No coupon found!
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'No coupon found!' }
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  /auth/signin:
+    post:
+      tags:
+        - Auth 💥
+      summary: Sign IN 😀
+      description: Sign In in the sotre.
+      parameters:
+        - name: user
+          in: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                default: raselinfo52@gmail.com
+              password:
+                type: string
+                default: rASEL012398@
+          example:
+            email: raselinfo52@gmail.com
+            password:
+      responses:
+        200:
+          description: Success
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }
+
+  # Store Utils
+  /setStoreUtils:
+    post:
+      tags:
+        - Stor Utils 💥
+      summary: Save store utils 😀
+      description: This route save store utils.
+      parameters:
+        - name: utils
+          in: body
+          schema:
+            type: object
+            properties:
+              storeName:
+                type: string
+              tax:
+                type: integer
+          require: true
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          require: true
+      responses:
+        200:
+          description: Success
+        500:
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: { message: 'Internal Server Error' }

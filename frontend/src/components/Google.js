@@ -36,7 +36,7 @@ const Google = ({
           payload: {
             name: userData.name,
             email: userData.email,
-            image: userData.image,
+            image: { url: userData.image.url },
             role: userData.role,
             // [userData.image.public_id]: undefined,
           },
@@ -78,6 +78,10 @@ const Google = ({
       if (isOneTapOpen) {
         window?.google?.accounts?.id.prompt();
       }
+    }
+    // After login google one tep login should be hide
+    if (userInfo.email) {
+      window?.google?.accounts?.id.cancel();
     }
   }, [
     isOneTapOpen,

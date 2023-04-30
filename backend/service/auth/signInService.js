@@ -4,20 +4,23 @@ const JWT = require('../jwt/JWT');
 const sendMail = require('../mail/sendMail');
 const Token = require('../../model/Token');
 const { BASE_CLIENT_URL } = require('../../config');
+const generateTokenAndCookie = require('../../utils/generateTokenAndCookie');
 const signInService = async ({ email, password, res }) => {
   try {
     // Todo: Check if user exist or not
-    const user = await UserService.findByProperty('email', email);
+    const user = await UserService.findByProperty({
+      key: 'email',
+      value: email,
+    });
+
     if (!user) {
       return { error: 'User Not Found!' };
     }
     // Todo: Check if user verified
     if (!user.verified) {
-      const emailVerifyToken = await JWT.signAccessToken(
-        {
-          email: user.email,
-        }
-      );
+      const emailVerifyToken = await JWT.signAccessToken({
+        email: user.email,
+      });
       // Save Token to Database
       const newToken = await new Token({
         token: emailVerifyToken,
@@ -42,35 +45,12 @@ const signInService = async ({ email, password, res }) => {
     if (!match) {
       return { error: 'Password Not Match' };
     }
-    //  Todo: Access Token
-    const token = await JWT.signAccessToken({
-      name: user.name,
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      image: user.image.url,
-    });
 
-    // Refresh Token
-    const refreshToken = await JWT.signRefreshToken(
-      {
-        name: user.name,
-        _id: user._id,
-        email: user.email,
-        role: user.role,
-        image: user.image.url,
-      }
-    );
-    res.cookie('refreshToken', refreshToken, {
-      path: '/',
-      httpOnly: true,
-      sameSite: 'lax',
-      maxAge: 8760 * 60 * 60 * 1000, // 1 year
-    });
+    const { accessToken } = await generateTokenAndCookie({ res, user });
 
     return {
       data: {
-        token: token,
+        token: accessToken,
       },
     };
   } catch (err) {
